@@ -1,0 +1,17 @@
+﻿{
+  "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
+  "id": null,
+  "name": "BeatSaviorData",
+  "author": "Mystogan",
+  "version": "0.0.1",
+  "description": "Streams data such as map completion to Beat Savior",
+  "gameVersion": "1.7.0",
+  "dependsOn": {
+    "BS Utils": "^1.3.5",
+  },
+  "loadAfter": [ "BS Utils" ],
+  "features": [],
+  "misc": {
+    "plugin-hint": "BeatSaviorData.Plugin"
+  }
+}
