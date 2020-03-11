@@ -10,6 +10,8 @@ namespace BeatSaviorData.Trackers
 	{
 		public int leftNoteHit, rightNoteHit, bombHit, miss;
 
+		public void EndOfSong() { }
+
 		public void OnNoteCut(BeatmapObjectSpawnController bosc, INoteController data, NoteCutInfo info)
 		{
 			if(info.allIsOK)

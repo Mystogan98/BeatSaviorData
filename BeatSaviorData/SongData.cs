@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using BeatSaviorData.Trackers;
+using Newtonsoft.Json;
 
 namespace BeatSaviorData
 {
@@ -21,11 +22,11 @@ namespace BeatSaviorData
 			{ "ScoreTracker", new ScoreTracker() }
 		};
 
-		private readonly BeatmapObjectSpawnController BOSC;
-		private readonly GameplayCoreSceneSetupData GCSSD;
-		private readonly ScoreController scoreController;
-		private readonly GameplayModifiersModelSO modifierData;
-		private readonly PlayerDataModelSO PlayerData;
+		private readonly BeatmapObjectSpawnController BOSC; public BeatmapObjectSpawnController GetBOSC() => BOSC;
+		private readonly GameplayCoreSceneSetupData GCSSD; public GameplayCoreSceneSetupData GetGCSSD() => GCSSD;
+		private readonly ScoreController scoreController; public ScoreController GetScoreController() => scoreController;
+		private readonly GameplayModifiersModelSO modifierData; public GameplayModifiersModelSO GetModifierData() => modifierData;
+		private readonly PlayerDataModelSO playerData; public PlayerDataModelSO GetPlayerData() => playerData;
 
 		private bool isNotAReplay;
 
@@ -34,7 +35,7 @@ namespace BeatSaviorData
 			BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().First();
 			GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
 			modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
-			PlayerData = Resources.FindObjectsOfTypeAll<PlayerDataModelSO>().First();
+			playerData = Resources.FindObjectsOfTypeAll<PlayerDataModelSO>().First();
 			scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().First();
 
 			playerID = GetUserInfo.GetUserID();
@@ -42,24 +43,9 @@ namespace BeatSaviorData
 			songDifficulty = GCSSD.difficultyBeatmap.difficulty.ToString().ToLower();
 
 			scoreController.scoreDidChangeEvent += IsNotAReplay;
-
-			/*bombCut = 0;
-			noteACut = 0;
-			noteBCut = 0;
-			AccA = 0;
-			AccB = 0;
-			accGrid = new int[12];
-			cutGrid = new int[12];
-			thisIsBullshit = new Dictionary<SaberSwingRatingCounter, KeyValuePair<NoteCutInfo, INoteController>>();*/
 		
 			foreach (ITracker t in trackers.Values)
-				RegisterTracker(t);
-		}
-
-		private void RegisterTracker(ITracker tracker)
-		{
-			BOSC.noteWasCutEvent += tracker.OnNoteCut;
-			BOSC.noteWasMissedEvent += tracker.OnNoteMissed;
+				t.RegisterTracker(this);
 		}
 
 		private void IsNotAReplay(int score, int modifiedScore)
@@ -68,5 +54,12 @@ namespace BeatSaviorData
 		}
 
 		public bool IsItAReplay() => !isNotAReplay;
+
+		public string FinalizeData()
+		{
+			foreach (ITracker t in trackers.Values)
+				t.EndOfSong();
+			return JsonConvert.SerializeObject(this, Formatting.Indented);
+		}
 	}
 }

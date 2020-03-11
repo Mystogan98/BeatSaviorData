@@ -8,7 +8,9 @@ namespace BeatSaviorData
 {
 	interface ITracker
 	{
-		void OnNoteCut(BeatmapObjectSpawnController bosc, INoteController data, NoteCutInfo info);
-		void OnNoteMissed(BeatmapObjectSpawnController bosc, INoteController data);
+		void RegisterTracker(SongData data);
+		/*void OnNoteCut(BeatmapObjectSpawnController bosc, INoteController data, NoteCutInfo info);
+		void OnNoteMissed(BeatmapObjectSpawnController bosc, INoteController data);*/
+		void EndOfSong();
 	}
 }
