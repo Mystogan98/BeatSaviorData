@@ -23,6 +23,7 @@ namespace BeatSaviorData.Trackers
 			accLeft = Utils.SafeDivide(accLeft, cutLeft);
 			for (int i = 0; i < 12; i++)
 				gridAcc[i] = Utils.SafeDivide(gridAcc[i], gridCut[i]);
+			// This doesn't take into account the number of note hit by each hand, gotta change that
 			averageAcc = (accRight + accLeft) / 2;
 		}
 

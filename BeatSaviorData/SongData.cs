@@ -28,7 +28,7 @@ namespace BeatSaviorData
 		private readonly GameplayModifiersModelSO modifierData; public GameplayModifiersModelSO GetModifierData() => modifierData;
 		private readonly PlayerDataModelSO playerData; public PlayerDataModelSO GetPlayerData() => playerData;
 
-		private bool isNotAReplay;
+		private bool isNotAReplay, isNotInPracticeMode;
 
 		public SongData()
 		{
@@ -45,6 +45,8 @@ namespace BeatSaviorData
 			songArtist = GCSSD.difficultyBeatmap.level.songAuthorName;
 			songMapper = GCSSD.difficultyBeatmap.level.levelAuthorName;
 
+			isNotInPracticeMode = (GCSSD.practiceSettings == null);
+
 			scoreController.scoreDidChangeEvent += IsNotAReplay;
 		
 			foreach (ITracker t in trackers.Values)
@@ -57,7 +59,8 @@ namespace BeatSaviorData
 			scoreController.scoreDidChangeEvent -= IsNotAReplay;
 		}
 
-		public bool IsItAReplay() => isNotAReplay;
+		public bool IsAReplay() => !isNotAReplay;
+		public bool IsPraticeMode() => !isNotInPracticeMode;
 
 		public string FinalizeData(LevelCompletionResults results)
 		{

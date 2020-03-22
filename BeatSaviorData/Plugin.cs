@@ -39,8 +39,7 @@ namespace BeatSaviorData
 		{
 			if (songData != null)
 			{
-				if (songData.IsItAReplay())
-				{
+				if (!songData.IsAReplay() && !songData.IsPraticeMode()) {
 					string json = songData.FinalizeData(results);
 					ShowData(json);
 					// upload
@@ -49,9 +48,12 @@ namespace BeatSaviorData
 					else
 						Logger.log.Info("BSD : Upload failed.");
 				}
-				else
-				{
+				else if (songData.IsAReplay()) {
 					Logger.log.Info("BSD : That was a replay you cheater (╯°□°）╯︵ ┻━┻");
+				}
+				else if(songData.IsPraticeMode())
+				{
+					Logger.log.Info("BSD : Don't try to cheat in practice mode, I see you kid. :eyes:");
 				}
 				songData = null;
 			}

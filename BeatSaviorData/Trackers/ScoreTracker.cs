@@ -14,10 +14,11 @@ namespace BeatSaviorData.Trackers
 		public List<string> modifiers = new List<string>();
 
 		private int maxScore, maxRawScore;
+		private float multiplier;
 
 		public void EndOfSong(LevelCompletionResults results)
 		{
-			modifiedRatio = score / (float)maxScore;
+			modifiedRatio = Mathf.RoundToInt(score * multiplier) / (float)maxScore;
 			rawRatio = score / (float)maxRawScore;
 		}
 
@@ -30,13 +31,15 @@ namespace BeatSaviorData.Trackers
 				beatmap.level.levelID, beatmap.difficulty, beatmap.parentDifficultyBeatmapSet.beatmapCharacteristic);
 			maxRawScore = ScoreController.MaxRawScoreForNumberOfNotes(beatmap.beatmapData.notesCount);
 
-			maxScore = GetTotalMultiplier(maxRawScore, data.GetPlayerData().playerData.gameplayModifiers);
+
+			multiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers);
+			maxScore = Mathf.RoundToInt(maxRawScore * multiplier);
 			personalBestModifiedRatio = stats.highScore / (float)maxScore;
 			personalBestRawRatio = stats.highScore / (float)maxRawScore;
 			personalBest = stats.highScore;
 		}
 		
-		private int GetTotalMultiplier(int maxRawScore, GameplayModifiers _modifiers)
+		private float GetTotalMultiplier(GameplayModifiers _modifiers)
 		{
 			float multiplier = 1;
 
@@ -52,9 +55,9 @@ namespace BeatSaviorData.Trackers
 			return Mathf.RoundToInt(maxRawScore * multiplier);
 		}
 
-		private void UpdateScore(int _score, int modified)
+		private void UpdateScore(int rawScore, int modified)
 		{
-			score = modified;
+			score = rawScore;
 		}
 	}
 }

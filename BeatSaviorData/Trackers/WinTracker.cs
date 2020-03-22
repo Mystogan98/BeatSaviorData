@@ -10,6 +10,7 @@ namespace BeatSaviorData.Trackers
 	{
 		public bool won;
 		public float endTime;
+		public int nbOfPause;
 
 		public void EndOfSong(LevelCompletionResults results)
 		{
@@ -19,7 +20,12 @@ namespace BeatSaviorData.Trackers
 
 		public void RegisterTracker(SongData data)
 		{
-			// This one doesn't need any event
+			BS_Utils.Utilities.BSEvents.songPaused += SongPaused;
+		}
+
+		private void SongPaused()
+		{
+			nbOfPause++;
 		}
 	}
 }
