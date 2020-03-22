@@ -17,7 +17,7 @@ namespace BeatSaviorData.Trackers
 		// I really don't like this but I don't know how to do otherwise. So for now it'll stay
 		private Dictionary<SaberSwingRatingCounter, KeyValuePair<NoteCutInfo, int>> thisIsBullshit = new Dictionary<SaberSwingRatingCounter, KeyValuePair<NoteCutInfo, int>>();
 
-		public void EndOfSong()
+		public void EndOfSong(LevelCompletionResults results)
 		{
 			accRight = Utils.SafeDivide(accRight, cutRight);
 			accLeft = Utils.SafeDivide(accLeft, cutLeft);
@@ -37,7 +37,10 @@ namespace BeatSaviorData.Trackers
 			}
 		}
 
-		public void OnNoteMissed(BeatmapObjectSpawnController bosc, INoteController data) { }
+		public void RegisterTracker(SongData data)
+		{
+			data.GetBOSC().noteWasCutEvent += OnNoteCut;
+		}
 
 		private void WaitForSwing(SaberSwingRatingCounter s)
 		{

@@ -12,14 +12,14 @@ namespace BeatSaviorData
 {
 	class SongData
 	{
-		public ulong playerID;
-		public string songID, songDifficulty;
+		public string playerID, songID, songDifficulty, songName, songArtist, songMapper;
 
 		public Dictionary<string, ITracker> trackers = new Dictionary<string, ITracker>()
 		{
-			{ "HitTracker", new HitTracker() },
-			{ "AccuracyTracker", new AccuracyTracker() },
-			{ "ScoreTracker", new ScoreTracker() }
+			{ "hitTracker", new HitTracker() },
+			{ "accuracyTracker", new AccuracyTracker() },
+			{ "scoreTracker", new ScoreTracker() },
+			{ "winTracker", new WinTracker() }
 		};
 
 		private readonly BeatmapObjectSpawnController BOSC; public BeatmapObjectSpawnController GetBOSC() => BOSC;
@@ -38,9 +38,12 @@ namespace BeatSaviorData
 			playerData = Resources.FindObjectsOfTypeAll<PlayerDataModelSO>().First();
 			scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().First();
 
-			playerID = GetUserInfo.GetUserID();
-			songID = GCSSD.difficultyBeatmap.level.levelID;
+			playerID = GetUserInfo.GetUserID().ToString();
+			songID = GCSSD.difficultyBeatmap.level.levelID.Replace("custom_level_","").Split('_')[0];
 			songDifficulty = GCSSD.difficultyBeatmap.difficulty.ToString().ToLower();
+			songName = GCSSD.difficultyBeatmap.level.songName;
+			songArtist = GCSSD.difficultyBeatmap.level.songAuthorName;
+			songMapper = GCSSD.difficultyBeatmap.level.levelAuthorName;
 
 			scoreController.scoreDidChangeEvent += IsNotAReplay;
 		
@@ -51,14 +54,15 @@ namespace BeatSaviorData
 		private void IsNotAReplay(int score, int modifiedScore)
 		{
 			isNotAReplay = true;
+			scoreController.scoreDidChangeEvent -= IsNotAReplay;
 		}
 
-		public bool IsItAReplay() => !isNotAReplay;
+		public bool IsItAReplay() => isNotAReplay;
 
-		public string FinalizeData()
+		public string FinalizeData(LevelCompletionResults results)
 		{
 			foreach (ITracker t in trackers.Values)
-				t.EndOfSong();
+				t.EndOfSong(results);
 			return JsonConvert.SerializeObject(this, Formatting.Indented);
 		}
 	}

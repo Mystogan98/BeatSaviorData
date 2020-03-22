@@ -19,32 +19,42 @@ namespace BeatSaviorData
 		internal static string Name => "BeatSaviorData";
 
 		private SongData songData;
+		private bool init = false;
 
 		public void Init(IPALogger logger) { Logger.log = logger; }
 
 		public void OnApplicationStart()
 		{
-			BSEvents.levelCleared += OnLevelClear;
+			if (!init)
+			{
+				BSEvents.levelCleared += UploadData;
+				BSEvents.levelFailed += UploadData;
+				/*BSEvents.levelQuit += OnLevelQuit;
+				BSEvents.levelRestarted += OnLevelRestarted;*/
+				init = true;
+			}
 		}
 
-		private void OnLevelClear(StandardLevelScenesTransitionSetupDataSO data, LevelCompletionResults results)
+		private void UploadData(StandardLevelScenesTransitionSetupDataSO data, LevelCompletionResults results)
 		{
-			if (songData != null/* && !songData.IsItAReplay()*/)
+			if (songData != null)
 			{
-				if (results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Cleared)
+				if (songData.IsItAReplay())
 				{
-					string json = songData.FinalizeData();
+					string json = songData.FinalizeData(results);
 					ShowData(json);
 					// upload
-				} else
-				{
-					Logger.log.Info("BSD : Don't fail the song REEEEEEEEEEEEEE");
+					if (HTTPManager.uploadJson(json))
+						Logger.log.Info("BSD : Upload succeeded !");
+					else
+						Logger.log.Info("BSD : Upload failed.");
 				}
-			} else
-			{
-				Logger.log.Info("BSD : That was a replay you cheater (╯°□°）╯︵ ┻━┻");
+				else
+				{
+					Logger.log.Info("BSD : That was a replay you cheater (╯°□°）╯︵ ┻━┻");
+				}
+				songData = null;
 			}
-			songData = null;
 		}
 
 		public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)

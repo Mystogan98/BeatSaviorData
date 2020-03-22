@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,11 @@ namespace BeatSaviorData
 
 		public static bool uploadJson(string json)
 		{
-			if(client.PostAsync(PrivateKeys.BeatSaviorUploadUrl, new StringContent(json)).Result.IsSuccessStatusCode)
+			//client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+			StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+			if (client.PostAsync(PrivateKeys.BeatSaviorUploadUrl, content).Result.IsSuccessStatusCode)
 				return true;
 			return false;
 		}
