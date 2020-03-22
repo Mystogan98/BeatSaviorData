@@ -52,7 +52,7 @@ namespace BeatSaviorData.Trackers
 			if (_modifiers.noFail) { multiplier -= 0.5f; modifiers.Add("NF"); }
 			if (_modifiers.noObstacles) { multiplier -= 0.05f; modifiers.Add("NO"); }
 
-			return Mathf.RoundToInt(maxRawScore * multiplier);
+			return multiplier;
 		}
 
 		private void UpdateScore(int rawScore, int modified)
