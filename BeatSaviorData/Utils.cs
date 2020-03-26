@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BeatSaviorData
+﻿namespace BeatSaviorData
 {
 	class Utils
 	{
@@ -18,6 +12,16 @@ namespace BeatSaviorData
 			{
 				return 0;
 			}
+		}
+
+		public static float SafeAverage(float a, float nbA, float b, float nbB)
+		{
+			if (!float.IsNaN(a) && !float.IsNaN(b))
+				return (a * nbA + b * nbB) / (nbA + nbB);
+			else if (float.IsNaN(b))
+				return a;
+			else
+				return b;
 		}
 	}
 }

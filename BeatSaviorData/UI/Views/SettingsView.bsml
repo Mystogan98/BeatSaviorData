@@ -1,0 +1,7 @@
+﻿<settings-container>
+  <horizontal pad="2" preferred-height="8">
+    <text text="Disabling passes upload will prevent you from participating in events." font-size="3.5"/>
+  </horizontal>
+  <checkbox text="Disable Pass Upload" value="DisablePass" />
+  <checkbox text="Disable Fail Upload" value="DisableFail" />
+</settings-container>

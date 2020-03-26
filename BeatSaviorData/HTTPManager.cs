@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BeatSaviorData
 {
@@ -12,15 +7,17 @@ namespace BeatSaviorData
 	{
 		public static readonly HttpClient client = new HttpClient();
 
-		public static bool uploadJson(string json)
+		public async static void uploadJson(string json)
 		{
 			//client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 			StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+			HttpResponseMessage success = await client.PostAsync(PrivateKeys.BeatSaviorUploadUrl, content);
 
-			if (client.PostAsync(PrivateKeys.BeatSaviorUploadUrl, content).Result.IsSuccessStatusCode)
-				return true;
-			return false;
+			if (success.IsSuccessStatusCode)
+				Logger.log.Info("BSD : Upload succeeded !");
+			else
+				Logger.log.Info("BSD : Upload failed.");
 		}
 	}
 }

@@ -1,9 +1,6 @@
 ﻿using BS_Utils.Gameplay;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using BeatSaviorData.Trackers;
 using Newtonsoft.Json;

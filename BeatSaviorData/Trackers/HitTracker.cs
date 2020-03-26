@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BeatSaviorData.Trackers
+﻿namespace BeatSaviorData.Trackers
 {
 	class HitTracker : ITracker
 	{
@@ -30,26 +24,27 @@ namespace BeatSaviorData.Trackers
 					case NoteType.NoteB:
 						rightNoteHit++;
 						break;
-					case NoteType.Bomb:
-						bombHit++;
-						break;
 				}
 			} else
 			{
-				miss++;
-				if (combo > maxCombo)
-					maxCombo = combo;
-				combo = 0;
+				if (data.noteData.noteType == NoteType.Bomb)
+					bombHit++;
+				else
+					miss++;
 			}
+		}
+
+		private void BreakComboWall()
+		{
+			if (combo > maxCombo)
+				maxCombo = combo;
+			combo = 0;
 		}
 
 		public void OnNoteMissed(BeatmapObjectSpawnController bosc, INoteController data)
 		{
 			if (data.noteData.noteType != NoteType.Bomb)
 			{
-				if (combo > maxCombo)
-					maxCombo = combo;
-				combo = 0;
 				miss++;
 			}
 		}
@@ -58,6 +53,7 @@ namespace BeatSaviorData.Trackers
 		{
 			data.GetBOSC().noteWasCutEvent += OnNoteCut;
 			data.GetBOSC().noteWasMissedEvent += OnNoteMissed;
+			data.GetScoreController().comboBreakingEventHappenedEvent += BreakComboWall;
 		}
 	}
 }

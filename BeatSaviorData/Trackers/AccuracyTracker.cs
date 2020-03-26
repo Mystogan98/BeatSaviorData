@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BeatSaviorData.Trackers
 {
 	class AccuracyTracker : ITracker
 	{
 		public float accRight, accLeft, averageAcc;
-		public float[] gridAcc = new float[12];
+		public float[] gridAcc = new float[12], leftAverageCut = new float[3], rightAverageCut = new float[3], averageCut = new float[3];
 
 		private int cutRight, cutLeft;
 		private int[] gridCut = new int[12];
@@ -21,10 +17,18 @@ namespace BeatSaviorData.Trackers
 		{
 			accRight = Utils.SafeDivide(accRight, cutRight);
 			accLeft = Utils.SafeDivide(accLeft, cutLeft);
+
 			for (int i = 0; i < 12; i++)
 				gridAcc[i] = Utils.SafeDivide(gridAcc[i], gridCut[i]);
-			// This doesn't take into account the number of note hit by each hand, gotta change that
-			averageAcc = (accRight + accLeft) / 2;
+
+			for (int i = 0; i < 3; i++) {
+				leftAverageCut[i] = Utils.SafeDivide(leftAverageCut[i], cutLeft);
+				rightAverageCut[i] = Utils.SafeDivide(rightAverageCut[i], cutRight);
+				averageCut[i] = (rightAverageCut[i] * cutRight + leftAverageCut[i] * cutLeft) / (cutRight + cutLeft);
+				averageCut[i] = Utils.SafeAverage(rightAverageCut[i], cutRight, leftAverageCut[i], cutLeft);
+			}
+
+			averageAcc = Utils.SafeAverage(accRight, cutRight, accLeft, cutLeft);
 		}
 
 		public void OnNoteCut(BeatmapObjectSpawnController bosc, INoteController data, NoteCutInfo info)
@@ -53,11 +57,17 @@ namespace BeatSaviorData.Trackers
 			{
 				cutLeft++;
 				accLeft += before + acc + after;
+				leftAverageCut[0] += before;
+				leftAverageCut[1] += acc;
+				leftAverageCut[2] += after;
 			}
 			else if (type == Saber.SaberType.SaberB)
 			{
 				cutRight++;
 				accRight += before + acc + after;
+				rightAverageCut[0] += before;
+				rightAverageCut[1] += acc;
+				rightAverageCut[2] += after;
 			}
 
 			gridCut[thisIsBullshit[s].Value]++;

@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using IPA;
-using IPA.Config;
-using IPA.Utilities;
+﻿using IPA;
 using UnityEngine.SceneManagement;
-using UnityEngine;
 using IPALogger = IPA.Logging.Logger;
-using BS_Utils.Gameplay;
 using BS_Utils.Utilities;
-using Newtonsoft.Json;
+using BeatSaberMarkupLanguage.Settings;
 
 namespace BeatSaviorData
 {
@@ -25,6 +17,9 @@ namespace BeatSaviorData
 
 		public void OnApplicationStart()
 		{
+			bool a = SettingsMenu.instance.DisableFails;
+			a = SettingsMenu.instance.DisablePass;
+
 			if (!init)
 			{
 				BSEvents.levelCleared += UploadData;
@@ -33,6 +28,8 @@ namespace BeatSaviorData
 				BSEvents.levelRestarted += OnLevelRestarted;*/
 				init = true;
 			}
+
+			BSMLSettings.instance.AddSettingsMenu("BeatSaviorData", "BeatSaviorData.UI.Views.SettingsView.bsml", SettingsMenu.instance);
 		}
 
 		private void UploadData(StandardLevelScenesTransitionSetupDataSO data, LevelCompletionResults results)
@@ -42,11 +39,13 @@ namespace BeatSaviorData
 				if (!songData.IsAReplay() && !songData.IsPraticeMode()) {
 					string json = songData.FinalizeData(results);
 					ShowData(json);
-					// upload
-					if (HTTPManager.uploadJson(json))
-						Logger.log.Info("BSD : Upload succeeded !");
+
+					if (results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Cleared && SettingsMenu.instance.DisablePass)
+						Logger.log.Info("Pass upload is disabled.");
+					else if (results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Failed && SettingsMenu.instance.DisableFails)
+						Logger.log.Info("Fail upload is disabled.");
 					else
-						Logger.log.Info("BSD : Upload failed.");
+						HTTPManager.uploadJson(json);
 				}
 				else if (songData.IsAReplay()) {
 					Logger.log.Info("BSD : That was a replay you cheater (╯°□°）╯︵ ┻━┻");
@@ -61,8 +60,9 @@ namespace BeatSaviorData
 
 		public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
 		{
-			if (nextScene.name == "GameCore")
-				songData = new SongData();
+			if(!SettingsMenu.instance.DisableFails || !SettingsMenu.instance.DisablePass)
+				if (nextScene.name == "GameCore")
+					songData = new SongData();
 		}
 
 		#region InterfaceImplementation
