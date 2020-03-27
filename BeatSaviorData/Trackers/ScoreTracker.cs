@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace BeatSaviorData.Trackers
@@ -29,8 +25,7 @@ namespace BeatSaviorData.Trackers
 			IDifficultyBeatmap beatmap = data.GetGCSSD().difficultyBeatmap;
 			PlayerLevelStatsData stats = data.GetPlayerData().playerData.GetPlayerLevelStatsData(
 				beatmap.level.levelID, beatmap.difficulty, beatmap.parentDifficultyBeatmapSet.beatmapCharacteristic);
-			maxRawScore = ScoreController.MaxRawScoreForNumberOfNotes(beatmap.beatmapData.notesCount);
-
+			maxRawScore = ScoreModel.MaxRawScoreForNumberOfNotes(beatmap.beatmapData.notesCount);
 
 			multiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers);
 			maxScore = Mathf.RoundToInt(maxRawScore * multiplier);

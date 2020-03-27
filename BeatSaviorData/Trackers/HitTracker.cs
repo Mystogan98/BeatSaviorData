@@ -11,12 +11,12 @@
 				maxCombo = combo;
 		}
 
-		public void OnNoteCut(BeatmapObjectSpawnController bosc, INoteController data, NoteCutInfo info)
+		public void OnNoteCut(NoteData data, NoteCutInfo info, int multiplier)
 		{
 			if(info.allIsOK)
 			{
 				combo++;
-				switch (data.noteData.noteType)
+				switch (data.noteType)
 				{
 					case NoteType.NoteA:
 						leftNoteHit++;
@@ -27,23 +27,23 @@
 				}
 			} else
 			{
-				if (data.noteData.noteType == NoteType.Bomb)
+				if (data.noteType == NoteType.Bomb)
 					bombHit++;
 				else
 					miss++;
 			}
 		}
 
-		private void BreakComboWall()
+		private void BreakCombo()
 		{
 			if (combo > maxCombo)
 				maxCombo = combo;
 			combo = 0;
 		}
 
-		public void OnNoteMissed(BeatmapObjectSpawnController bosc, INoteController data)
+		public void OnNoteMissed(NoteData data, int multiplier)
 		{
-			if (data.noteData.noteType != NoteType.Bomb)
+			if (data.noteType != NoteType.Bomb)
 			{
 				miss++;
 			}
@@ -51,9 +51,9 @@
 
 		public void RegisterTracker(SongData data)
 		{
-			data.GetBOSC().noteWasCutEvent += OnNoteCut;
-			data.GetBOSC().noteWasMissedEvent += OnNoteMissed;
-			data.GetScoreController().comboBreakingEventHappenedEvent += BreakComboWall;
+			data.GetScoreController().noteWasCutEvent += OnNoteCut;
+			data.GetScoreController().noteWasMissedEvent += OnNoteMissed;
+			data.GetScoreController().comboBreakingEventHappenedEvent += BreakCombo;
 		}
 	}
 }

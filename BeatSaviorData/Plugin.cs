@@ -1,33 +1,29 @@
 ﻿using IPA;
-using UnityEngine.SceneManagement;
 using IPALogger = IPA.Logging.Logger;
 using BS_Utils.Utilities;
 using BeatSaberMarkupLanguage.Settings;
 
 namespace BeatSaviorData
 {
-	public class Plugin : IBeatSaberPlugin
+	[Plugin(RuntimeOptions.SingleStartInit)]
+	public class Plugin
 	{
 		internal static string Name => "BeatSaviorData";
 
 		private SongData songData;
-		private bool init = false;
 
+		[Init]
 		public void Init(IPALogger logger) { Logger.log = logger; }
 
+		[OnStart]
 		public void OnApplicationStart()
 		{
-			bool a = SettingsMenu.instance.DisableFails;
-			a = SettingsMenu.instance.DisablePass;
+			BS_Utils.Utilities.BSEvents.gameSceneLoaded += GameSceneLoaded;
 
-			if (!init)
-			{
-				BSEvents.levelCleared += UploadData;
-				BSEvents.levelFailed += UploadData;
-				/*BSEvents.levelQuit += OnLevelQuit;
-				BSEvents.levelRestarted += OnLevelRestarted;*/
-				init = true;
-			}
+			BSEvents.levelCleared += UploadData;
+			BSEvents.levelFailed += UploadData;
+			/*BSEvents.levelQuit += OnLevelQuit;
+			BSEvents.levelRestarted += OnLevelRestarted;*/
 
 			BSMLSettings.instance.AddSettingsMenu("BeatSaviorData", "BeatSaviorData.UI.Views.SettingsView.bsml", SettingsMenu.instance);
 		}
@@ -58,24 +54,11 @@ namespace BeatSaviorData
 			}
 		}
 
-		public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
+		public void GameSceneLoaded()
 		{
 			if(!SettingsMenu.instance.DisableFails || !SettingsMenu.instance.DisablePass)
-				if (nextScene.name == "GameCore")
-					songData = new SongData();
+				songData = new SongData();
 		}
-
-		#region InterfaceImplementation
-		public void OnApplicationQuit() { }
-
-		public void OnUpdate() { }
-
-		public void OnFixedUpdate() { }
-
-		public void OnSceneLoaded(Scene scene, LoadSceneMode sceneMode) { }
-
-		public void OnSceneUnloaded(Scene scene) { }
-		#endregion
 
 		private void ShowData(string json)
 		{

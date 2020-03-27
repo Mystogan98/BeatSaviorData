@@ -31,11 +31,11 @@ namespace BeatSaviorData.Trackers
 			averageAcc = Utils.SafeAverage(accRight, cutRight, accLeft, cutLeft);
 		}
 
-		public void OnNoteCut(BeatmapObjectSpawnController bosc, INoteController data, NoteCutInfo info)
+		public void OnNoteCut(NoteData data, NoteCutInfo info, int multiplier)
 		{
-			if (info.allIsOK && data.noteData.noteType != NoteType.Bomb)
+			if (info.allIsOK && data.noteType != NoteType.Bomb)
 			{
-				thisIsBullshit.Add(info.swingRatingCounter, new KeyValuePair<NoteCutInfo, int>(info, data.noteData.lineIndex + 4 * (int)data.noteData.noteLineLayer));
+				thisIsBullshit.Add(info.swingRatingCounter, new KeyValuePair<NoteCutInfo, int>(info, data.lineIndex + 4 * (int)data.noteLineLayer));
 				// For some reason it doesn't work without that
 				info.swingRatingCounter.didFinishEvent -= WaitForSwing;
 				info.swingRatingCounter.didFinishEvent += WaitForSwing;
@@ -44,16 +44,16 @@ namespace BeatSaviorData.Trackers
 
 		public void RegisterTracker(SongData data)
 		{
-			data.GetBOSC().noteWasCutEvent += OnNoteCut;
+			data.GetScoreController().noteWasCutEvent += OnNoteCut;
 		}
 
 		private void WaitForSwing(SaberSwingRatingCounter s)
 		{
-			Saber.SaberType type = thisIsBullshit[s].Key.saberType;
+			SaberType type = thisIsBullshit[s].Key.saberType;
 
-			ScoreController.RawScoreWithoutMultiplier(thisIsBullshit[s].Key, out int before, out int after, out int acc);
+			ScoreModel.RawScoreWithoutMultiplier(thisIsBullshit[s].Key, out int before, out int after, out int acc);
 
-			if (type == Saber.SaberType.SaberA)
+			if (type == SaberType.SaberA)
 			{
 				cutLeft++;
 				accLeft += before + acc + after;
@@ -61,7 +61,7 @@ namespace BeatSaviorData.Trackers
 				leftAverageCut[1] += acc;
 				leftAverageCut[2] += after;
 			}
-			else if (type == Saber.SaberType.SaberB)
+			else if (type == SaberType.SaberB)
 			{
 				cutRight++;
 				accRight += before + acc + after;

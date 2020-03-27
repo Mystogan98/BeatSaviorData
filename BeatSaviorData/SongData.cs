@@ -23,7 +23,7 @@ namespace BeatSaviorData
 		private readonly GameplayCoreSceneSetupData GCSSD; public GameplayCoreSceneSetupData GetGCSSD() => GCSSD;
 		private readonly ScoreController scoreController; public ScoreController GetScoreController() => scoreController;
 		private readonly GameplayModifiersModelSO modifierData; public GameplayModifiersModelSO GetModifierData() => modifierData;
-		private readonly PlayerDataModelSO playerData; public PlayerDataModelSO GetPlayerData() => playerData;
+		private readonly PlayerDataModel playerData; public PlayerDataModel GetPlayerData() => playerData;
 
 		private bool isNotAReplay, isNotInPracticeMode;
 
@@ -32,7 +32,7 @@ namespace BeatSaviorData
 			BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().First();
 			GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
 			modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
-			playerData = Resources.FindObjectsOfTypeAll<PlayerDataModelSO>().First();
+			playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
 			scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().First();
 
 			playerID = GetUserInfo.GetUserID().ToString();
