@@ -49,6 +49,7 @@ namespace BeatSaviorData.Trackers
 
 		private void WaitForSwing(SaberSwingRatingCounter s)
 		{
+			int index = thisIsBullshit[s].Value;
 			SaberType type = thisIsBullshit[s].Key.saberType;
 
 			ScoreModel.RawScoreWithoutMultiplier(thisIsBullshit[s].Key, out int before, out int after, out int acc);
@@ -70,8 +71,11 @@ namespace BeatSaviorData.Trackers
 				rightAverageCut[2] += after;
 			}
 
-			gridCut[thisIsBullshit[s].Value]++;
-			gridAcc[thisIsBullshit[s].Value] += before + acc + after;
+			if (index < 12)
+			{
+				gridCut[index]++;
+				gridAcc[index] += before + acc + after;
+			}
 
 			thisIsBullshit.Remove(s);
 		}
