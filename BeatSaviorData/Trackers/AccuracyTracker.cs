@@ -71,10 +71,17 @@ namespace BeatSaviorData.Trackers
 				rightAverageCut[2] += after;
 			}
 
-			if (index < 12)
+			
+			try
 			{
-				gridCut[index]++;
-				gridAcc[index] += before + acc + after;
+				if (index < 12 && index >= 0)
+				{
+					gridCut[index]++;
+					gridAcc[index] += before + acc + after;
+				}
+			} catch
+			{
+				Logger.log.Error("Accuracy tracker grid acc : index = " + index);
 			}
 
 			thisIsBullshit.Remove(s);
