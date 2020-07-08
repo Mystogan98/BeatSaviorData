@@ -12,7 +12,7 @@ namespace BeatSaviorData
 			//client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 			StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-			HttpResponseMessage success = await client.PostAsync(PrivateKeys.BeatSaviorUploadUrl, content);
+			HttpResponseMessage success = await client.PostAsync(PrivateKeys.BeatSaviorSongUploadUrl, content);
 
 			if (success.IsSuccessStatusCode)
 				Logger.log.Info("BSD : Upload succeeded !");

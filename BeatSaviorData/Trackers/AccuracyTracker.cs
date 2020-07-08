@@ -49,6 +49,9 @@ namespace BeatSaviorData.Trackers
 
 		private void WaitForSwing(SaberSwingRatingCounter s)
 		{
+			if (!thisIsBullshit.ContainsKey(s))
+				return;
+
 			int index = thisIsBullshit[s].Value;
 			SaberType type = thisIsBullshit[s].Key.saberType;
 
