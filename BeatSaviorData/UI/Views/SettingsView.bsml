@@ -4,4 +4,5 @@
   </horizontal>
   <checkbox text="Disable Pass Upload" value="DisablePass" />
   <checkbox text="Disable Fail Upload" value="DisableFail" />
+  <checkbox text="Enable Deep Trackers" value="EnableDeepTrackers" />
 </settings-container>

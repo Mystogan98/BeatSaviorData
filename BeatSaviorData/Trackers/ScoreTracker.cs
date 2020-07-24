@@ -6,15 +6,14 @@ namespace BeatSaviorData.Trackers
 	class ScoreTracker : ITracker
 	{
 		public int score, personalBest; 
-		public float rawRatio, modifiedRatio, personalBestRawRatio, personalBestModifiedRatio;
+		public float rawRatio, modifiedRatio, personalBestRawRatio, personalBestModifiedRatio, modifiersMultiplier;
 		public List<string> modifiers = new List<string>();
 
 		private int maxScore, maxRawScore;
-		private float multiplier;
 
 		public void EndOfSong(LevelCompletionResults results)
 		{
-			modifiedRatio = Mathf.RoundToInt(score * multiplier) / (float)maxScore;
+			modifiedRatio = Mathf.RoundToInt(score * modifiersMultiplier) / (float)maxScore;
 			rawRatio = score / (float)maxRawScore;
 		}
 
@@ -27,8 +26,8 @@ namespace BeatSaviorData.Trackers
 				beatmap.level.levelID, beatmap.difficulty, beatmap.parentDifficultyBeatmapSet.beatmapCharacteristic);
 			maxRawScore = ScoreModel.MaxRawScoreForNumberOfNotes(beatmap.beatmapData.notesCount);
 
-			multiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers);
-			maxScore = Mathf.RoundToInt(maxRawScore * multiplier);
+			modifiersMultiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers);
+			maxScore = Mathf.RoundToInt(maxRawScore * modifiersMultiplier);
 			personalBestModifiedRatio = stats.highScore / (float)maxScore;
 			personalBestRawRatio = stats.highScore / (float)maxRawScore;
 			personalBest = stats.highScore;

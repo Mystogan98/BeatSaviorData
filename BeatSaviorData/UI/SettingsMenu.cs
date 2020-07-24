@@ -20,5 +20,12 @@ namespace BeatSaviorData
 			get => config.GetBool("BeatSaviorData", "DisableFails", false, true);
 			set => config.SetBool("BeatSaviorData", "DisableFails", value);
 		}
+
+		[UIValue("EnableDeepTrackers")]
+		public bool EnableDeepTrackers
+		{
+			get => config.GetBool("BeatSaviorData", "EnableDeepTrackers", true, true);
+			set => config.SetBool("BeatSaviorData", "EnableDeepTrackers", value);
+		}
 	}
 }

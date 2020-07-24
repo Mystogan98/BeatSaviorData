@@ -1,0 +1,7 @@
+﻿<bg>
+  <text id="noTrackerText" text="Deep trackers disabled, unable to show score graph." anchor-min-x='0.1' anchor-max-x='0.9' anchor-min-y='0.20' anchor-max-y='0.8' font-size='8' size-delta-x='0' size-delta-y='0' font-color='#FF0000' align='Center'></text>
+
+  <text id='title' text='No Title, please reach Mystogan#5963 on Discord' align='Center' font-size='10' word-wrapping='true' size-delta-x='15' size-delta-y='5' overflow-mode='Ellipsis' anchor-min-x='0.1' anchor-max-x='0.9' anchor-min-y='0.9' anchor-max-y='0.95'></text>
+  <bg bg='round-rect-panel' id='graph' anchor-min-x='0.05' anchor-max-x='0.95' anchor-min-y='0.17' anchor-max-y='0.87'></bg>
+  <text text="BeatSaviorData v2.0.0 by Mystogan#5963" anchor-min-x='0' anchor-max-x='0.95' anchor-min-y='0' anchor-max-y='0.05' font-size='3' size-delta-x='0' size-delta-y='0' font-color='#AAAAAA' align='Right'></text>
+</bg>

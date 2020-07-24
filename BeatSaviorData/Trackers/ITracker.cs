@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BeatSaviorData
 {
-	interface ITracker
+	public interface ITracker
 	{
 		void RegisterTracker(SongData data);
 		void EndOfSong(LevelCompletionResults results);

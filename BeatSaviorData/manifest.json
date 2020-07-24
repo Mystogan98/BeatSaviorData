@@ -3,12 +3,12 @@
   "id": "BeatSaviorData",
   "name": "BeatSaviorData",
   "author": "Mystogan",
-  "version": "1.0.0",
-  "description": "Uploads data on map completion, such as per saber accuracy, to Beat Savior",
-  "gameVersion": "1.8.0",
+  "version": "2.0.0",
+  "description": "Show in-depth stats and a score graph at the end of songs, also uploads those stats to Beat Savior, and save in-depth stats localy to be used by BeatSaviorAnalyzer",
+  "gameVersion": "1.10.0",
   "dependsOn": {
-    "BS Utils": "^1.3.5",
-    "BeatSaberMarkupLanguage": "^1.1.5"
+    "BS Utils": "^1.4.10",
+    "BeatSaberMarkupLanguage": "^1.3.2"
   },
   "loadAfter": [ "BS Utils", "BeatSaberMarkupLanguage" ],
   "features": [],

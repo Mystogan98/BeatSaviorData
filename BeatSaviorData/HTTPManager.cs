@@ -1,5 +1,7 @@
-﻿using System.Net.Http;
+﻿using Newtonsoft.Json;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BeatSaviorData
 {
@@ -7,17 +9,25 @@ namespace BeatSaviorData
 	{
 		public static readonly HttpClient client = new HttpClient();
 
-		public async static void uploadJson(string json)
+		public async static void UploadSongJson(string json)
 		{
-			//client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			await Upload(json, PrivateKeys.BeatSaviorSongUploadUrl);
+		}
 
+		public async static void UploadPlayerStats(string json)
+		{
+			await Upload(json, PrivateKeys.BeatSaviorPlayerDataUploadURL);
+		}
+
+		private async static Task Upload(string json, string url)
+		{
 			StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-			HttpResponseMessage success = await client.PostAsync(PrivateKeys.BeatSaviorUploadUrl, content);
+			HttpResponseMessage success = await client.PostAsync(url, content);
 
 			if (success.IsSuccessStatusCode)
-				Logger.log.Info("BSD : Upload succeeded !");
+				Logger.log.Info("BSD : Upload successful !");
 			else
-				Logger.log.Info("BSD : Upload failed.");
+				Logger.log.Info("BSD : Upload failed." + success.Content.ReadAsStringAsync().Result);
 		}
 	}
 }

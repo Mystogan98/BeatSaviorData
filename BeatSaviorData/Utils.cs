@@ -1,4 +1,6 @@
-﻿namespace BeatSaviorData
+﻿using UnityEngine;
+
+namespace BeatSaviorData
 {
 	class Utils
 	{
@@ -22,6 +24,11 @@
 				return a;
 			else
 				return b;
+		}
+
+		public static float[] FloatArrayFromVector(Vector3 v)
+		{
+			return new float[] { v.x, v.y, v.z };
 		}
 	}
 }

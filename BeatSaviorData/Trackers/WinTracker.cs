@@ -3,6 +3,7 @@
 	class WinTracker : ITracker
 	{
 		public bool won;
+		public string rank;
 		public float endTime;
 		public int nbOfPause;
 
@@ -10,6 +11,7 @@
 		{
 			won = results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Cleared;
 			endTime = results.endSongTime;
+			rank = RankModel.GetRankName(results.rank);
 		}
 
 		public void RegisterTracker(SongData data)
