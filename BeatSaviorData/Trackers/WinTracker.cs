@@ -7,11 +7,13 @@
 		public float endTime;
 		public int nbOfPause;
 
-		public void EndOfSong(LevelCompletionResults results)
+		public void EndOfSong(LevelCompletionResults results,  SongData data)
 		{
 			won = results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Cleared;
 			endTime = results.endSongTime;
 			rank = RankModel.GetRankName(results.rank);
+
+			BS_Utils.Utilities.BSEvents.songPaused -= SongPaused;
 		}
 
 		public void RegisterTracker(SongData data)

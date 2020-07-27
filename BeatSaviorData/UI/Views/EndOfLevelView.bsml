@@ -1,5 +1,5 @@
 <bg>
-    <vertical anchor-min-x='0' anchor-max-x='0.3' anchor-min-y='0.7' anchor-max-y='0.95' size-delta-x='0'>
+    <vertical bg="round-rect-panel" anchor-min-x='0' anchor-max-x='0.3' anchor-min-y='0.7' anchor-max-y='0.95' size-delta-x='0'>
         <text id='note' text='SS' align='Center' font-size='19' size-delta-x='0'></text>
         <horizontal child-expand-width='true' size-delta-x='0' spacing='3'>
             <text id='FC' text='FC' align='Center' font-size='6' size-delta-x='0' font-color='#FFA713'></text>
@@ -7,10 +7,10 @@
         </horizontal>
     </vertical>
   
-    <text id='title' text='No Title, please reach Mystogan#5963 on Discord' align='Center' font-size='10' word-wrapping='true' size-delta-x='15' size-delta-y='5' overflow-mode='Ellipsis' anchor-min-x='0.32' anchor-max-x='0.7' anchor-min-y='0.75' anchor-max-y='0.95'></text>
+    <text id='title' text='No Title, please reach Mystogan#5963 on Discord' align='Center' font-size='10' word-wrapping='true' size-delta-x='10' size-delta-y='0' overflow-mode='Ellipsis' anchor-min-x='0.32' anchor-max-x='0.7' anchor-min-y='0.80' anchor-max-y='0.95'></text>
     <text id='difficulty' text='Expert+++++++' align='Center' font-color='#CCCCCC' font-size='6' size-delta-x='15' size-delta-y='0' anchor-min-x='0.32' anchor-max-x='0.7' anchor-min-y='0.7' anchor-max-y='0.75'></text>
   
-    <vertical anchor-min-x='0.75' anchor-max-x='1' anchor-min-y='0.7' anchor-max-y='0.98'>
+    <vertical bg='round-rect-panel' anchor-min-x='0.75' anchor-max-x='1' anchor-min-y='0.7' anchor-max-y='0.98'>
         <text id='combo' text='Combo : 9999' align='Left' font-size='5'></text>
         <text id='miss' text='Misses : 9999' align='Left' font-size='5'></text>
         <text id='pauses' text='Pauses : 9999' align='Left' font-size='5'></text>

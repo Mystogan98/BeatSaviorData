@@ -103,7 +103,10 @@ namespace BeatSaviorData.Trackers
 	{
 		public List<Note> notes = new List<Note>();
 
-		public void EndOfSong(LevelCompletionResults results) {	}
+		public void EndOfSong(LevelCompletionResults results, SongData data) {
+			data.GetScoreController().noteWasCutEvent -= OnNoteCut;
+			data.GetScoreController().noteWasMissedEvent -= NoteTracker_noteWasMissedEvent;
+		}
 
 		public void OnNoteCut(NoteData data, NoteCutInfo info, int multiplier)
 		{

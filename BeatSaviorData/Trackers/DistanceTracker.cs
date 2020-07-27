@@ -10,7 +10,7 @@ namespace BeatSaviorData.Trackers
 	{
 		public float rightSaber, leftSaber, rightHand, leftHand;
 
-		public void EndOfSong(LevelCompletionResults results)
+		public void EndOfSong(LevelCompletionResults results, SongData data)
 		{
 			rightSaber = results.rightSaberMovementDistance;
 			rightHand = results.rightHandMovementDistance;

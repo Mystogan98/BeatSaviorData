@@ -13,7 +13,7 @@ namespace BeatSaviorData.Trackers
 		private int cutRight, cutLeft;
 		private int[] gridCut = new int[12];
 
-		public void EndOfSong(LevelCompletionResults results)
+		public void EndOfSong(LevelCompletionResults results, SongData data)
 		{
 			accRight = Utils.SafeDivide(accRight, cutRight);
 			accLeft = Utils.SafeDivide(accLeft, cutLeft);
@@ -32,6 +32,8 @@ namespace BeatSaviorData.Trackers
 			averageSpeed = Utils.SafeDivide(leftSpeed + rightSpeed, cutRight + cutLeft);
 			leftSpeed = Utils.SafeDivide(leftSpeed, cutLeft);
 			rightSpeed = Utils.SafeDivide(rightSpeed, cutRight);
+
+			data.GetScoreController().noteWasCutEvent -= OnNoteCut;
 		}
 
 		public void RegisterTracker(SongData data)

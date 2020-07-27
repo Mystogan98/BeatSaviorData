@@ -84,7 +84,7 @@ namespace BeatSaviorData
             title.fontSizeMax = 11;
             title.fontSizeMin = 5;
 
-            difficulty.text = data.songDifficulty;
+            difficulty.text = FormatSongDifficulty(data.songDifficulty);
 
             combo.text = "Combo : " + ht.maxCombo;
             miss.text = "Misses : " + ht.miss;
@@ -113,6 +113,18 @@ namespace BeatSaviorData
                 case "B": return B;
                 case "C": return C;
                 case "D": case "E": return DorE;
+            }
+        }
+
+        private string FormatSongDifficulty(string diffName)
+        {
+            switch(diffName)
+            {
+                case "easy": return "Easy";
+                case "normal": return "Normal";
+                case "hard": return "Hard";
+                case "expert": return "Expert";
+                default: case "expertplus": return "Expert+";
             }
         }
     }

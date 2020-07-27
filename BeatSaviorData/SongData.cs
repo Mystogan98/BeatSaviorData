@@ -99,9 +99,9 @@ namespace BeatSaviorData
 				songDataType = SongDataType.fail;
 
 			foreach (ITracker t in trackers.Values)
-				t.EndOfSong(results);
+				t.EndOfSong(results, this);
 			foreach (ITracker t in deepTrackers.Values)
-				t.EndOfSong(results);
+				t.EndOfSong(results, this);
 			deepTrackerResult = JsonConvert.SerializeObject(this, Formatting.None);
 
 

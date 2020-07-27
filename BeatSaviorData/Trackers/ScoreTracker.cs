@@ -11,10 +11,12 @@ namespace BeatSaviorData.Trackers
 
 		private int maxScore, maxRawScore;
 
-		public void EndOfSong(LevelCompletionResults results)
+		public void EndOfSong(LevelCompletionResults results, SongData data)
 		{
 			modifiedRatio = Mathf.RoundToInt(score * modifiersMultiplier) / (float)maxScore;
 			rawRatio = score / (float)maxRawScore;
+
+			data.GetScoreController().scoreDidChangeEvent -= UpdateScore;
 		}
 
 		public void RegisterTracker(SongData data)

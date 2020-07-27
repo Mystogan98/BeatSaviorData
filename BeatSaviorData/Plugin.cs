@@ -5,6 +5,8 @@ using BeatSaberMarkupLanguage.Settings;
 using UnityEngine;
 using System.Linq;
 using HarmonyLib;
+using System.Collections.Generic;
+using System;
 
 namespace BeatSaviorData
 {
@@ -79,8 +81,7 @@ namespace BeatSaviorData
 
 		public void GameSceneLoaded()
 		{
-			if(!SettingsMenu.instance.DisableFails || !SettingsMenu.instance.DisablePass)
-				songData = new SongData();
+			songData = new SongData();
 		}
 
 		public bool IsComputeFinished() => songDataFinished;

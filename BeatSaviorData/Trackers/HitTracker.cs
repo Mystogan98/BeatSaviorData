@@ -6,9 +6,13 @@
 
 		private int combo;
 
-		public void EndOfSong(LevelCompletionResults results) {
+		public void EndOfSong(LevelCompletionResults results, SongData data) {
 			if (combo > maxCombo)
 				maxCombo = combo;
+
+			data.GetScoreController().noteWasCutEvent -= OnNoteCut;
+			data.GetScoreController().noteWasMissedEvent -= OnNoteMissed;
+			data.GetScoreController().comboBreakingEventHappenedEvent -= BreakCombo;
 		}
 
 		public void OnNoteCut(NoteData data, NoteCutInfo info, int multiplier)
