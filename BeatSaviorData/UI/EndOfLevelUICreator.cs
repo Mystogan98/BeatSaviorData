@@ -36,7 +36,8 @@ namespace BeatSaviorData
 
 		public static void Create()
 		{
-			instance.StartCoroutine(instance.WaitForData());
+			if(SettingsMenu.instance.EnableUI)
+				instance.StartCoroutine(instance.WaitForData());
 		}
 
 		private IEnumerator WaitForData()

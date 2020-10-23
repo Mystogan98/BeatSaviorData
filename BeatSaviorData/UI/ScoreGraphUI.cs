@@ -46,9 +46,10 @@ namespace BeatSaviorData
 			}
 
 			List<Note> notes = (data.deepTrackers["noteTracker"] as NoteTracker).notes;
+			graph = (data.trackers["scoreGraphTracker"] as ScoreGraphTracker).graph;
 			float lastGraphEntry = -1;
 
-			graph = GetGraphFromRawData(notes);
+			GetOffsets(notes);
 			lastSongBeat = Mathf.CeilToInt(data.songDuration);
 			won = (data.trackers["winTracker"] as WinTracker).won;
 			titleText.text = data.songName;
@@ -239,35 +240,12 @@ namespace BeatSaviorData
 			rt.localEulerAngles = new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
 		}
 
-		private Dictionary<float, float> GetGraphFromRawData(List<Note> notes)
+		private void GetOffsets(List<Note> notes)
 		{
-			Dictionary<float, float> graph = new Dictionary<float, float>();
-			int actualScore = 0, maxScore = 0, multiplier = 1, multiplierProgress = 0, lastBeat = 0;
-
-			foreach(Note n in notes)
+			foreach (Note n in notes)
 			{
-				actualScore += n.GetTotalScore();
-
 				if (n.IsAMiss() && misses.Count < 4)
-					misses.Add((float) Math.Truncate(n.time));
-
-				if (multiplier < 8)
-				{
-					multiplierProgress++;
-					if (multiplierProgress == multiplier * 2)
-					{
-						multiplier *= 2;
-						multiplierProgress = 0;
-					}
-				}
-
-				maxScore += 115 * multiplier;
-				
-				if(Math.Truncate(n.time) > lastBeat)
-				{
-					graph.Add((float) Math.Truncate(n.time), (float) actualScore / (float) maxScore);
-					lastBeat = (int) Math.Truncate(n.time);
-				}
+					misses.Add((float)Math.Truncate(n.time));
 			}
 
 			scoreOffset = graph.Min(e => e.Value);
@@ -278,8 +256,7 @@ namespace BeatSaviorData
 				scoreOffset = 0.8f;
 			else
 				scoreOffset -= 0.1f;
-
-			return graph;
 		}
+
 	}
 }

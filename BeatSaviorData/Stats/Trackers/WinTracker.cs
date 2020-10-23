@@ -13,17 +13,7 @@
 			endTime = results.endSongTime;
 			rank = RankModel.GetRankName(results.rank);
 
-			BS_Utils.Utilities.BSEvents.songPaused -= SongPaused;
-		}
-
-		public void RegisterTracker(SongData data)
-		{
-			BS_Utils.Utilities.BSEvents.songPaused += SongPaused;
-		}
-
-		private void SongPaused()
-		{
-			nbOfPause++;
+			nbOfPause = data.GetDataCollector().nbOfPause;
 		}
 	}
 }

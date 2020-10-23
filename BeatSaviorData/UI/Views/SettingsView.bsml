@@ -5,4 +5,5 @@
   <checkbox text="Disable Pass Upload" value="DisablePass" />
   <checkbox text="Disable Fail Upload" value="DisableFail" />
   <checkbox text="Enable Deep Trackers" value="EnableDeepTrackers" />
+  <checkbox text="Enable UI" value="EnableUI" />
 </settings-container>

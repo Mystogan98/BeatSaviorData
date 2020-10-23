@@ -9,14 +9,16 @@ namespace BeatSaviorData
 	{
 		public static readonly HttpClient client = new HttpClient();
 
-		public async static void UploadSongJson(string json)
-		{
-			await Upload(json, PrivateKeys.BeatSaviorSongUploadUrl);
-		}
-
 		public async static void UploadPlayerStats(string json)
 		{
 			await Upload(json, PrivateKeys.BeatSaviorPlayerDataUploadURL);
+			await Upload(json, PrivateKeys.GneuhPlayerDataUploadUrl);
+		}
+
+		public async static void UploadSongJson(string json)
+		{
+			await Upload(json, PrivateKeys.BeatSaviorSongUploadUrl);
+			await Upload(json, PrivateKeys.GneuhSongUploadUrl);
 		}
 
 		private async static Task Upload(string json, string url)
@@ -25,9 +27,9 @@ namespace BeatSaviorData
 			HttpResponseMessage success = await client.PostAsync(url, content);
 
 			if (success.IsSuccessStatusCode)
-				Logger.log.Info("BSD : Upload successful !");
+				Logger.log.Info("BSD : Upload successful to " + url.Substring(0, 15) + " !");
 			else
-				Logger.log.Info("BSD : Upload failed." + success.Content.ReadAsStringAsync().Result);
+				Logger.log.Info("BSD : Upload failed to " + url.Substring(0, 15) + "." + success.Content.ReadAsStringAsync().Result);
 		}
 	}
 }

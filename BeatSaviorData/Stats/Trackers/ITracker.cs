@@ -8,7 +8,6 @@ namespace BeatSaviorData
 {
 	public interface ITracker
 	{
-		void RegisterTracker(SongData data);
 		void EndOfSong(LevelCompletionResults results, SongData data);
 	}
 }

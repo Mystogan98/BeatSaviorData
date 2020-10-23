@@ -5,7 +5,7 @@ namespace BeatSaviorData.Trackers
 {
 	class ScoreTracker : ITracker
 	{
-		public int score, personalBest; 
+		public int rawScore, score, personalBest; 
 		public float rawRatio, modifiedRatio, personalBestRawRatio, personalBestModifiedRatio, modifiersMultiplier;
 		public List<string> modifiers = new List<string>();
 
@@ -13,19 +13,23 @@ namespace BeatSaviorData.Trackers
 
 		public void EndOfSong(LevelCompletionResults results, SongData data)
 		{
-			modifiedRatio = Mathf.RoundToInt(score * modifiersMultiplier) / (float)maxScore;
-			rawRatio = score / (float)maxRawScore;
+			GetMaxScores(data);
 
-			data.GetScoreController().scoreDidChangeEvent -= UpdateScore;
+			foreach(Note n in data.GetDataCollector().notes)
+			{
+				rawScore += n.GetTotalScore();
+			}
+
+			score = Mathf.RoundToInt(rawScore * modifiersMultiplier);
+
+			modifiedRatio = score / (float)maxScore;
+			rawRatio = score / (float)maxRawScore;
 		}
 
-		public void RegisterTracker(SongData data)
+		public void GetMaxScores(SongData data)
 		{
-			data.GetScoreController().scoreDidChangeEvent += UpdateScore;
-
 			IDifficultyBeatmap beatmap = data.GetGCSSD().difficultyBeatmap;
-			PlayerLevelStatsData stats = data.GetPlayerData().playerData.GetPlayerLevelStatsData(
-				beatmap.level.levelID, beatmap.difficulty, beatmap.parentDifficultyBeatmapSet.beatmapCharacteristic);
+			PlayerLevelStatsData stats = data.GetPlayerData().playerData.GetPlayerLevelStatsData(beatmap.level.levelID, beatmap.difficulty, beatmap.parentDifficultyBeatmapSet.beatmapCharacteristic);
 			maxRawScore = ScoreModel.MaxRawScoreForNumberOfNotes(beatmap.beatmapData.notesCount);
 
 			modifiersMultiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers);
@@ -49,11 +53,6 @@ namespace BeatSaviorData.Trackers
 			if (_modifiers.noObstacles) { multiplier -= 0.05f; modifiers.Add("NO"); }
 
 			return multiplier;
-		}
-
-		private void UpdateScore(int rawScore, int modified)
-		{
-			score = rawScore;
 		}
 	}
 }
