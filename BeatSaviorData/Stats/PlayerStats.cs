@@ -34,7 +34,7 @@ namespace BeatSaviorData
 
 		public PlayerStats()
 		{
-			playerID = GetUserInfo.GetUserID().ToString();
+			playerID = BSUtilsTemporaryFix.GetUserID().ToString();
 
 			PlayerData playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First().playerData;
 			ColorScheme colors = playerData.colorSchemesSettings.GetSelectedColorScheme();

@@ -39,6 +39,9 @@
     <Reference Include="0Harmony">
       <HintPath>..\..\..\..\..\..\Games\steamapps\common\Beat Saber\Libs\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="BeatmapCore">
+      <HintPath>..\..\..\..\..\..\Games\steamapps\common\Beat Saber\Beat Saber_Data\Managed\BeatmapCore.dll</HintPath>
+    </Reference>
     <Reference Include="BSML, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Games\steamapps\common\Beat Saber\Plugins\BSML.dll</HintPath>
@@ -50,6 +53,9 @@
     <Reference Include="Colors, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Games\steamapps\common\Beat Saber\Beat Saber_Data\Managed\Colors.dll</HintPath>
+    </Reference>
+    <Reference Include="GameplayCore">
+      <HintPath>..\..\..\..\..\..\Games\steamapps\common\Beat Saber\Beat Saber_Data\Managed\GameplayCore.dll</HintPath>
     </Reference>
     <Reference Include="HMLib">
       <HintPath>..\..\..\..\..\..\Games\steamapps\common\Beat Saber\Beat Saber_Data\Managed\HMLib.dll</HintPath>
@@ -94,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BSUtilsTemporaryFix.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="HarmonyPatches\ResultsViewControllerPatch.cs" />
     <Compile Include="HarmonyPatches\SaberMovementDataPatches.cs" />
@@ -134,10 +141,4 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(TargetName).dll" "C:\Games\steamapps\common\Beat Saber\Plugins\$(TargetName).dll"</PostBuildEvent>
   </PropertyGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Obfuscar.2.2.26\build\obfuscar.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Obfuscar.2.2.26\build\obfuscar.props'))" />
-  </Target>
 </Project>

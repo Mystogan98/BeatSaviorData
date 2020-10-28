@@ -37,9 +37,9 @@ namespace BeatSaviorData
 
 		private Note(NoteData data, CutType cut)
 		{
-			if (data.noteType == NoteType.NoteB)
+			if (data.colorType == ColorType.ColorB)
 				noteType = BSD_NoteType.right;
-			else if (data.noteType == NoteType.NoteA)
+			else if (data.colorType == ColorType.ColorA)
 				noteType = BSD_NoteType.left;
 
 
@@ -71,7 +71,7 @@ namespace BeatSaviorData
 			multiplier = _multiplier;
 		}
 
-		private void WaitForSwing(SaberSwingRatingCounter s)
+		private void WaitForSwing(ISaberSwingRatingCounter s)
 		{
 			ScoreModel.RawScoreWithoutMultiplier(info, out int before, out int after, out int accuracy);
 

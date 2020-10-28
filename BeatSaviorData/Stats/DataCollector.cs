@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BeatmapSaveData;
 
 namespace BeatSaviorData
 {
@@ -35,16 +36,17 @@ namespace BeatSaviorData
 
 		private void OnNoteCut(NoteData data, NoteCutInfo info, int multiplier)
 		{
-			if (info.allIsOK && data.noteType != NoteType.Bomb)
+			// (data.colorType != ColorType.None) check if it is not a bomb
+			if (info.allIsOK && data.colorType != ColorType.None)
 			{
 				combo++;
 				notes.Add(new Note(data, CutType.cut, info, multiplier));
 			}
-			else if (data.noteType != NoteType.Bomb)
+			else if (data.colorType != ColorType.None)
 			{
 				notes.Add(new Note(data, CutType.badCut, info, multiplier));
 			} 
-			else if (data.noteType == NoteType.Bomb)
+			else if (data.colorType == ColorType.None)
 			{
 				bombHit++;
 			}
@@ -52,7 +54,7 @@ namespace BeatSaviorData
 
 		private void OnNoteMiss(NoteData data, int multiplier)
 		{
-			if (data.noteType != NoteType.Bomb)
+			if (data.colorType != ColorType.None)
 			{
 				notes.Add(new Note(data, CutType.miss, multiplier));
 			}

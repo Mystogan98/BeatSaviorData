@@ -30,8 +30,9 @@ namespace BeatSaviorData
 
 		public static void Show(FlowCoordinator fc)
 		{
-			fc.InvokeMethod("SetLeftScreenViewController", new object[] { instance.leftUi, false });
-			fc.InvokeMethod("SetRightScreenViewController", new object[] { instance.rightUi, false});
+			fc.InvokeMethod("SetLeftScreenViewController", new object[] { instance.leftUi, ViewController.AnimationType.None });
+			if (!SettingsMenu.instance.DisableGraphPanel)
+				fc.InvokeMethod("SetRightScreenViewController", new object[] { instance.rightUi, ViewController.AnimationType.None });
 		}
 
 		public static void Create()
@@ -48,10 +49,13 @@ namespace BeatSaviorData
 			lastData = plugin.GetSongData();
 
 			leftUi = BeatSaberUI.CreateViewController<EndOfLevelUI>();
-			rightUi = BeatSaberUI.CreateViewController<ScoreGraphUI>();
-
 			leftUi.data = lastData;
-			rightUi.data = lastData;
+
+			if (!SettingsMenu.instance.DisableGraphPanel)
+			{
+				rightUi = BeatSaberUI.CreateViewController<ScoreGraphUI>();
+				rightUi.data = lastData;
+			}
 		}
 	}
 }

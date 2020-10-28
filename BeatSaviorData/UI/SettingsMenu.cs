@@ -31,8 +31,15 @@ namespace BeatSaviorData
 		[UIValue("EnableUI")]
 		public bool EnableUI
 		{
-			get => config.GetBool("BeatSaviorData", "EnableUI", false, true);
+			get => config.GetBool("BeatSaviorData", "EnableUI", true, true);
 			set => config.SetBool("BeatSaviorData", "EnableUI", value);
+		}
+
+		[UIValue("DisableGraphPanel")]
+		public bool DisableGraphPanel
+		{
+			get => config.GetBool("BeatSaviorData", "DisableGraphPanel", false, true);
+			set => config.SetBool("BeatSaviorData", "DisableGraphPanel", value);
 		}
 	}
 }

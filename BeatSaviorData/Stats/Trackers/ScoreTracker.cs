@@ -30,7 +30,7 @@ namespace BeatSaviorData.Trackers
 		{
 			IDifficultyBeatmap beatmap = data.GetGCSSD().difficultyBeatmap;
 			PlayerLevelStatsData stats = data.GetPlayerData().playerData.GetPlayerLevelStatsData(beatmap.level.levelID, beatmap.difficulty, beatmap.parentDifficultyBeatmapSet.beatmapCharacteristic);
-			maxRawScore = ScoreModel.MaxRawScoreForNumberOfNotes(beatmap.beatmapData.notesCount);
+			maxRawScore = ScoreModel.MaxRawScoreForNumberOfNotes(beatmap.beatmapData.cuttableNotesType);
 
 			modifiersMultiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers);
 			maxScore = Mathf.RoundToInt(maxRawScore * modifiersMultiplier);
@@ -50,7 +50,7 @@ namespace BeatSaviorData.Trackers
 			if (_modifiers.noArrows) { multiplier -= 0.3f; modifiers.Add("NA"); }
 			if (_modifiers.noBombs) { multiplier -= 0.1f; modifiers.Add("NB"); }
 			if (_modifiers.noFail) { multiplier -= 0.5f; modifiers.Add("NF"); }
-			if (_modifiers.noObstacles) { multiplier -= 0.05f; modifiers.Add("NO"); }
+			if (_modifiers.enabledObstacleType == GameplayModifiers.EnabledObstacleType.NoObstacles) { multiplier -= 0.05f; modifiers.Add("NO"); }
 
 			return multiplier;
 		}

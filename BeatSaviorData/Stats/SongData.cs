@@ -64,7 +64,7 @@ namespace BeatSaviorData
 			playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
 			scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().First();
 
-			playerID = GetUserInfo.GetUserID().ToString();
+			playerID = BSUtilsTemporaryFix.GetUserID().ToString();
 			songID = GCSSD.difficultyBeatmap.level.levelID.Replace("custom_level_","").Split('_')[0];
 			songDifficulty = GCSSD.difficultyBeatmap.difficulty.ToString().ToLower();
 			songName = GCSSD.difficultyBeatmap.level.songName;
