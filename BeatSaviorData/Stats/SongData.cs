@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using BeatSaviorData.Trackers;
 using Newtonsoft.Json;
+using System;
 
 namespace BeatSaviorData
 {
@@ -58,13 +59,24 @@ namespace BeatSaviorData
 			if (!SettingsMenu.instance.EnableDeepTrackers)
 				deepTrackers.Clear();
 
-			BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().First();
-			GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
-			modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
-			playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
-			scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().First();
+			try
+			{
+				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().First();
+				GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
+				modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
+				playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
+				scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().First();
+			} catch (Exception)
+			{
+				Logger.log.Error("SongData couldn't be created. Did you start the tutorial ?");
+				return;
+			}
 
-			playerID = BSUtilsTemporaryFix.GetUserID().ToString();
+			if (UserIDFix.UserIDIsReady)
+				playerID = UserIDFix.UserID;
+			else
+				UserIDFix.UserIDReady += SetUserID;
+
 			songID = GCSSD.difficultyBeatmap.level.levelID.Replace("custom_level_","").Split('_')[0];
 			songDifficulty = GCSSD.difficultyBeatmap.difficulty.ToString().ToLower();
 			songName = GCSSD.difficultyBeatmap.level.songName;
@@ -78,7 +90,7 @@ namespace BeatSaviorData
 
 			try
 			{
-				songDuration = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().First().songLength;
+				songDuration = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().FirstOrDefault().songLength;
 			} catch {
 				Logger.log.Error("BSD : Could not get song length !");
 				songDuration = -1;
@@ -95,6 +107,12 @@ namespace BeatSaviorData
 
 			dataCollector = new DataCollector();
 			dataCollector.RegisterCollector(this);
+		}
+
+		private void SetUserID()
+		{
+			playerID = UserIDFix.UserID;
+			UserIDFix.UserIDReady -= SetUserID;
 		}
 
 		private void IsNotAReplay(int score, int modifiedScore)

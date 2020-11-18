@@ -100,7 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BSUtilsTemporaryFix.cs" />
+    <Compile Include="UserIDFix.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="HarmonyPatches\ResultsViewControllerPatch.cs" />
     <Compile Include="HarmonyPatches\SaberMovementDataPatches.cs" />

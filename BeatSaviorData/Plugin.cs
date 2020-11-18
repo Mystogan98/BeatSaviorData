@@ -20,10 +20,9 @@ namespace BeatSaviorData
 		internal static Harmony harmony;
 
 		private bool songDataFinished = false;
-		private bool playerIDInitialized = false;
 
 		[Init]
-		public void Init(IPALogger logger) { Logger.log = logger; }
+		public void Init(IPALogger logger) { Logger.log = logger; UserIDFix.GetUserID(); }
 
 		[OnStart]
 		public void OnApplicationStart()
@@ -107,13 +106,6 @@ namespace BeatSaviorData
 
 		public void OnActiveSceneChanged(Scene prevScene, Scene nextScene)
 		{
-			if (!playerIDInitialized && nextScene.name == "MenuViewControllers")
-			{
-				BSUtilsTemporaryFix.TriggerReady();
-				BSUtilsTemporaryFix.UpdateUserInfo();
-				playerIDInitialized = true;
-			}
-
 			if (nextScene.name == "GameCore")
 			{
 				GameSceneLoaded();

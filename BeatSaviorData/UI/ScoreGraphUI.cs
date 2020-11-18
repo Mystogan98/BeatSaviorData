@@ -1,6 +1,7 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.ViewControllers;
 using BeatSaviorData.Trackers;
+using HMUI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,9 +30,9 @@ namespace BeatSaviorData
 		private GameObject graphObject;
 
 		[UIComponent("noTrackerText")]
-		private readonly TextMeshProUGUI noTrackerText;
+		private readonly CurvedTextMeshPro noTrackerText;
 		[UIComponent("title")]
-		private readonly TextMeshProUGUI titleText;
+		private readonly CurvedTextMeshPro titleText;
 
 		[UIAction("#post-parse")]
 		public void SetDataToUI()
@@ -164,9 +165,9 @@ namespace BeatSaviorData
 		{
 			void CreateLabelText(string _text)
 			{
-				GameObject go = new GameObject("LabelText", typeof(TextMeshProUGUI));
+				GameObject go = new GameObject("LabelText", typeof(CurvedTextMeshPro));
 				RectTransform rt = go.GetComponent<RectTransform>();
-				TextMeshProUGUI tmp = go.GetComponent<TextMeshProUGUI>();
+				CurvedTextMeshPro tmp = go.GetComponent<CurvedTextMeshPro>();
 
 				go.transform.SetParent(graphObject.transform, false);
 				tmp.text = _text;
@@ -191,9 +192,9 @@ namespace BeatSaviorData
 		{
 			void CreateLabelText(string text)
 			{
-				GameObject go = new GameObject("LabelText", typeof(TextMeshProUGUI));
+				GameObject go = new GameObject("LabelText", typeof(CurvedTextMeshPro));
 				RectTransform rt = go.GetComponent<RectTransform>();
-				TextMeshProUGUI tmp = go.GetComponent<TextMeshProUGUI>();
+				CurvedTextMeshPro tmp = go.GetComponent<CurvedTextMeshPro>();
 
 				go.transform.SetParent(graphObject.transform, false);
 				tmp.text = text;
@@ -224,14 +225,18 @@ namespace BeatSaviorData
 
 		private void CreateLine(string name, Vector2 pos1v, Vector2 pos2v, Color color, float lineWidth)
 		{
-			GameObject go = new GameObject(name, typeof(RawImage));
+			GameObject go = new GameObject(name, typeof(ImageView));
 			RectTransform rt = go.GetComponent<RectTransform>();
 
 			Vector2 dir = (pos2v - pos1v).normalized;
 			float distance = Vector2.Distance(pos1v, pos2v);
 
+			ImageView image = go.GetComponent<ImageView>();
+
 			go.transform.SetParent(graphObject.transform, false);
-			go.GetComponent<RawImage>().color = color;
+			image.color = color;
+			//image.sprite = BeatSaberMarkupLanguage.Utilities.ImageResources.BlankSprite;
+			//image.material = BeatSaberMarkupLanguage.Utilities.ImageResources.NoGlowMat;
 
 			rt.anchorMin = Vector2.zero;
 			rt.anchorMax = Vector2.zero;
