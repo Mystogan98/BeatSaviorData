@@ -1,4 +1,5 @@
-﻿using BeatSaberMarkupLanguage.Attributes;
+﻿using BeatSaberMarkupLanguage;
+using BeatSaberMarkupLanguage.Attributes;
 using BeatSaberMarkupLanguage.ViewControllers;
 using BeatSaviorData.Trackers;
 using HMUI;
@@ -85,7 +86,7 @@ namespace BeatSaviorData
 			{
 				for (int i = 0; i < misses.Count; i++)
 				{
-					CreateVerticalLabelLine(misses[i], graph[misses[i]], new Color(1, 1, 1, .5f), "Missed");
+					CreateVerticalLabelLine(misses[i], graph[misses[i]], new Color(1, 1, 1, .75f), "Missed");
 					labelsLeft--;
 				}
 			}
@@ -94,7 +95,7 @@ namespace BeatSaviorData
 			{
 				if (misses.Count < 4 && !misses.Contains(drops[i]) || misses.Count >= 4)
 				{
-					CreateVerticalLabelLine(drops[i], graph[drops[i]], new Color(1, 1, 1, .5f), "Score drop");
+					CreateVerticalLabelLine(drops[i], graph[drops[i]], new Color(1, 1, 1, .75f), "Score drop");
 					labelsLeft--;
 				}
 			}
@@ -152,11 +153,11 @@ namespace BeatSaviorData
 			else if (scoreOffset == 0.8f)
 				increment = 0.05f;
 
-			for (float i = 0; i < 1 + increment - 0.001f; i += increment)
+			for (float i = 0 ; i <= 1 + increment - 0.001f; i += increment)
 			{
 				if (i >= scoreOffset - 0.001f)
 				{
-					CreateHorizontalLabelLine(i, new Color(1, .5f + i / 2, .5f + i / 2, .5f));
+					CreateHorizontalLabelLine(i, new Color(1, 0.2f + i * 0.8f, 0.2f + i * 0.8f, .75f));
 				}
 			}
 		}
@@ -225,18 +226,18 @@ namespace BeatSaviorData
 
 		private void CreateLine(string name, Vector2 pos1v, Vector2 pos2v, Color color, float lineWidth)
 		{
-			GameObject go = new GameObject(name, typeof(ImageView));
-			RectTransform rt = go.GetComponent<RectTransform>();
+			GameObject go = new GameObject(name);
 
 			Vector2 dir = (pos2v - pos1v).normalized;
 			float distance = Vector2.Distance(pos1v, pos2v);
 
-			ImageView image = go.GetComponent<ImageView>();
+			ImageView image = go.AddComponent<ImageView>();
+			image.sprite = BeatSaberMarkupLanguage.Utilities.ImageResources.WhitePixel;
+			image.material = BeatSaberMarkupLanguage.Utilities.ImageResources.NoGlowMat;
+			image.color = color;
 
 			go.transform.SetParent(graphObject.transform, false);
-			image.color = color;
-			//image.sprite = BeatSaberMarkupLanguage.Utilities.ImageResources.BlankSprite;
-			//image.material = BeatSaberMarkupLanguage.Utilities.ImageResources.NoGlowMat;
+			RectTransform rt = go.GetComponent<RectTransform>();
 
 			rt.anchorMin = Vector2.zero;
 			rt.anchorMax = Vector2.zero;
