@@ -23,7 +23,7 @@ namespace BeatSaviorData.Trackers
 			score = Mathf.RoundToInt(rawScore * modifiersMultiplier);
 
 			modifiedRatio = score / (float)maxRawScore;
-			rawRatio = score / (float)maxRawScore;
+			rawRatio = rawScore / (float)maxRawScore;
 		}
 
 		public void GetMaxScores(SongData data)
