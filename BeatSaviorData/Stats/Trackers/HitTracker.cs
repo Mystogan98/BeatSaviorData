@@ -2,13 +2,14 @@
 {
 	class HitTracker : ITracker
 	{
-		public int leftNoteHit, rightNoteHit, bombHit, miss, maxCombo;
+		public int leftNoteHit, rightNoteHit, bombHit, miss, maxCombo, nbOfWallHit;
 
 		public void EndOfSong(LevelCompletionResults results, SongData data) {
 			DataCollector collector = data.GetDataCollector();
 
 			maxCombo = collector.maxCombo;
 			bombHit = collector.bombHit;
+			nbOfWallHit = collector.nbOfWallHit;
 
 			foreach(Note n in collector.notes)
 			{

@@ -11,12 +11,14 @@ namespace BeatSaviorData
 
 		public async static void UploadPlayerStats(string json)
 		{
-			await Upload(json, PrivateKeys.BeatSaviorPlayerDataUploadURL);
+			if(!SettingsMenu.instance.DisableBeatSaviorUpload)
+				await Upload(json, PrivateKeys.BeatSaviorPlayerDataUploadURL);
 		}
 
 		public async static void UploadSongJson(string json)
 		{
-			await Upload(json, PrivateKeys.BeatSaviorSongUploadUrl);
+			if (!SettingsMenu.instance.DisableBeatSaviorUpload)
+				await Upload(json, PrivateKeys.BeatSaviorSongUploadUrl);
 		}
 
 		private async static Task Upload(string json, string url)

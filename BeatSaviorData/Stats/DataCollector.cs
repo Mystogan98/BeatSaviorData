@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IPA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,18 @@ namespace BeatSaviorData
 	public class DataCollector
 	{
 		public List<Note> notes = new List<Note>();
-		public int maxCombo, bombHit, nbOfPause;
+		public int maxCombo, bombHit, nbOfPause, nbOfWallHit;
 
 		private int combo;
+		private ScoreController sc;
+		private PlayerHeadAndObstacleInteraction phaoi;
 
 		public void RegisterCollector(SongData data)
 		{
 			Note.ResetID();
+			SwingTranspilerHandler.Reset();
+
+			sc = data.GetScoreController();
 			data.GetScoreController().noteWasCutEvent += OnNoteCut;
 			data.GetScoreController().noteWasMissedEvent += OnNoteMiss;
 			data.GetScoreController().comboBreakingEventHappenedEvent += BreakCombo;
@@ -36,7 +42,7 @@ namespace BeatSaviorData
 
 		private void OnNoteCut(NoteData data, NoteCutInfo info, int multiplier)
 		{
-			// (data.colorType != ColorType.None) check if it is not a bomb
+			// (data.colorType != ColorType.None) checks if it is not a bomb
 			if (info.allIsOK && data.colorType != ColorType.None)
 			{
 				combo++;
@@ -62,6 +68,11 @@ namespace BeatSaviorData
 
 		private void BreakCombo()
 		{
+			phaoi = phaoi ?? sc.GetField<PlayerHeadAndObstacleInteraction, ScoreController>("_playerHeadAndObstacleInteraction");
+
+			if (phaoi != null && phaoi.intersectingObstacles.Count > 0)
+				nbOfWallHit++;
+
 			if (combo > maxCombo)
 				maxCombo = combo;
 			combo = 0;

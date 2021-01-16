@@ -8,6 +8,7 @@ using HarmonyLib;
 using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
+using BeatSaviorData.Trackers;
 
 namespace BeatSaviorData
 {
@@ -27,8 +28,6 @@ namespace BeatSaviorData
 		[OnStart]
 		public void OnApplicationStart()
 		{
-			BSEvents.gameSceneLoaded += GameSceneLoaded;
-
 			SceneManager.activeSceneChanged += OnActiveSceneChanged;
 
 			BSEvents.levelCleared += UploadSoloData;
@@ -93,6 +92,7 @@ namespace BeatSaviorData
 				}
 
 				FileManager.SaveSongStats(songData.GetDeepTrackersResults());
+				FileManager.SavePBScoreGraph((songData.trackers["scoreGraphTracker"] as ScoreGraphTracker).graph, (songData.trackers["scoreTracker"] as ScoreTracker).score, songData.songID);
 
 				storedData = songData;
 				songDataFinished = true;

@@ -21,13 +21,6 @@ namespace BeatSaviorData
 			set => config.SetBool("BeatSaviorData", "DisableFails", value);
 		}
 
-		[UIValue("EnableDeepTrackers")]
-		public bool EnableDeepTrackers
-		{
-			get => config.GetBool("BeatSaviorData", "EnableDeepTrackers", true, true);
-			set => config.SetBool("BeatSaviorData", "EnableDeepTrackers", value);
-		}
-
 		[UIValue("EnableUI")]
 		public bool EnableUI
 		{
@@ -40,6 +33,13 @@ namespace BeatSaviorData
 		{
 			get => config.GetBool("BeatSaviorData", "DisableGraphPanel", false, true);
 			set => config.SetBool("BeatSaviorData", "DisableGraphPanel", value);
+		}
+
+		[UIValue("DisableBeatSaviorUpload")]
+		public bool DisableBeatSaviorUpload
+		{
+			get => config.GetBool("BeatSaviorData", "DisableBeatSaviorUpload", false, true);
+			set => config.SetBool("BeatSaviorData", "DisableBeatSaviorUpload", value);
 		}
 	}
 }

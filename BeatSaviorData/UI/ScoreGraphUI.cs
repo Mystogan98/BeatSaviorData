@@ -30,23 +30,12 @@ namespace BeatSaviorData
 		[UIObject("graph")]
 		private GameObject graphObject;
 
-		[UIComponent("noTrackerText")]
-		private readonly CurvedTextMeshPro noTrackerText;
 		[UIComponent("title")]
 		private readonly CurvedTextMeshPro titleText;
 
 		[UIAction("#post-parse")]
 		public void SetDataToUI()
 		{
-			if(!SettingsMenu.instance.EnableDeepTrackers)
-			{
-				noTrackerText.gameObject.SetActive(true);
-				return;
-			} else
-			{
-				noTrackerText.gameObject.SetActive(false);
-			}
-
 			List<Note> notes = (data.deepTrackers["noteTracker"] as NoteTracker).notes;
 			graph = (data.trackers["scoreGraphTracker"] as ScoreGraphTracker).graph;
 			float lastGraphEntry = -1;

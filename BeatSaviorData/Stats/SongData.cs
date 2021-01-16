@@ -5,6 +5,7 @@ using UnityEngine;
 using BeatSaviorData.Trackers;
 using Newtonsoft.Json;
 using System;
+using System.Threading.Tasks;
 
 namespace BeatSaviorData
 {
@@ -21,7 +22,7 @@ namespace BeatSaviorData
 	public class SongData
 	{
 		#region Public
-		public SongDataType songDataType = SongDataType.none;
+			public SongDataType songDataType = SongDataType.none;
 			public string playerID, songID, songDifficulty, songName, songArtist, songMapper;
 			public float songSpeed = 1, songStartTime = 0, songDuration = 0;
 
@@ -35,12 +36,12 @@ namespace BeatSaviorData
 					{ "distanceTracker", new DistanceTracker() },
 					{ "scoreGraphTracker", new ScoreGraphTracker() }
 				};
-				public Dictionary<string, ITracker> deepTrackers = new Dictionary<string, ITracker>()
-			{
-				{ "noteTracker", new NoteTracker() }
-			};
-			#endregion
 
+				public Dictionary<string, ITracker> deepTrackers = new Dictionary<string, ITracker>()
+				{
+					{ "noteTracker", new NoteTracker() }
+				};
+			#endregion
 		#endregion
 
 		#region Private
@@ -56,9 +57,6 @@ namespace BeatSaviorData
 
 		public SongData()
 		{
-			if (!SettingsMenu.instance.EnableDeepTrackers)
-				deepTrackers.Clear();
-
 			try
 			{
 				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().First();
@@ -83,18 +81,7 @@ namespace BeatSaviorData
 			songArtist = GCSSD.difficultyBeatmap.level.songAuthorName;
 			songMapper = GCSSD.difficultyBeatmap.level.levelAuthorName;
 
-			// well either way, getting the IDifficultyBeatmap of the current level, accessing the “level” property, and calling the GetImageCoverAsync or something like that is the way to go
-
-			// Normal way: use BS utils and access the static GameplayCoreSceneSetupData
-			// Auros way: Zenject
-
-			try
-			{
-				songDuration = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().FirstOrDefault().songLength;
-			} catch {
-				Logger.log.Error("BSD : Could not get song length !");
-				songDuration = -1;
-			}
+			WaitForAudioTimeSyncController();
 
 			if (GCSSD.practiceSettings != null) {
 				songDataType = SongDataType.practice;
@@ -107,6 +94,18 @@ namespace BeatSaviorData
 
 			dataCollector = new DataCollector();
 			dataCollector.RegisterCollector(this);
+		}
+
+		private async void WaitForAudioTimeSyncController()
+		{
+			await Task.Delay(500);
+
+			try {
+				songDuration = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().FirstOrDefault().songLength;
+			} catch {
+				Logger.log.Error("BSD : Could not get song length !");
+				songDuration = -1;
+			}
 		}
 
 		private void SetUserID()

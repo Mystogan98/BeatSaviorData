@@ -1,13 +1,7 @@
 ﻿<settings-container>
-  <horizontal pad="2" preferred-height="6">
-    <text text="Disabling passes upload will prevent you from participating in events." font-size="3.5"/>
-  </horizontal>
   <checkbox text="Disable Pass Upload" value="DisablePass" />
   <checkbox text="Disable Fail Upload" value="DisableFail" />
-  <checkbox text="Enable Deep Trackers" value="EnableDeepTrackers" />
   <checkbox text="Enable UI" value="EnableUI" />
-  <horizontal pad="2" preferred-height="8">
-    <text text="I am working on a fix, but you can disable the graph panel if the bug bothers you." font-size="3"/>
-  </horizontal>
-  <checkbox text="Disable only graph panel" value="DisableGraphPanel" />
+  <checkbox text="Disable Graph Panel" value="DisableGraphPanel" />
+  <checkbox text="Disable Beat Savior Upload" value="DisableBeatSaviorUpload" />
 </settings-container>

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using BeatSaviorData.Trackers;
+using Newtonsoft.Json;
 
 namespace BeatSaviorData
 {
@@ -11,6 +13,9 @@ namespace BeatSaviorData
 	{
 		private static bool isANewFile = false;
 		private static string fixedFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Beat Savior Data\\"), filePath = "";
+		private static string PBScoreGraphFileName = "_PBScoreGraphs.bsd";
+
+		private static List<ScoreGraphHolder> PBScoreGraphs;
 
 		private static void FindOrCreateFile()
 		{
@@ -81,6 +86,43 @@ namespace BeatSaviorData
 		{
 			File.AppendAllText(filePath, "\n" + json);
 			Logger.log.Info("BSD : Song stats saved successfully.");
+		}
+
+		public static void SavePBScoreGraph(Dictionary<float, float> graph, int score, string songHash)
+		{
+			string filePath = fixedFilePath + PBScoreGraphFileName;
+			ScoreGraphHolder tmpGraph;
+
+			// FindOrCreateFile has been executed first, so the file path exists.
+			if (!File.Exists(filePath)) {
+				File.Create(filePath).Dispose();
+				PBScoreGraphs = new List<ScoreGraphHolder>();
+			} else if (PBScoreGraphs == null)
+				PBScoreGraphs = JsonConvert.DeserializeObject<List<ScoreGraphHolder>>(File.ReadAllText(filePath));
+
+			tmpGraph = PBScoreGraphs.Find((g) => g.songHash == songHash);
+
+			if(tmpGraph == null || tmpGraph.score < score)
+			{
+				if (tmpGraph != null)
+					PBScoreGraphs.Remove(tmpGraph);
+				PBScoreGraphs.Add(new ScoreGraphHolder(graph, score, songHash));
+				File.WriteAllText(filePath, JsonConvert.SerializeObject(PBScoreGraphs));
+			}
+		}
+
+		private class ScoreGraphHolder
+		{
+			public string songHash;
+			public int score;
+			public Dictionary<float, float> graph;
+
+			public ScoreGraphHolder(Dictionary<float, float> graph, int score, string songHash)
+			{
+				this.songHash = songHash;
+				this.score = score;
+				this.graph = graph;
+			}
 		}
 	}
 }

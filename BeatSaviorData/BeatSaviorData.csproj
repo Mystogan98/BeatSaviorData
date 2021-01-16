@@ -26,6 +26,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>
+    </NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -100,6 +102,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HarmonyPatches\SaberSwingRatingCounterPatches.cs" />
+    <Compile Include="Stats\SwingTranspilerHandler.cs" />
     <Compile Include="UserIDFix.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="HarmonyPatches\ResultsViewControllerPatch.cs" />
@@ -115,7 +119,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stats\Trackers\ScoreGraphTracker.cs" />
     <Compile Include="UI\ScoreGraphUI.cs" />
-    <Compile Include="UI\SettingsMenu.cs" />
+    <Compile Include="SettingsMenu.cs" />
     <Compile Include="Stats\SongData.cs" />
     <Compile Include="Stats\Trackers\AccuracyTracker.cs" />
     <Compile Include="Stats\Trackers\DistanceTracker.cs" />
@@ -136,7 +140,6 @@
     <EmbeddedResource Include="UI\Views\EndOfLevelView.bsml" />
     <EmbeddedResource Include="UI\Views\ScoreGraphView.bsml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetDir)$(TargetName).dll" "C:\Games\steamapps\common\Beat Saber\Plugins\$(TargetName).dll"</PostBuildEvent>

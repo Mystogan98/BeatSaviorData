@@ -7,25 +7,28 @@ using System.Threading.Tasks;
 using IPA.Utilities;
 using UnityEngine;
 using System.Reflection.Emit;
+using System.Reflection;
 
-// This will be used to get the pre-swing overswing stat as soon as I'll have figure out how to do it
 namespace BeatSaviorData.HarmonyPatches
 {
-	/*[HarmonyPatch(typeof(SaberMovementData), "ComputeSwingRating")]
+	[HarmonyPatch(typeof(SaberMovementData), "ComputeSwingRating", new Type[] { typeof(bool), typeof(float) })]
 	public static class SaberMovementDataPatches
 	{
-		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+		static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
 		{
-			List<CodeInstruction> code = new List<CodeInstruction>(instructions);
-			foreach(CodeInstruction c in code)
-			{
-				code.Add(new CodeInstruction(OpCodes.Call));
-			}
-		}
+			List<CodeInstruction> tmp = instructions.ToList(); ;
 
-		private static void LoadVariable(float num)
-		{
-			Logger.log.Info("Overswing is : " + num);
+			List<CodeInstruction> code = new List<CodeInstruction>()
+			{
+				new CodeInstruction(OpCodes.Ldloc_S, 4),
+				new CodeInstruction(OpCodes.Call, SwingTranspilerHandler.AddPreswingMethodInfo)
+			};
+
+			tmp.InsertRange(111, code);
+
+			tmp[113].MoveLabelsTo(tmp[111]);
+
+			return tmp;
 		}
-	}*/
+	}
 }

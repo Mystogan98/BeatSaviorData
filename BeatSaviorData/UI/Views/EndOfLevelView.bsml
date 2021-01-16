@@ -1,34 +1,88 @@
 <bg>
-    <vertical anchor-min-x='0' anchor-max-x='0.3' anchor-min-y='0.7' anchor-max-y='0.95' size-delta-x='0'>
-        <text id='note' text='SS' align='Center' font-size='19' size-delta-x='0'></text>
-        <horizontal child-expand-width='true' size-delta-x='0' spacing='3'>
-            <text id='FC' text='FC' align='Center' font-size='6' size-delta-x='0' font-color='#FFA713'></text>
-            <text id='percent' text='XXX %' align='Center' font-size='6' size-delta-x='0'></text>
-        </horizontal>
-    </vertical>
+  <bg anchor-min-x='0' anchor-max-x='1' anchor-min-y='0.75' anchor-max-y='1' size-delta-x='0' size-delta-y='0'>
+    <bg id='songCover' anchor-min-x='0.01' anchor-max-x='0.175' anchor-min-y='0.05' anchor-max-y='0.95'></bg>
+    <bg id='titleCard' anchor-min-x='0.19' anchor-max-x='0.98' anchor-min-y='0.05' anchor-max-y='0.95' size-delta-x='0' size-delta-y='0' child-expand-width='true' child-expand-height='true' child-control-width='true' child-control-height='true'>
+      <text id='title' align='MidlineLeft' bold='true' overflow-mode='Ellipsis' anchor-min-x='0' anchor-max-x='1' anchor-min-y='0.5' anchor-max-y='1.1' size-delta-x='0' size-delta-y='2'></text>
+      <text id='artist' align='MidlineLeft' overflow-mode='Ellipsis' anchor-min-x='0' anchor-max-x='1' anchor-min-y='0.425' anchor-max-y='0.6' size-delta-x='0' size-delta-y='1'></text>
+      <text id='mapper' align='MidlineLeft' overflow-mode='Ellipsis' anchor-min-x='0' anchor-max-x='1' anchor-min-y='0.25' anchor-max-y='0.425' size-delta-x='0' size-delta-y='1'></text>
+      <text id='difficulty' align='MidlineLeft' anchor-min-x='0' anchor-max-x='1' anchor-min-y='0' anchor-max-y='0.25' size-delta-x='0' size-delta-y='1.5'></text>
+    </bg>
+  </bg>
+
+  <bg anchor-min-x='0' anchor-max-x='1' anchor-min-y='0.61' anchor-max-y='0.74' size-delta-x='0' size-delta-y='0'>
+    <bg id='upperBand' anchor-min-x='0' anchor-max-x='1' anchor-min-y='0.97' anchor-max-y='1' size-delta-x='0' size-delta-y='0'></bg>
+
+    <text align='Center' text='Rating' font-size='3' anchor-min-x='0' anchor-max-x='0.2' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rank' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0' anchor-max-x='0.2' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Score' font-size='3' anchor-min-x='0.2' anchor-max-x='0.4' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='percent' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0.2' anchor-max-x='0.4' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Combo' font-size='3' anchor-min-x='0.4' anchor-max-x='0.6' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='combo' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0.4' anchor-max-x='0.6' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
+
+    <text id='missLabel' align='Center' text='Misses' font-size='3' anchor-min-x='0.6' anchor-max-x='0.8' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='miss' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0.6' anchor-max-x='0.8' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
+    
+    <text align='Center' text='Pauses' font-size='3' anchor-min-x='0.8' anchor-max-x='1' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='pauses' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0.8' anchor-max-x='1' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
+
+    <bg id='lowerBand' anchor-min-x='0' anchor-max-x='1' anchor-min-y='0' anchor-max-y='0.03' size-delta-x='0' size-delta-y='0'></bg>
+  </bg>
+
+  <bg anchor-min-x='0.07' anchor-max-x='0.47' anchor-min-y='0' anchor-max-y='0.6' size-delta-x='0' size-delta-y='0'>
+    <bg id='leftCircle' anchor-min-x='0.1' anchor-max-x='0.4' anchor-min-y='0.52' anchor-max-y='0.92' size-delta-x='0' size-delta-y='0'></bg>
+    <text id='leftAverage' align='Center' font-size='7' anchor-min-x='0.1' anchor-max-x='0.4' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    
+    <text align='Center' text='Before cut' font-size='3' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.89' anchor-max-y='0.94' size-delta-x='0' size-delta-y='0'></text>
+    <text id='leftBeforeCut' align='Center' font-size='5' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.79' anchor-max-y='0.89' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Accuracy' font-size='3' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.73' anchor-max-y='0.78' size-delta-x='0' size-delta-y='0'></text>
+    <text id='leftAccuracy' align='Center' font-size='5' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.63' anchor-max-y='0.73' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='After cut' font-size='3' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.57' anchor-max-y='0.62' size-delta-x='0' size-delta-y='0'></text>
+    <text id='leftAfterCut' align='Center' font-size='5' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.47' anchor-max-y='0.57' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Distance' font-size='3' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.35' anchor-max-y='0.4' size-delta-x='0' size-delta-y='0'></text>
+    <text id='leftDistance' align='Center' font-size='4.5' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.25' anchor-max-y='0.35' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Speed' font-size='3' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.19' anchor-max-y='0.24' size-delta-x='0' size-delta-y='0'></text>
+    <text id='leftSpeed' align='Center' font-size='4.5' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Pre-swing' font-size='3' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.35' anchor-max-y='0.4' size-delta-x='0' size-delta-y='0'></text>
+    <text id='leftBeforeSwing' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.25' anchor-max-y='0.35' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Post-swing' font-size='3' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.19' anchor-max-y='0.24' size-delta-x='0' size-delta-y='0'></text>
+    <text id='leftAfterSwing' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
+  </bg>
+
+  <bg id='middleBand' anchor-min-x='0.498' anchor-max-x='0.502' anchor-min-y='0.05' anchor-max-y='0.6' size-delta-x='0' size-delta-y='0'></bg>
+
+  <bg anchor-min-x='0.53' anchor-max-x='0.93' anchor-min-y='0' anchor-max-y='0.6' size-delta-x='0' size-delta-y='0'>
+    <bg id='rightCircle' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.52' anchor-max-y='0.92' size-delta-x='0' size-delta-y='0'></bg>
+    <text id='rightAverage' align='Center' font-size='7' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Before cut' font-size='3' anchor-min-x='0.1' anchor-max-x='0.4' anchor-min-y='0.89' anchor-max-y='0.94' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rightBeforeCut' align='Center' font-size='5' anchor-min-x='0.1' anchor-max-x='0.4' anchor-min-y='0.79' anchor-max-y='0.89' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Accuracy' font-size='3' anchor-min-x='0.1' anchor-max-x='0.4' anchor-min-y='0.73' anchor-max-y='0.78' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rightAccuracy' align='Center' font-size='5' anchor-min-x='0.1' anchor-max-x='0.4' anchor-min-y='0.63' anchor-max-y='0.73' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='After cut' font-size='3' anchor-min-x='0.1' anchor-max-x='0.4' anchor-min-y='0.57' anchor-max-y='0.62' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rightAfterCut' align='Center' font-size='5' anchor-min-x='0.1' anchor-max-x='0.4' anchor-min-y='0.47' anchor-max-y='0.57' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Distance' font-size='3' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.35' anchor-max-y='0.4' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rightDistance' align='Center' font-size='4.5' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.25' anchor-max-y='0.35' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Speed' font-size='3' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.19' anchor-max-y='0.24' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rightSpeed' align='Center' font-size='4.5' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Pre-swing' font-size='3' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.35' anchor-max-y='0.4' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rightBeforeSwing' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.25' anchor-max-y='0.35' size-delta-x='0' size-delta-y='0'></text>
+
+    <text align='Center' text='Post-swing' font-size='3' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.19' anchor-max-y='0.24' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rightAfterSwing' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
+  </bg>
   
-    <text id='title' text='No Title, please reach Mystogan#5963 on Discord' align='Center' font-size='10' word-wrapping='true' size-delta-x='10' size-delta-y='0' overflow-mode='Ellipsis' anchor-min-x='0.32' anchor-max-x='0.7' anchor-min-y='0.80' anchor-max-y='0.95'></text>
-    <text id='difficulty' text='Expert+++++++' align='Center' font-color='#CCCCCC' font-size='6' size-delta-x='15' size-delta-y='0' anchor-min-x='0.32' anchor-max-x='0.7' anchor-min-y='0.7' anchor-max-y='0.75'></text>
-  
-    <vertical anchor-min-x='0.75' anchor-max-x='1' anchor-min-y='0.7' anchor-max-y='0.98'>
-        <text id='combo' text='Combo : 9999' align='Left' font-size='5'></text>
-        <text id='miss' text='Misses : 9999' align='Left' font-size='5'></text>
-        <text id='pauses' text='Pauses : 9999' align='Left' font-size='5'></text>
-    </vertical>
-  
-    <vertical anchor-min-x='0.1' anchor-max-x='0.45' anchor-min-y='0.05' anchor-max-y='0.6'>
-        <text id='leftLabel' text='Left Hand' font-color='#FF0000' align='Center' font-size='11'></text>
-        <text id='leftAverage' text='114.99' align='Center' font-size='7'></text>
-        <text id='leftCut' text='69.9/14.9/29.9' align='Center' font-size='7'></text>
-        <text id='leftDistance' text='999999 Km' align='Center' font-size='7'></text>
-        <text id='leftSpeed' text='100 Km/h' align='Center' font-size='7'></text>
-    </vertical>
-    <vertical anchor-min-x='0.55' anchor-max-x='0.9' anchor-min-y='0.05' anchor-max-y='0.6'>
-        <text id='rightLabel' text='Right Hand' font-color='#0000FF' align='Center' font-size='11'></text>
-        <text id='rightAverage' text='114.99' align='Center' font-size='7'></text>
-        <text id='rightCut' text='69.9/14.9/29.9' align='Center' font-size='7'></text>
-        <text id='rightDistance' text='999999 Km' align='Center' font-size='7'></text>
-        <text id='rightSpeed' text='100 Km/h' align='Center' font-size='7'></text>
-    </vertical>
-  <text text="BeatSaviorData v2.0.1 by Mystogan#5963" anchor-min-x='0' anchor-max-x='0.95' anchor-min-y='0' anchor-max-y='0.05' font-size='3' size-delta-x='0' size-delta-y='0' font-color='#AAAAAA' align='Right'></text>
+  <text text="BeatSaviorData v2.1.0 by Mystogan#5963" anchor-min-x='0' anchor-max-x='0.95' anchor-min-y='0' anchor-max-y='0.05' font-size='3' size-delta-x='0' size-delta-y='0' font-color='#AAAAAA' align='Right'></text>
 </bg>

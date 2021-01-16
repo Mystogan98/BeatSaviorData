@@ -30,10 +30,11 @@ namespace BeatSaviorData
 		public CutType cutType;
 		public int multiplier;
 		public int[] score;
-		public float timeDeviation, speed;
+		public float timeDeviation, speed, preswing, postswing;
 		public float[] cutPoint, saberDir;
+		public float timeDependence;
 
-		private NoteCutInfo info;
+		private readonly NoteCutInfo info;
 
 		private Note(NoteData data, CutType cut)
 		{
@@ -41,7 +42,6 @@ namespace BeatSaviorData
 				noteType = BSD_NoteType.right;
 			else if (data.colorType == ColorType.ColorA)
 				noteType = BSD_NoteType.left;
-
 
 			score = new int[] { 0, 0, 0 };
 			index = data.lineIndex + 4 * (int)data.noteLineLayer;
@@ -61,6 +61,7 @@ namespace BeatSaviorData
 
 			if (info != null && info.swingRatingCounter != null)
 			{    // If it's a miss info is null
+				timeDependence = Math.Abs(info.cutNormal.z);
 				info.swingRatingCounter.didFinishEvent -= WaitForSwing;
 				info.swingRatingCounter.didFinishEvent += WaitForSwing;
 			}
@@ -68,12 +69,19 @@ namespace BeatSaviorData
 
 		public Note(NoteData data, CutType cut, int _multiplier) : this(data, cut)
 		{
+			// This is a miss
 			multiplier = _multiplier;
 		}
 
 		private void WaitForSwing(ISaberSwingRatingCounter s)
 		{
 			ScoreModel.RawScoreWithoutMultiplier(info, out int before, out int after, out int accuracy);
+
+			SwingHolder sh = SwingTranspilerHandler.GetSwing(s as SaberSwingRatingCounter);
+			if (sh != null) {
+				preswing = sh.preswing;
+				postswing = sh.postswing;
+			}
 
 			score = new int[] { before, accuracy, after };
 			timeDeviation = info.timeDeviation;
