@@ -40,13 +40,16 @@ namespace BeatSaviorData
 		{
 			string[] files = Directory.GetFiles(fixedFilePath);
 
-			if (files.Length > 30)
+			if (files.Length > 31)	// 30 data files + PB graph file
 			{
 				string oldestPath = "";
 				DateTime oldestTime = DateTime.MaxValue, tmpdt;
 
 				foreach(string s in files)
 				{
+					if (s == PBScoreGraphFileName)
+						continue;
+
 					if (string.IsNullOrEmpty(oldestPath))
 					{
 						oldestPath = s;

@@ -28,7 +28,7 @@ namespace BeatSaviorData
 		Dictionary<float, float> graph;
 
 		[UIObject("graph")]
-		private GameObject graphObject;
+		private readonly GameObject graphObject;
 
 		[UIComponent("title")]
 		private readonly CurvedTextMeshPro titleText;

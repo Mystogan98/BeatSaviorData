@@ -3,19 +3,25 @@
 ## What it does
 
 BeatSaviorData is a Beat Saber plugin that collects and shows a lot of data about your plays, such as per-hand accuracy, speed, distance traveled, overswing percentage, ...
+
 It shows a score graph at the end of songs, alongside with a data panel, directly in game. It also uploads part of that data to beatsavior.io, where you can see your recent plays on your profile page, with exclusive data.
 
 ![BSD screenshot](https://github.com/Mystogan98/BeatSaviorData/blob/master/ReadmeImage.png?raw=true)
 
+
 ## How to install
 
 Go to the "Releases" tab on the right, download the latest DLL file, and drop it into your "Plugins" folder inside your Beat Saber folder.
+
 Requires BSIPA (4.1.3 or higher), BS_Utils (1.6.5 or higher) and BeatSaberMarkupLanguage (1.4.2 or higher).
+
 
 ## Can I use the data myself ?
 
 Yes ! You can use the api on the website (https://www.beatsavior.io/api/livescores/player/\<playerId>), or locally in your AppData folder (AppData/Roaming/Beat Savior Data). I plan on making the DataCollector directly accessible in the game too, for other mods to use it in real time. In the local files, the first line is the player's stats, then every other line corresponds to one song. Every line is a correct json object, even though the whole file isn't.
+
 Please credit me if you use them.
+
 
 
 
@@ -34,6 +40,7 @@ Please credit me if you use them.
 - songStartTime : Time in seconds of the song's start. (float, practice mode only)
 - songDuration : Duration of the song in seconds. (float)
 
+
 #### HitTracker
 
 - leftNoteHit : Number of note hit by the left saber. (int)
@@ -42,6 +49,7 @@ Please credit me if you use them.
 - miss : Number of misses. (int)
 - maxCombo : Maximum combo achieved during the song. (int)
 - nbOfWallHit : Number of time a wall as reduced your combo. (int)
+
 
 #### AccuracyTracker
 
@@ -53,6 +61,7 @@ Same goes with Speed (in m/s), HighestSpeed (in m/s), Preswing (percentage, 1 = 
 
 - gridAcc : Average accuracy on every position of the 4*3 grid. Very likely to be full of NaN on Noodle/Mapping extensions maps. (float array)
 - gridCut : Number of cut on every position of the 4*3 grid. Very likely to be full of NaN on Noodle/Mapping extensions maps. (float array)
+
 
 #### ScoreTracker
 
@@ -66,12 +75,14 @@ Same goes with Speed (in m/s), HighestSpeed (in m/s), Preswing (percentage, 1 = 
 - modifiersMultiplier : Total score multiplier with current modifiers. (float)
 - modifiers : Acronym of current modifiers. (string array)
 
+
 #### WinTracker
 
 - won : If the map was successfully passed or not. (bool)
 - rank : Rank name (SS, S, A, ...). (string)
 - endTime : The time in second when the run ended. (float)
 - nbOfPause : The number of pause made during the song. (int)
+
 
 #### DistanceTracker
 
@@ -80,9 +91,11 @@ Same goes with Speed (in m/s), HighestSpeed (in m/s), Preswing (percentage, 1 = 
 - rightHand : The distance traveled by the right hand. (float)
 - leftHand : The distance traveled by the left hand. (float)
 
+
 #### ScoreGraphTracker
 
 - graph : Records the score ratio for every beat with at least one note. (Dictionnary<string, float>)
+
 
 #### NoteTracker
 
