@@ -12,7 +12,6 @@
     "BeatSaberMarkupLanguage": "^1.4.2"
   },
   "loadAfter": [ "BS Utils", "BeatSaberMarkupLanguage" ],
-  "features": [],
   "misc": {
     "plugin-hint": "BeatSaviorData.Plugin"
   },

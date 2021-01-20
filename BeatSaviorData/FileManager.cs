@@ -39,35 +39,21 @@ namespace BeatSaviorData
 		private static void DeleteOldRecords()
 		{
 			string[] files = Directory.GetFiles(fixedFilePath);
+			SortedDictionary<DateTime, string> filesWithTime = new SortedDictionary<DateTime, string>();
 
-			if (files.Length > 31)	// 30 data files + PB graph file
+			foreach(string s in files)
 			{
-				string oldestPath = "";
-				DateTime oldestTime = DateTime.MaxValue, tmpdt;
+				if (Path.GetFileNameWithoutExtension(s).StartsWith("_"))
+					continue;
 
-				foreach(string s in files)
-				{
-					if (s == PBScoreGraphFileName)
-						continue;
+				filesWithTime.Add(DateTime.Parse(Path.GetFileNameWithoutExtension(s)), s);
+			}
 
-					if (string.IsNullOrEmpty(oldestPath))
-					{
-						oldestPath = s;
-						oldestTime = DateTime.Parse(Path.GetFileNameWithoutExtension(s));
-					}
-					else
-					{
-						tmpdt = DateTime.Parse(Path.GetFileNameWithoutExtension(s));
-						if(tmpdt < oldestTime)
-						{
-							oldestTime = tmpdt;
-							oldestPath = s;
-						}
-					}
-				}
-
-				Logger.log.Info("BSD : Oldest file \"" + Path.GetFileName(filePath) + "\" deleted.");
-				File.Delete(oldestPath);
+			while(filesWithTime.Count > 30)
+			{
+				Logger.log.Info("BSD : Oldest file \"" + Path.GetFileName(filesWithTime.Last().Value) + "\" deleted.");
+				File.Delete(filesWithTime.Last().Value);
+				filesWithTime.Remove(filesWithTime.Last().Key);
 			}
 		}
 
