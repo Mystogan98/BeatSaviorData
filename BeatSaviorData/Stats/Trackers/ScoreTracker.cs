@@ -13,7 +13,7 @@ namespace BeatSaviorData.Trackers
 
 		public void EndOfSong(LevelCompletionResults results, SongData data)
 		{
-			GetMaxScores(data);
+			GetMaxScores(results, data);
 
 			foreach(Note n in data.GetDataCollector().notes)
 			{
@@ -26,20 +26,20 @@ namespace BeatSaviorData.Trackers
 			rawRatio = rawScore / (float)maxRawScore;
 		}
 
-		public void GetMaxScores(SongData data)
+		public void GetMaxScores(LevelCompletionResults results, SongData data)
 		{
 			IDifficultyBeatmap beatmap = data.GetGCSSD().difficultyBeatmap;
 			PlayerLevelStatsData stats = data.GetPlayerData().playerData.GetPlayerLevelStatsData(beatmap.level.levelID, beatmap.difficulty, beatmap.parentDifficultyBeatmapSet.beatmapCharacteristic);
 			maxRawScore = ScoreModel.MaxRawScoreForNumberOfNotes(beatmap.beatmapData.cuttableNotesType);
 
-			modifiersMultiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers);
+			modifiersMultiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers, results.energy);
 			maxScore = Mathf.RoundToInt(maxRawScore * modifiersMultiplier);
 			personalBestModifiedRatio = stats.highScore / (float)maxScore;
 			personalBestRawRatio = stats.highScore / (float)maxRawScore;
 			personalBest = stats.highScore;
 		}
 		
-		private float GetTotalMultiplier(GameplayModifiers _modifiers)
+		private float GetTotalMultiplier(GameplayModifiers _modifiers, float energy)
 		{
 			float multiplier = 1;
 
@@ -49,7 +49,7 @@ namespace BeatSaviorData.Trackers
 			if (_modifiers.ghostNotes) { multiplier += 0.04f; modifiers.Add("GN"); }
 			if (_modifiers.noArrows) { multiplier -= 0.3f; modifiers.Add("NA"); }
 			if (_modifiers.noBombs) { multiplier -= 0.1f; modifiers.Add("NB"); }
-			if (_modifiers.noFail) { multiplier -= 0.5f; modifiers.Add("NF"); }
+			if (_modifiers.noFailOn0Energy && energy == 0) { multiplier -= 0.5f; modifiers.Add("NF"); }
 			if (_modifiers.enabledObstacleType == GameplayModifiers.EnabledObstacleType.NoObstacles) { multiplier -= 0.05f; modifiers.Add("NO"); }
 
 			return multiplier;
