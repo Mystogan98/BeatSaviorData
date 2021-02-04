@@ -19,48 +19,82 @@ namespace BeatSaviorData
 	{
 		public override string ResourceName => "BeatSaviorData.UI.Views.ScoreGraphView.bsml";
 
-		public SongData data;
-		private int lastSongBeat = 0;
-		private float width = 90, height = 45, offsetx = 10f, offsety = 5f, scoreOffset, modifiersMultiplier;
-		private bool won = true;
-
-		private List<float> misses = new List<float>();
-		Dictionary<float, float> graph;
-
+		#pragma warning disable 0649    // Disables the "never assigned" warning
 		[UIObject("graph")]
 		private readonly GameObject graphObject;
 
 		[UIComponent("title")]
 		private readonly CurvedTextMeshPro titleText;
+		#pragma warning restore 0649
+
+		private int lastSongBeat = 0;
+		private float width = 90, height = 45, offsetx = 10f, offsety = 5f, scoreOffset, modifiersMultiplier;
+		private bool won = true;
+
+		private List<float> misses = new List<float>();
+		private Dictionary<float, float> graph;
+
+		private bool postParseDone = false;
+		private SongData tmpData;
 
 		[UIAction("#post-parse")]
-		public void SetDataToUI()
+		public void PostParse()
 		{
-			List<Note> notes = (data.deepTrackers["noteTracker"] as NoteTracker).notes;
-			graph = (data.trackers["scoreGraphTracker"] as ScoreGraphTracker).graph;
-			float lastGraphEntry = -1;
+			postParseDone = true;
+			if (tmpData != null)
+				Refresh(tmpData);
+		}
 
-			GetOffsets(notes);
-			lastSongBeat = Mathf.CeilToInt(data.songDuration);
-			won = (data.trackers["winTracker"] as WinTracker).won;
-			titleText.text = data.songName;
-			titleText.enableAutoSizing = true;
-			titleText.fontSizeMin = 1;
-			titleText.fontSizeMax = 10;
-			modifiersMultiplier = (data.trackers["scoreTracker"] as ScoreTracker).modifiersMultiplier;
-
-			CreateHorizontalLabels();
-
-			foreach(float f in graph.Keys)
-			{
-				if (lastGraphEntry != -1)
-				{
-					CreateGraphLine((lastGraphEntry, graph[lastGraphEntry]), (f, graph[f]), Color.white);
-				}
-				lastGraphEntry = f;
+		public void Refresh(SongData data)
+		{
+			if (!postParseDone) {
+				tmpData = data;
+				return;
 			}
 
-			CreateVerticalLabels();
+			lastSongBeat = 0;
+			scoreOffset = 0;
+			modifiersMultiplier = 0;
+			won = true;
+			misses = new List<float>();
+
+			try
+			{
+				foreach (Transform t in graphObject.transform)
+					Destroy(t.gameObject);
+
+				List<Note> notes = (data.deepTrackers["noteTracker"] as NoteTracker).notes;
+				graph = (data.trackers["scoreGraphTracker"] as ScoreGraphTracker).graph;
+				float lastGraphEntry = -1;
+
+				GetOffsets(notes);
+				lastSongBeat = Mathf.CeilToInt(data.songDuration);
+				won = (data.trackers["winTracker"] as WinTracker).won;
+				titleText.text = data.songName;
+				titleText.enableAutoSizing = true;
+				titleText.fontSizeMin = 1;
+				titleText.fontSizeMax = 10;
+				modifiersMultiplier = (data.trackers["scoreTracker"] as ScoreTracker).modifiersMultiplier;
+
+				CreateHorizontalLabels();
+
+				foreach (float f in graph.Keys)
+				{
+					if (lastGraphEntry != -1)
+					{
+						CreateGraphLine((lastGraphEntry, graph[lastGraphEntry]), (f, graph[f]), Color.white);
+					}
+					lastGraphEntry = f;
+				}
+
+				CreateVerticalLabels();
+			} catch (Exception e)
+			{
+				// Sometimes it gets in the graph without calling the graph. Or something. I have no god damn idea what happens in those 1/10000000 cases. Still, that catch *should* avoid the whole game to crash.
+				Logger.log.Error("The graph just crashed, most likely for some unknow magical reasons.\n");
+				Logger.log.Error(e.Message);
+				Logger.log.Error(e.StackTrace);
+			}
 		} 
 
 		private void CreateVerticalLabels()

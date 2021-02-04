@@ -48,13 +48,15 @@ namespace BeatSaviorData
 
 			lastData = plugin.GetSongData();
 
-			leftUi = BeatSaberUI.CreateViewController<EndOfLevelUI>();
-			leftUi.data = lastData;
+			if(leftUi == null)
+				leftUi = BeatSaberUI.CreateViewController<EndOfLevelUI>();
+			leftUi.Refresh(lastData);
 
 			if (!SettingsMenu.instance.DisableGraphPanel)
 			{
-				rightUi = BeatSaberUI.CreateViewController<ScoreGraphUI>();
-				rightUi.data = lastData;
+				if(rightUi == null)
+					rightUi = BeatSaberUI.CreateViewController<ScoreGraphUI>();
+				rightUi.Refresh(lastData);
 			}
 		}
 	}

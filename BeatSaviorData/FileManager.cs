@@ -51,9 +51,9 @@ namespace BeatSaviorData
 
 			while(filesWithTime.Count > 30)
 			{
-				Logger.log.Info("BSD : Oldest file \"" + Path.GetFileName(filesWithTime.Last().Value) + "\" deleted.");
-				File.Delete(filesWithTime.Last().Value);
-				filesWithTime.Remove(filesWithTime.Last().Key);
+				Logger.log.Info("BSD : Oldest file \"" + Path.GetFileName(filesWithTime.First().Value) + "\" deleted.");
+				File.Delete(filesWithTime.First().Value);
+				filesWithTime.Remove(filesWithTime.First().Key);
 			}
 		}
 

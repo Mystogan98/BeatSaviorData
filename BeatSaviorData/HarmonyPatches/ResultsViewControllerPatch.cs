@@ -15,7 +15,7 @@ namespace BeatSaviorData.HarmonyPatches
 	{
 		static void Postfix(ref ResultsViewController __instance)
 		{
-			// Create end of song UI
+			// Create or refresh end of song UI
 			EndOfLevelUICreator.Create();
 		}
 	}

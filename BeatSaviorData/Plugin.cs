@@ -82,9 +82,9 @@ namespace BeatSaviorData
 
 				if (!songData.IsPraticeMode()) {
 					if (results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Cleared && SettingsMenu.instance.DisablePass)
-						Logger.log.Info("Pass upload is disabled.");
+						Logger.log.Info("Pass upload is disabled in the settings.");
 					else if (results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Failed && SettingsMenu.instance.DisableFails)
-						Logger.log.Info("Fail upload is disabled.");
+						Logger.log.Info("Fail upload is disabled in the settings.");
 					else
 					{
 						HTTPManager.UploadSongJson(songData.GetTrackersResults());
