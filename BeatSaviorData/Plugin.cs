@@ -50,6 +50,8 @@ namespace BeatSaviorData
 
 		private void DiscardSongData(StandardLevelScenesTransitionSetupDataSO data, LevelCompletionResults results)
 		{
+			if (songData == null)
+				return;
 			songData.GetDataCollector().UnregisterCollector(songData);
 			songData = null;
 		}
