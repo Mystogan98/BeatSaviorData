@@ -50,6 +50,10 @@ namespace BeatSaviorData
 
 		private void DiscardSongData(StandardLevelScenesTransitionSetupDataSO data, LevelCompletionResults results)
 		{
+			// Prevent a nullref exception, but it shouldn't happen in the first place (might mean some trackers do not get destroyed), so some investigation required
+			if (songData == null)
+				return;
+
 			songData.GetDataCollector().UnregisterCollector(songData);
 			songData = null;
 		}

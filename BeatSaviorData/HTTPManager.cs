@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,26 +12,50 @@ namespace BeatSaviorData
 
 		public async static void UploadPlayerStats(string json)
 		{
-			if (!SettingsMenu.instance.DisableBeatSaviorUpload)
-				await Upload(json, PrivateKeys.BeatSaviorPlayerDataUploadURL);
-			else
-				Logger.log.Debug("Beat Savior Upload is disabled in the settings.");
 			/*if(!SettingsMenu.instance.DisableSilverHazeHTTPSUpload)
 				await Upload(json, PrivateKeys.SilverHazeUploadUrl);
 			if (!SettingsMenu.instance.DisableSilverHazeHTTPUpload)
 				await Upload(json, PrivateKeys.SilverHazeUploadUrlHTTP);*/
+			if (!SettingsMenu.instance.DisableBeatSaviorUpload)
+			{
+				try
+				{
+					await Upload(json, PrivateKeys.BeatSaviorPlayerDataUploadURL);
+				}
+				catch (Exception ex)
+				{
+					Logger.log.Error($"BSD : Error uploading player stats to BeatSavior");
+					Logger.log.Debug(ex);
+				}
+			}
+			else
+			{
+				Logger.log.Debug("Beat Savior Upload is disabled in the settings.");
+			}
 		}
 
 		public async static void UploadSongJson(string json)
 		{
-			if (!SettingsMenu.instance.DisableBeatSaviorUpload)
-				await Upload(json, PrivateKeys.BeatSaviorSongUploadUrl);
-			else
-				Logger.log.Debug("Beat Savior Upload is disabled in the settings.");
 			/*if (!SettingsMenu.instance.DisableSilverHazeHTTPSUpload)
 				await Upload(json, PrivateKeys.SilverHazeUploadUrl);
 			if (!SettingsMenu.instance.DisableSilverHazeHTTPUpload)
 				await Upload(json, PrivateKeys.SilverHazeUploadUrlHTTP);*/
+			if (!SettingsMenu.instance.DisableBeatSaviorUpload)
+			{
+				try
+				{
+					await Upload(json, PrivateKeys.BeatSaviorSongUploadUrl);
+				}
+				catch (Exception ex)
+				{
+					Logger.log.Error($"BSD : Error uploading song results to BeatSavior");
+					Logger.log.Debug(ex);
+				}
+			}
+			else
+			{
+				Logger.log.Debug("Beat Savior Upload is disabled in the settings.");
+			}
 		}
 
 		private async static Task Upload(string json, string url)
