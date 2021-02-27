@@ -21,6 +21,13 @@ namespace BeatSaviorData
 			set => config.SetBool("BeatSaviorData", "DisableFails", value);
 		}
 
+		[UIValue("HideNbOfPauses")]
+		public bool HideNbOfPauses
+		{
+			get => config.GetBool("BeatSaviorData", "HideNbOfPauses", false, true);
+			set => config.SetBool("BeatSaviorData", "HideNbOfPauses", value);
+		}
+
 		[UIValue("EnableUI")]
 		public bool EnableUI
 		{

@@ -58,18 +58,25 @@ namespace BeatSaviorData
                 string fileName = Path.GetFileNameWithoutExtension(s);
                 if (fileName.StartsWith("_"))
                     continue;
-                if (DateTime.TryParseExact(fileName, FileDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+                try
                 {
-                    //Logger.log.Debug($"Loaded '{fileName}' -> {date.ToString("d")}");
-                    filesWithTime.Add(date, s);
-                }
-                else if (DateTime.TryParseExact(fileName, OldFileDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out  date))
+                    if (DateTime.TryParseExact(fileName, FileDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
+                    {
+                        //Logger.log.Debug($"Loaded '{fileName}' -> {date.ToString("d")}");
+                        filesWithTime.Add(date, s);
+                    }
+                    else if (DateTime.TryParseExact(fileName, OldFileDateFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                    {
+                        //Logger.log.Debug($"Loaded old format '{fileName}' -> {date.ToString("d")}");
+                        filesWithTime.Add(date, s);
+                    }
+                    else
+                        Logger.log.Debug($"Unexpected file: '{fileName}' ({s}) in Beat Savior Data folder.");
+                } catch (ArgumentException)
                 {
-                    //Logger.log.Debug($"Loaded old format '{fileName}' -> {date.ToString("d")}");
-                    filesWithTime.Add(date, s);
+                    // This happens because of the new format, you can have two files with the same date, one with the new format and one with the old, but as their DateTime is the same you cannot add both. 
+                    Logger.log.Debug($"Argument exception with file \"{fileName}\". Maybe a conflict with old/new format.");
                 }
-                else
-                    Logger.log.Debug($"Unexpected file: '{fileName}' ({s}) in Beat Savior Data folder.");
             }
 
             while (filesWithTime.Count > MaxStatsFiles)

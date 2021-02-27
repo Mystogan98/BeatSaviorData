@@ -13,7 +13,10 @@
 			endTime = results.endSongTime;
 			rank = RankModel.GetRankName(results.rank);
 
-			nbOfPause = data.GetDataCollector().nbOfPause;
+			if (!SettingsMenu.instance.HideNbOfPauses)
+				nbOfPause = data.GetDataCollector().nbOfPause;
+			else
+				nbOfPause = 999;
 		}
 	}
 }

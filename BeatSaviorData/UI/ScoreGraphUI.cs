@@ -67,6 +67,10 @@ namespace BeatSaviorData
 				graph = (data.trackers["scoreGraphTracker"] as ScoreGraphTracker).graph;
 				float lastGraphEntry = -1;
 
+				// That should never happen but some magical things decided to fuck my monkey brain by doing impossible things once in a while and that's freaking annoying
+				if (graph.Count == 0)
+					return;
+
 				GetOffsets(notes);
 				lastSongBeat = Mathf.CeilToInt(data.songDuration);
 				won = (data.trackers["winTracker"] as WinTracker).won;

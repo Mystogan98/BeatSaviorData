@@ -103,5 +103,6 @@ namespace BeatSaviorData
 		}
 
 		public bool IsAMiss() => GetTotalScore() == 0;
+		public NoteCutInfo GetInfo() => info;
 	}
 }

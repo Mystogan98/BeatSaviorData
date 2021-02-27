@@ -310,7 +310,7 @@ namespace BeatSaviorData
             combo.text = ht.maxCombo.ToString();
 
             // Misses
-            miss.text = fc ? "FC" : ht.miss.ToString();
+            miss.text = fc ? "FC" : ht.missedNotes.ToString();
             if (fc) {
                 miss.color = goldColor;
                 missLabel.color = goldColor;
@@ -321,7 +321,10 @@ namespace BeatSaviorData
             }
 
             // Pauses
-            pauses.text = wt.nbOfPause.ToString();
+            if (wt.nbOfPause != 999)
+                pauses.text = wt.nbOfPause.ToString();
+            else
+                pauses.text = "-";
 
             // LowerBand
             if (fc) lowerBandImg.color = goldColor;
