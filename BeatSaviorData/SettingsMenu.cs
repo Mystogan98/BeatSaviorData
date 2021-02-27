@@ -41,5 +41,19 @@ namespace BeatSaviorData
 			get => config.GetBool("BeatSaviorData", "DisableBeatSaviorUpload", false, true);
 			set => config.SetBool("BeatSaviorData", "DisableBeatSaviorUpload", value);
 		}
+
+		/*[UIValue("DisableSilverHazeHTTPSUpload")]
+		public bool DisableSilverHazeHTTPSUpload
+		{
+			get => config.GetBool("BeatSaviorData", "DisableSilverHazeHTTPSUpload", false, true);
+			set => config.SetBool("BeatSaviorData", "DisableBeatSaviorUpload", value);
+		}
+
+		[UIValue("DisableSilverHazeHTTPUpload")]
+		public bool DisableSilverHazeHTTPUpload
+		{
+			get => config.GetBool("BeatSaviorData", "DisableSilverHazeHTTPUpload", true, true);
+			set => config.SetBool("BeatSaviorData", "DisableBeatSaviorUpload", value);
+		}*/
 	}
 }
