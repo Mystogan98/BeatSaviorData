@@ -310,7 +310,7 @@ namespace BeatSaviorData
             combo.text = ht.maxCombo.ToString();
 
             // Misses
-            miss.text = fc ? "FC" : ht.missedNotes.ToString();
+            miss.text = fc ? "FC" : ht.miss.ToString();
             if (fc) {
                 miss.color = goldColor;
                 missLabel.color = goldColor;
