@@ -32,8 +32,8 @@ namespace BeatSaviorData.HarmonyPatches
 				new CodeInstruction(OpCodes.Call, SwingTranspilerHandler.AddPostswingMethodInfo)
 			};
 
-			tmp.InsertRange(168, codeSecond);
-			tmp.InsertRange(123, codeFirst);
+			tmp.InsertRange(157, codeSecond);		// 168
+			tmp.InsertRange(114, codeFirst);		// 123
 
 			return tmp;
 		}

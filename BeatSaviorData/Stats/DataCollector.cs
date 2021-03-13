@@ -40,7 +40,7 @@ namespace BeatSaviorData
 			BS_Utils.Utilities.BSEvents.songPaused -= SongPaused;
 		}
 
-		private void OnNoteCut(NoteData data, NoteCutInfo info, int multiplier)
+		private void OnNoteCut(NoteData data, in NoteCutInfo info, int multiplier)
 		{
 			// (data.colorType != ColorType.None) checks if it is not a bomb
 			if (info.allIsOK && data.colorType != ColorType.None)

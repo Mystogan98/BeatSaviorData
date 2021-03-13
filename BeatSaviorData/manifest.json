@@ -3,13 +3,13 @@
   "id": "BeatSaviorData",
   "name": "BeatSaviorData",
   "author": "Mystogan",
-  "version": "2.1.4.1",
+  "version": "2.1.5",
   "description": "Show in-depth stats and a score graph at the end of songs, also uploads those stats to Beat Savior, and save in-depth stats localy to be used by BeatSaviorAnalyzer",
-  "gameVersion": "1.13.2",
+  "gameVersion": "1.13.4",
   "dependsOn": {
-    "BSIPA": "^4.1.3",
-    "BS Utils": "^1.6.5",
-    "BeatSaberMarkupLanguage": "^1.4.2"
+    "BSIPA": "^4.1.4",
+    "BS Utils": "^1.8.0",
+    "BeatSaberMarkupLanguage": "^1.5.1"
   },
   "loadAfter": [ "BS Utils", "BeatSaberMarkupLanguage" ],
   "misc": {

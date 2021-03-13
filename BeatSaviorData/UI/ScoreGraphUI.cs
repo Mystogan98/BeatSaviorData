@@ -1,5 +1,6 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.Attributes;
+using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.ViewControllers;
 using BeatSaviorData.Trackers;
 using HMUI;
@@ -36,6 +37,60 @@ namespace BeatSaviorData
 
 		private bool postParseDone = false;
 		private SongData tmpData;
+
+		private List<Color> colors = new List<Color>()
+		{
+			Color.yellow,
+			new Color(1, 0.5f, 0, 1), // Orange
+			Color.red,
+			new Color(1, 0, 0.5f, 1),	// Dark pink
+			Color.magenta,
+			new Color(0.5f, 0, 1, 1),	// Purple
+			Color.blue,
+			new Color(0, 0.5f, 1),	// Light blue
+			Color.cyan,
+			new Color(0, 1, 0.5f), // Blue-green
+			Color.green,
+			new Color(0.5f, 1, 0)	// Light green
+		};
+
+		private List<string> uCute = new List<string>()
+		{
+			"You are awesome. Keep going !",
+			"Smile ! You are beautiful <3",
+			"You're not Mystogan#5963, but you're still awesome ! (Whoever that guy is)",
+			"Damn you're good at this game !",
+			"You're stunning *blushes*",
+			"You made my day better. Thanks !",
+			"I hope you had a great day !",
+			"Everybody loves you, don't forget it <3",
+			"I couldn't write this sentence without U in it <3",
+			"There’s ordinary. And then there’s you.",
+			"Aside from stats, you are my favorite.",
+			"On a scale of 1 to 10, you're a 115.",
+			"You're so hot, brother.",
+			"Help me step bro, I'm stuck !",
+			"Clearly, you've never played a Muffn map",
+			"Is there anything you can’t do?",
+			"I bet you’re smarter than Google.",
+			"Your smile is proof that the best things in life are free.",
+			"I love your sabers' colors !",
+			"I wanted to write something more, but I don't need to. You're already all this mod needs <3",
+			"I WANT MORE STAAAAAAAAAATS",
+			"Someday I feel bad. But then I remember you're actually using my mod <3",
+			"Everytime I see a comment on my mod, it makes me smile. Thank you <3",
+			"More than 4000 users for a mod made by a monkey brain. I don't deserve you guys <3",
+			// To the one reading this : You're awesome. I mean it.
+			"DADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADA",
+			"Is Taichi still number one ?",
+			"Overkill is such a good song !",
+			"June is the best month. Change my mind.",
+			"<3",
+			"I bet you cannot play the next map on faster.",
+			"You can cut notes but you'll never break my heart <3",
+			"Duck.",
+			"Duck plushies are the best plushies."
+		};
 
 		[UIAction("#post-parse")]
 		public void PostParse()
@@ -74,7 +129,13 @@ namespace BeatSaviorData
 				GetOffsets(notes);
 				lastSongBeat = Mathf.CeilToInt(data.songDuration);
 				won = (data.trackers["winTracker"] as WinTracker).won;
-				titleText.text = data.songName;
+				if(!Plugin.fish)
+					titleText.text = data.songName;
+				else
+				{
+					titleText.text = uCute[Utils.random.Next(uCute.Count)];
+					titleText.color = colors[Utils.random.Next(colors.Count)];
+				}
 				titleText.enableAutoSizing = true;
 				titleText.fontSizeMin = 1;
 				titleText.fontSizeMax = 10;
@@ -193,15 +254,16 @@ namespace BeatSaviorData
 		{
 			void CreateLabelText(string _text)
 			{
-				GameObject go = new GameObject("LabelText", typeof(CurvedTextMeshPro));
+				GameObject go = new GameObject("LabelText", typeof(FormattableText));
 				RectTransform rt = go.GetComponent<RectTransform>();
-				CurvedTextMeshPro tmp = go.GetComponent<CurvedTextMeshPro>();
+				CurvedTextMeshPro tmp = go.GetComponent<FormattableText>();
 
 				go.transform.SetParent(graphObject.transform, false);
 				tmp.text = _text;
 				tmp.color = color;
 				tmp.alignment = TextAlignmentOptions.Center;
 				tmp.fontSize = 3;
+				tmp.fontSharedMaterial = titleText.fontSharedMaterial;
 
 				rt.anchorMin = Vector2.zero;
 				rt.anchorMax = Vector2.zero;
@@ -220,14 +282,15 @@ namespace BeatSaviorData
 		{
 			void CreateLabelText(string text)
 			{
-				GameObject go = new GameObject("LabelText", typeof(CurvedTextMeshPro));
+				GameObject go = new GameObject("LabelText", typeof(FormattableText));
 				RectTransform rt = go.GetComponent<RectTransform>();
-				CurvedTextMeshPro tmp = go.GetComponent<CurvedTextMeshPro>();
+				CurvedTextMeshPro tmp = go.GetComponent<FormattableText>();
 
 				go.transform.SetParent(graphObject.transform, false);
 				tmp.text = text;
 				tmp.color = color;
 				tmp.fontSize = 3;
+				tmp.fontSharedMaterial = titleText.fontSharedMaterial;
 
 				rt.anchorMin = Vector2.zero;
 				rt.anchorMax = Vector2.zero;

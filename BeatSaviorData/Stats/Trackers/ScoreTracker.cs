@@ -46,11 +46,13 @@ namespace BeatSaviorData.Trackers
 			if (_modifiers.disappearingArrows) { multiplier += 0.02f; modifiers.Add("DA"); }
 			if (_modifiers.songSpeed == GameplayModifiers.SongSpeed.Faster) { multiplier += 0.08f; modifiers.Add("FS"); }
 			if (_modifiers.songSpeed == GameplayModifiers.SongSpeed.Slower) { multiplier -= 0.3f; modifiers.Add("SS"); }
+			if (_modifiers.songSpeed == GameplayModifiers.SongSpeed.SuperFast) { multiplier += 0.1f; modifiers.Add("SF"); }
 			if (_modifiers.ghostNotes) { multiplier += 0.04f; modifiers.Add("GN"); }
 			if (_modifiers.noArrows) { multiplier -= 0.3f; modifiers.Add("NA"); }
 			if (_modifiers.noBombs) { multiplier -= 0.1f; modifiers.Add("NB"); }
 			if (_modifiers.noFailOn0Energy && energy == 0) { multiplier -= 0.5f; modifiers.Add("NF"); }
 			if (_modifiers.enabledObstacleType == GameplayModifiers.EnabledObstacleType.NoObstacles) { multiplier -= 0.05f; modifiers.Add("NO"); }
+			//if (_modifiers.zenMode) { multiplier -= 1f; modifiers.Add("ZM"); }
 
 			return multiplier;
 		}

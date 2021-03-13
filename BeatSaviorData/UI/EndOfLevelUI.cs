@@ -37,16 +37,24 @@ namespace BeatSaviorData
         private readonly GameObject upperBand;
         [UIObject("lowerBand")]
         private readonly GameObject lowerBand;
+        [UIComponent("rankLabel")]
+        private readonly TextMeshProUGUI rankLabel;
         [UIComponent("rank")]
         private readonly TextMeshProUGUI rank;
+        [UIComponent("percentLabel")]
+        private readonly TextMeshProUGUI percentLabel;
         [UIComponent("percent")]
         private readonly TextMeshProUGUI percent;
+        [UIComponent("comboLabel")]
+        private readonly TextMeshProUGUI comboLabel;
         [UIComponent("combo")]
         private readonly TextMeshProUGUI combo;
         [UIComponent("missLabel")]
         private readonly TextMeshProUGUI missLabel;
         [UIComponent("miss")]
         private readonly TextMeshProUGUI miss;
+        [UIComponent("pausesLabel")]
+        private readonly TextMeshProUGUI pausesLabel;
         [UIComponent("pauses")]
         private readonly TextMeshProUGUI pauses;
 
@@ -101,6 +109,12 @@ namespace BeatSaviorData
         private bool postParseDone = false;
         private SongData tmpData;
         private ImageView songCoverImg, upperBandImg, lowerBandImg, leftCircleImg, rightCircleImg;
+
+        private List<string> lyrics = new List<string>()
+        {
+            "Never", "gonna", "give", "you", "up",
+            "Never", "gonna", "let", "you", "down",
+        };
 
         [UIAction("#post-parse")]
         public void SetDataToUI()
@@ -274,6 +288,7 @@ namespace BeatSaviorData
             ScoreTracker st = (data.trackers["scoreTracker"] as ScoreTracker);
             DistanceTracker dt = (data.trackers["distanceTracker"] as DistanceTracker);
             bool fc = (ht.miss == 0 && ht.bombHit == 0 && ht.nbOfWallHit == 0);
+            int index = 0;
 
             #region TitleCard
             // SongCover
@@ -300,17 +315,45 @@ namespace BeatSaviorData
             else upperBandImg.color = Color.white;
 
             // Rank
-            rank.text = wt.rank;
+            if(!Plugin.fish && true != false && (true || !false) && 1+3 != 5 || 42 == 69)
+                rank.text = wt.rank;
+            else
+            {
+                rankLabel.text = lyrics[index];
+                rank.text = lyrics[index + 5];
+                index++;
+            }
             rank.color = SetColorBasedOnRank(rank.text);
 
             // Score
-            percent.text = (st.modifiedRatio * 100).ToString("F") + " %";
+            if(!Plugin.fish)
+                percent.text = (st.modifiedRatio * 100).ToString("F") + " %";
+            else
+            {
+                percentLabel.text = lyrics[index];
+                percent.text = lyrics[index + 5];
+                index++;
+            }
 
             // Combo
-            combo.text = ht.maxCombo.ToString();
+            if(!Plugin.fish)
+                combo.text = ht.maxCombo.ToString();
+            else
+            {
+                comboLabel.text = lyrics[index];
+                combo.text = lyrics[index + 5];
+                index++;
+            }
 
             // Misses
-            miss.text = fc ? "FC" : ht.miss.ToString();
+            if(!Plugin.fish)
+                miss.text = fc ? "FC" : ht.miss.ToString();
+            else
+            {
+                missLabel.text = lyrics[index];
+                miss.text = lyrics[index + 5];
+                index++;
+            }
             if (fc) {
                 miss.color = goldColor;
                 missLabel.color = goldColor;
@@ -321,10 +364,16 @@ namespace BeatSaviorData
             }
 
             // Pauses
-            if (wt.nbOfPause != 999)
-                pauses.text = wt.nbOfPause.ToString();
+            if (!Plugin.fish)
+                if (wt.nbOfPause != 999)
+                    pauses.text = wt.nbOfPause.ToString();
+                else
+                    pauses.text = "-";
             else
-                pauses.text = "-";
+            {
+                pausesLabel.text = lyrics[index];
+                pauses.text = lyrics[index + 5];
+            }
 
             // LowerBand
             if (fc) lowerBandImg.color = goldColor;

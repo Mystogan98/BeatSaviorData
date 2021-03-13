@@ -16,10 +16,11 @@ namespace BeatSaviorData
 	public class Plugin
 	{
 		internal static string Name => "BeatSaviorData";
+		internal static bool fish;
+
+		private static Harmony harmony;
 
 		private SongData songData, storedData;
-		internal static Harmony harmony;
-
 		private bool songDataFinished = false;
 
 		[Init]
@@ -28,6 +29,8 @@ namespace BeatSaviorData
 		[OnStart]
 		public void OnApplicationStart()
 		{
+			fish = DateTime.Now.Month == 4 && DateTime.Now.Day == 1;
+
 			SceneManager.activeSceneChanged += OnActiveSceneChanged;
 
 			BSEvents.levelCleared += UploadSoloData;

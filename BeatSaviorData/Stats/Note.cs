@@ -59,11 +59,11 @@ namespace BeatSaviorData
 
 			info = _info;
 
-			if (info != null && info.swingRatingCounter != null)
-			{    // If it's a miss info is null
+			if (/*info != null && */info.swingRatingCounter != null)
+			{
 				timeDependence = Math.Abs(info.cutNormal.z);
-				info.swingRatingCounter.didFinishEvent -= WaitForSwing;
-				info.swingRatingCounter.didFinishEvent += WaitForSwing;
+				// info.swingRatingCounter.UnregisterDidFinishReceiver(new WaitForSwing(this));
+				info.swingRatingCounter.RegisterDidFinishReceiver(new WaitForSwing(this));
 			}
 		}
 
@@ -71,25 +71,6 @@ namespace BeatSaviorData
 		{
 			// This is a miss
 			multiplier = _multiplier;
-		}
-
-		private void WaitForSwing(ISaberSwingRatingCounter s)
-		{
-			ScoreModel.RawScoreWithoutMultiplier(info, out int before, out int after, out int accuracy);
-
-			SwingHolder sh = SwingTranspilerHandler.GetSwing(s as SaberSwingRatingCounter);
-			if (sh != null) {
-				preswing = sh.preswing;
-				postswing = sh.postswing;
-			}
-
-			score = new int[] { before, accuracy, after };
-			timeDeviation = info.timeDeviation;
-			speed = info.saberSpeed;
-			cutPoint = Utils.FloatArrayFromVector(info.cutPoint);
-			saberDir = Utils.FloatArrayFromVector(info.saberDir);
-
-			info.swingRatingCounter.didFinishEvent -= WaitForSwing;
 		}
 
 		public static void ResetID()
@@ -104,5 +85,35 @@ namespace BeatSaviorData
 
 		public bool IsAMiss() => GetTotalScore() == 0;
 		public NoteCutInfo GetInfo() => info;
+
+		private class WaitForSwing : ISaberSwingRatingCounterDidFinishReceiver
+		{
+			private Note n;
+
+			public WaitForSwing(Note _n)
+			{
+				n = _n;
+			}
+
+			public void HandleSaberSwingRatingCounterDidFinish(ISaberSwingRatingCounter s)
+			{
+				ScoreModel.RawScoreWithoutMultiplier(s, n.info.cutDistanceToCenter, out int before, out int after, out int accuracy);
+
+				SwingHolder sh = SwingTranspilerHandler.GetSwing(s as SaberSwingRatingCounter);
+				if (sh != null)
+				{
+					n.preswing = sh.preswing;
+					n.postswing = sh.postswing;
+				}
+
+				n.score = new int[] { before, accuracy, after };
+				n.timeDeviation = n.info.timeDeviation;
+				n.speed = n.info.saberSpeed;
+				n.cutPoint = Utils.FloatArrayFromVector(n.info.cutPoint);
+				n.saberDir = Utils.FloatArrayFromVector(n.info.saberDir);
+
+				n.info.swingRatingCounter.UnregisterDidFinishReceiver(this);
+			}
+		}
 	}
 }

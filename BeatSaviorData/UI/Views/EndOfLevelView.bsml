@@ -12,19 +12,19 @@
   <bg anchor-min-x='0' anchor-max-x='1' anchor-min-y='0.61' anchor-max-y='0.74' size-delta-x='0' size-delta-y='0'>
     <bg id='upperBand' anchor-min-x='0' anchor-max-x='1' anchor-min-y='0.97' anchor-max-y='1' size-delta-x='0' size-delta-y='0'></bg>
 
-    <text align='Center' text='Rating' font-size='3' anchor-min-x='0' anchor-max-x='0.2' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rankLabel' align='Center' text='Rating' font-size='3' anchor-min-x='0' anchor-max-x='0.2' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
     <text id='rank' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0' anchor-max-x='0.2' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
 
-    <text align='Center' text='Score' font-size='3' anchor-min-x='0.2' anchor-max-x='0.4' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='percentLabel' align='Center' text='Score' font-size='3' anchor-min-x='0.2' anchor-max-x='0.4' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
     <text id='percent' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0.2' anchor-max-x='0.4' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
 
-    <text align='Center' text='Combo' font-size='3' anchor-min-x='0.4' anchor-max-x='0.6' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='comboLabel' align='Center' text='Combo' font-size='3' anchor-min-x='0.4' anchor-max-x='0.6' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
     <text id='combo' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0.4' anchor-max-x='0.6' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
 
     <text id='missLabel' align='Center' text='Misses' font-size='3' anchor-min-x='0.6' anchor-max-x='0.8' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
     <text id='miss' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0.6' anchor-max-x='0.8' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
     
-    <text align='Center' text='Pauses' font-size='3' anchor-min-x='0.8' anchor-max-x='1' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
+    <text id='pausesLabel' align='Center' text='Pauses' font-size='3' anchor-min-x='0.8' anchor-max-x='1' anchor-min-y='0.5' anchor-max-y='0.9' size-delta-x='0' size-delta-y='0'></text>
     <text id='pauses' align='Center' font-size='5' bold='true' text='Rating' anchor-min-x='0.8' anchor-max-x='1' anchor-min-y='0.1' anchor-max-y='0.5' size-delta-x='0' size-delta-y='0'></text>
 
     <bg id='lowerBand' anchor-min-x='0' anchor-max-x='1' anchor-min-y='0' anchor-max-y='0.03' size-delta-x='0' size-delta-y='0'></bg>
@@ -84,5 +84,5 @@
     <text id='rightAfterSwing' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
   </bg>
   
-  <text text="BeatSaviorData v2.1.4 by Mystogan#5963" anchor-min-x='0' anchor-max-x='0.95' anchor-min-y='0' anchor-max-y='0.05' font-size='3' size-delta-x='0' size-delta-y='0' font-color='#AAAAAA' align='Right'></text>
+  <text text="BeatSaviorData v2.1.5 by Mystogan#5963" anchor-min-x='0' anchor-max-x='0.95' anchor-min-y='0' anchor-max-y='0.05' font-size='3' size-delta-x='0' size-delta-y='0' font-color='#AAAAAA' align='Right'></text>
 </bg>

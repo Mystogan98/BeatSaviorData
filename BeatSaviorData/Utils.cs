@@ -4,6 +4,7 @@ namespace BeatSaviorData
 {
 	class Utils
 	{
+		public static System.Random random = new System.Random();
 		public static float SafeDivide(float a, float b)
 		{
 			try
