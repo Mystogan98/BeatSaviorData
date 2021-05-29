@@ -9,6 +9,12 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
 using BeatSaviorData.Trackers;
+using UnityEngine.UI;
+using System.Collections;
+using HMUI;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace BeatSaviorData
 {
@@ -18,13 +24,18 @@ namespace BeatSaviorData
 		internal static string Name => "BeatSaviorData";
 		internal static bool fish;
 
-		private static Harmony harmony;
+		private Harmony harmony;
 
 		private SongData songData, storedData;
 		private bool songDataFinished = false;
 
 		[Init]
-		public void Init(IPALogger logger) { Logger.log = logger; UserIDFix.GetUserID(); }
+		public void Init(IPALogger logger) 
+		{
+			ServicePointManager.ServerCertificateValidationCallback = ((object message, X509Certificate cert, X509Chain chain, SslPolicyErrors sslPolicyErrors) => true);
+			Logger.log = logger; 
+			UserIDFix.GetUserID(); 
+		}
 
 		[OnStart]
 		public void OnApplicationStart()
@@ -42,14 +53,50 @@ namespace BeatSaviorData
 
 			BSMLSettings.instance.AddSettingsMenu("BeatSaviorData", "BeatSaviorData.UI.Views.SettingsView.bsml", SettingsMenu.instance);
 
-			harmony = new Harmony("com.Mystogan.BeatSaber.BeatSaviorData");
+			harmony = new Harmony("BeatSaviorData");
 
-			//Patch Classes
+			// Patch Classes
 			harmony.PatchAll(System.Reflection.Assembly.GetExecutingAssembly());
 
 			// Create the creator that show stats at the end of a song
 			new GameObject("EndOfLevelUICreator").AddComponent<EndOfLevelUICreator>().plugin = this;
 		}
+
+		private void UploadStats(ScenesTransitionSetupDataSO obj)
+		{ 
+			new PlayerStats();	// Get and upload player related stats
+			BSEvents.lateMenuSceneLoadedFresh -= UploadStats;
+
+			//SharedCoroutineStarter.instance.StartCoroutine(TMP());
+		}
+
+		/*private IEnumerator TMP()
+		{
+			GameObject screen = GameObject.Find("LeftScreen/GameplaySetupViewController/BSMLBackground");
+
+			while(screen == null)
+			{
+				yield return new WaitForSeconds(1);
+				screen = GameObject.Find("LeftScreen/GameplaySetupViewController/BSMLBackground");
+			}
+
+			GameObject go = new GameObject("BSDHistoryButton", typeof(Button));
+			go.transform.SetParent(screen.transform, false);
+			RectTransform rt = go.AddComponent<RectTransform>();
+
+			rt.anchorMin = new Vector2(0.15f, -0.08f);
+			rt.anchorMax = new Vector2(0.35f, -0.02f);
+			rt.offsetMin = Vector2.zero;
+			rt.offsetMax = Vector2.zero;
+
+			ImageView image = go.AddComponent<ImageView>();
+			//image.sprite = BeatSaberMarkupLanguage.Utilities.ImageResources.WhitePixel;
+			image.sprite = Resources.FindObjectsOfTypeAll<Sprite>().Where(x => x.name == "RoundRect10").First();
+			image.material = BeatSaberMarkupLanguage.Utilities.ImageResources.NoGlowMat;
+			image.type = Image.Type.Sliced;
+			image.preserveAspect = true;
+			image.color = new Color32(63, 21, 69, 255);     // new Color32(140, 42, 145, 255);
+		}*/
 
 		private void DiscardSongData(StandardLevelScenesTransitionSetupDataSO data, LevelCompletionResults results)
 		{
@@ -64,18 +111,12 @@ namespace BeatSaviorData
 		[OnExit]
 		public void OnApplicationExit()
 		{
-			harmony.UnpatchAll();
+			harmony.UnpatchAll("BeatSaviorData");
 
 			SceneManager.activeSceneChanged -= OnActiveSceneChanged;
 
 			BSEvents.levelCleared -= UploadSoloData;
 			BSEvents.levelFailed -= UploadSoloData;
-			BSEvents.lateMenuSceneLoadedFresh -= UploadStats;
-		}
-
-		private void UploadStats(ScenesTransitionSetupDataSO obj)
-		{
-			new PlayerStats();	// Get and upload player related stats
 			BSEvents.lateMenuSceneLoadedFresh -= UploadStats;
 		}
 
@@ -94,7 +135,7 @@ namespace BeatSaviorData
 						Logger.log.Info("Fail upload is disabled in the settings.");
 					else
 					{
-						HTTPManager.UploadSongJson(songData.GetTrackersResults());
+						HTTPManager.UploadSongJson(songData.GetTrackersResults(), songData.GetTinyJson());
 					}
 				}
 

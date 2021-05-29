@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace BeatSaviorData.HarmonyPatches
 {
 	[HarmonyPatch(typeof(SoloFreePlayFlowCoordinator), "ProcessLevelCompletionResultsAfterLevelDidFinish")]
-	//[HarmonyPatch("SetDataToUI", MethodType.Normal)]
 	class SoloFreePlayFlowCoordinatorPatches
 	{
 		static void Postfix(ref SoloFreePlayFlowCoordinator __instance, LevelCompletionResults levelCompletionResults)

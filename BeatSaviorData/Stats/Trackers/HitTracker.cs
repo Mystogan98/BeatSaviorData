@@ -22,7 +22,7 @@
 					if (n.cutType == CutType.miss)
 					{
 						missedNotes++;
-						if (n.noteType == BSD_NoteType.left)
+						if (n.noteType == BSDNoteType.left)
 							leftMiss++;
 						else
 							rightMiss++;
@@ -37,9 +37,9 @@
 					}
 
 				}
-				else if (n.noteType == BSD_NoteType.left)
+				else if (n.noteType == BSDNoteType.left)
 					leftNoteHit++;
-				else if (n.noteType == BSD_NoteType.right)
+				else if (n.noteType == BSDNoteType.right)
 					rightNoteHit++;
 			}
 		}

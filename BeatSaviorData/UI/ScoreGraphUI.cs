@@ -79,7 +79,7 @@ namespace BeatSaviorData
 			"I WANT MORE STAAAAAAAAAATS",
 			"Someday I feel bad. But then I remember you're actually using my mod <3",
 			"Everytime I see a comment on my mod, it makes me smile. Thank you <3",
-			"More than 4000 users for a mod made by a monkey brain. I don't deserve you guys <3",
+			"More than 20000 users for a mod made by a monkey brain. I don't deserve you guys <3",
 			// To the one reading this : You're awesome. I mean it.
 			"DADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADADA",
 			"Is Taichi still number one ?",
@@ -164,6 +164,8 @@ namespace BeatSaviorData
 
 		private void CreateVerticalLabels()
 		{
+			// Add the easter egg "Connasse de chaise"
+
 			List<float> drops = new List<float>();
 			int labelsLeft = 3;
 

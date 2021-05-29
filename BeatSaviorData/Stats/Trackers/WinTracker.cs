@@ -7,7 +7,7 @@
 		public float endTime;
 		public int nbOfPause;
 
-		public void EndOfSong(LevelCompletionResults results,  SongData data)
+		public void EndOfSong(LevelCompletionResults results, SongData data)
 		{
 			won = results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Cleared;
 			endTime = results.endSongTime;

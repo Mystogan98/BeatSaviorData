@@ -5,4 +5,5 @@
   <checkbox text="Enable UI" value="EnableUI" />
   <checkbox text="Disable Graph Panel" value="DisableGraphPanel" />
   <checkbox text="Disable Beat Savior Upload" value="DisableBeatSaviorUpload" />
+  <checkbox text="Enable BSFR Upload" value="EnableBSFRUpload" />
 </settings-container>

@@ -24,6 +24,7 @@ namespace BeatSaviorData
 		#region Public
 			public SongDataType songDataType = SongDataType.none;
 			public string playerID, songID, songDifficulty, songName, songArtist, songMapper;
+			public int songDifficultyRank;
 			public float songSpeed = 1, songStartTime = 0, songDuration = 0;
 
 			#region Dictionarries
@@ -52,7 +53,7 @@ namespace BeatSaviorData
 			private readonly GameplayModifiersModelSO modifierData;
 			private readonly PlayerDataModel playerData;
 
-			private string trackerResult, deepTrackerResult;
+			private string trackerResult, deepTrackerResult, gameMode;
 		#endregion
 
 		public SongData()
@@ -77,6 +78,9 @@ namespace BeatSaviorData
 
 			songID = GCSSD.difficultyBeatmap.level.levelID.Replace("custom_level_","").Split('_')[0];
 			songDifficulty = GCSSD.difficultyBeatmap.difficulty.ToString().ToLower();
+			gameMode = GCSSD.difficultyBeatmap.level.beatmapLevelData.difficultyBeatmapSets[0].beatmapCharacteristic.serializedName;
+
+			songDifficultyRank = GCSSD.difficultyBeatmap.difficultyRank;
 			songName = GCSSD.difficultyBeatmap.level.songName;
 			songArtist = GCSSD.difficultyBeatmap.level.songAuthorName;
 			songMapper = GCSSD.difficultyBeatmap.level.levelAuthorName;
@@ -158,6 +162,13 @@ namespace BeatSaviorData
 		public bool IsPraticeMode() => songDataType == SongDataType.practice;
 		public string GetDeepTrackersResults() => deepTrackerResult;
 		public string GetTrackersResults() => trackerResult;
+		public string GetTinyJson() => JsonConvert.SerializeObject(new TinyJson() { playerID = playerID, songID = songID, gameMode = gameMode, score = (trackers["scoreTracker"] as ScoreTracker).score, difficulty = songDifficultyRank }, Formatting.None);
 		#endregion
+		}
+
+	public class TinyJson
+	{
+		public string playerID, songID, gameMode;
+		public int score, difficulty;
 	}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BeatSaviorData
 {
-	public enum BSD_NoteType
+	public enum BSDNoteType
 	{
 		right,
 		left
@@ -23,7 +23,7 @@ namespace BeatSaviorData
 	{
 		private static int actualId = 0;
 
-		public BSD_NoteType noteType;
+		public BSDNoteType noteType;
 		public NoteCutDirection noteDirection;
 		public int index, id;
 		public float time;
@@ -39,9 +39,9 @@ namespace BeatSaviorData
 		private Note(NoteData data, CutType cut)
 		{
 			if (data.colorType == ColorType.ColorB)
-				noteType = BSD_NoteType.right;
+				noteType = BSDNoteType.right;
 			else if (data.colorType == ColorType.ColorA)
-				noteType = BSD_NoteType.left;
+				noteType = BSDNoteType.left;
 
 			score = new int[] { 0, 0, 0 };
 			index = data.lineIndex + 4 * (int)data.noteLineLayer;

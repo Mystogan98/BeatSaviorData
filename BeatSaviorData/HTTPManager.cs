@@ -12,10 +12,6 @@ namespace BeatSaviorData
 
 		public async static void UploadPlayerStats(string json)
 		{
-			/*if(!SettingsMenu.instance.DisableSilverHazeHTTPSUpload)
-				await Upload(json, PrivateKeys.SilverHazeUploadUrl);
-			if (!SettingsMenu.instance.DisableSilverHazeHTTPUpload)
-				await Upload(json, PrivateKeys.SilverHazeUploadUrlHTTP);*/
 			if (!SettingsMenu.instance.DisableBeatSaviorUpload)
 			{
 				try
@@ -34,12 +30,8 @@ namespace BeatSaviorData
 			}
 		}
 
-		public async static void UploadSongJson(string json)
+		public async static void UploadSongJson(string json, string tinyJson = null)
 		{
-			/*if (!SettingsMenu.instance.DisableSilverHazeHTTPSUpload)
-				await Upload(json, PrivateKeys.SilverHazeUploadUrl);
-			if (!SettingsMenu.instance.DisableSilverHazeHTTPUpload)
-				await Upload(json, PrivateKeys.SilverHazeUploadUrlHTTP);*/
 			if (!SettingsMenu.instance.DisableBeatSaviorUpload)
 			{
 				try
@@ -55,6 +47,32 @@ namespace BeatSaviorData
 			else
 			{
 				Logger.log.Debug("Beat Savior Upload is disabled in the settings.");
+			}
+
+			if (SettingsMenu.instance.EnableBSFRUpload)
+			{
+				try
+				{
+					await Upload(tinyJson, PrivateKeys.BSFRUploadNotifierUrl);
+				}
+				catch (Exception ex)
+				{
+					Logger.log.Error($"BSD : Error uploading player stats to BSFR");
+					Logger.log.Debug(ex);
+				}
+			}
+
+			if (SettingsMenu.instance.EnableCustomUrlUpload)
+			{
+				try
+				{
+					await Upload(tinyJson, SettingsMenu.instance.CustomUploadUrl);
+				}
+				catch (Exception ex)
+				{
+					Logger.log.Error($"BSD : Error uploading player stats to CustomURL");
+					Logger.log.Debug(ex);
+				}
 			}
 		}
 

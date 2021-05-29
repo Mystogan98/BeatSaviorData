@@ -26,7 +26,7 @@ namespace BeatSaviorData.Trackers
 
 				acc = n.score[0] + n.score[1] + n.score[2];
 
-				if (n.noteType == BSD_NoteType.left) {
+				if (n.noteType == BSDNoteType.left) {
 					cutLeft++;
 					accLeft += acc;
 					leftAverageCut[0] += n.score[0];
