@@ -59,6 +59,12 @@ namespace BeatSaviorData
 
 		public SongData()
 		{
+			if (!BS_Utils.Plugin.LevelData.IsSet)
+            {
+				Logger.log.Error("BS_Utils level data is not present. Did you start the tutorial ?");
+				return;
+			}
+				
 			try
 			{
 				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();						// Does this get used for anything?
