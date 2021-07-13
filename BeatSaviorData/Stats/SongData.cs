@@ -1,4 +1,5 @@
 ﻿using BS_Utils.Gameplay;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -58,13 +59,22 @@ namespace BeatSaviorData
 
 		public SongData()
 		{
+			if (!BS_Utils.Plugin.LevelData.IsSet)
+			{
+				Logger.log.Error("BS_Utils level data is not present. Did you start the tutorial ?");
+				return;
+			}
+				
 			try
 			{
-				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().First();
+				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();						// Does this get used for anything?
 				GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
 				modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
 				playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
-				scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().First();
+
+				// Ideally, this would get used with (x => x.isActiveAndEnabled). However, when SongData is getting created, no ScoreController is active and enabled at that point in time.
+				// Getting the last one might be good enough, though.
+				scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().Last();		
 			} catch (Exception)
 			{
 				Logger.log.Error("SongData couldn't be created. Did you start the tutorial ?");
@@ -105,7 +115,8 @@ namespace BeatSaviorData
 			await Task.Delay(500);
 
 			try {
-				songDuration = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().FirstOrDefault().songLength;
+				AudioTimeSyncController audioTimeSyncController = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().LastOrDefault(x => x.isActiveAndEnabled);
+				songDuration = audioTimeSyncController.songLength;
 			} catch {
 				Logger.log.Error("BSD : Could not get song length !");
 				songDuration = -1;

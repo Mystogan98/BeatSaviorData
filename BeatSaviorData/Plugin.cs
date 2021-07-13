@@ -156,6 +156,9 @@ namespace BeatSaviorData
 		{
 			if (nextScene.name == "GameCore")
 			{
+				if (BS_Utils.Plugin.LevelData.Mode == BS_Utils.Gameplay.Mode.Multiplayer)
+					return;
+                    
 				GameSceneLoaded();
 
 				foreach(MissionLevelScenesTransitionSetupDataSO m in Resources.FindObjectsOfTypeAll<MissionLevelScenesTransitionSetupDataSO>())
