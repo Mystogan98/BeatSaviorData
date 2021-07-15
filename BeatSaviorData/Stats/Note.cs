@@ -30,8 +30,8 @@ namespace BeatSaviorData
 		public CutType cutType;
 		public int multiplier;
 		public int[] score;
-		public float timeDeviation, speed, preswing, postswing;
-		public float[] cutPoint, saberDir;
+		public float timeDeviation, speed, preswing, postswing, distanceToCenter;
+		public float[] cutPoint, saberDir, cutNormal;
 		public float timeDependence;
 
 		private readonly NoteCutInfo info;
@@ -64,6 +64,7 @@ namespace BeatSaviorData
 				timeDependence = Math.Abs(info.cutNormal.z);
 				// info.swingRatingCounter.UnregisterDidFinishReceiver(new WaitForSwing(this));
 				info.swingRatingCounter.RegisterDidFinishReceiver(new WaitForSwing(this));
+				distanceToCenter = info.cutDistanceToCenter;
 			}
 		}
 
@@ -111,6 +112,7 @@ namespace BeatSaviorData
 				n.speed = n.info.saberSpeed;
 				n.cutPoint = Utils.FloatArrayFromVector(n.info.cutPoint);
 				n.saberDir = Utils.FloatArrayFromVector(n.info.saberDir);
+				n.cutNormal = Utils.FloatArrayFromVector(n.info.cutNormal);
 
 				n.info.swingRatingCounter.UnregisterDidFinishReceiver(this);
 			}

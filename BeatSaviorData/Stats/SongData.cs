@@ -7,6 +7,8 @@ using BeatSaviorData.Trackers;
 using Newtonsoft.Json;
 using System;
 using System.Threading.Tasks;
+using System.Reflection;
+using HarmonyLib;
 
 namespace BeatSaviorData
 {
@@ -22,6 +24,8 @@ namespace BeatSaviorData
 
 	public class SongData
 	{
+		private static MethodBase ScoreSaber_playbackEnabled = AccessTools.Method("ScoreSaber.Core.ReplaySystem.HarmonyPatches.PatchHandleHMDUnmounted:Prefix");	
+
 		#region Public
 			public SongDataType songDataType = SongDataType.none;
 			public string playerID, songID, songDifficulty, songName, songArtist, songMapper;
@@ -102,8 +106,13 @@ namespace BeatSaviorData
 				songSpeed = GCSSD.practiceSettings.songSpeedMul;
 				songStartTime = GCSSD.practiceSettings.startSongTime;
 			} else {
-				songDataType = SongDataType.replay;         // We set it as a replay by default, then set it as a pass if IsNotAReplay() is called
-				scoreController.scoreDidChangeEvent += IsNotAReplay;
+				if (ScoreSaber_playbackEnabled != null && (bool)ScoreSaber_playbackEnabled.Invoke(null, null) == false)
+					songDataType = SongDataType.replay;
+				else
+					songDataType = SongDataType.none;
+				
+				// We set it as a replay by default, then set it as a pass if IsNotAReplay() is called
+				//scoreController.scoreDidChangeEvent += IsNotAReplay;
 			}
 
 			dataCollector = new DataCollector();
@@ -115,8 +124,7 @@ namespace BeatSaviorData
 			await Task.Delay(500);
 
 			try {
-				AudioTimeSyncController audioTimeSyncController = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().LastOrDefault(x => x.isActiveAndEnabled);
-				songDuration = audioTimeSyncController.songLength;
+				songDuration = Resources.FindObjectsOfTypeAll<AudioTimeSyncController>().LastOrDefault(x => x.isActiveAndEnabled).songLength;
 			} catch {
 				Logger.log.Error("BSD : Could not get song length !");
 				songDuration = -1;
@@ -129,12 +137,12 @@ namespace BeatSaviorData
 			UserIDFix.UserIDReady -= SetUserID;
 		}
 
-		private void IsNotAReplay(int score, int modifiedScore)
+		/*private void IsNotAReplay(int score, int modifiedScore)
 		{
 			if (songDataType == SongDataType.replay)
 				songDataType = SongDataType.none;
 			scoreController.scoreDidChangeEvent -= IsNotAReplay;
-		}
+		}*/
 
 		private Dictionary<string, ITracker> iDontLikeThat;
 		public void FinalizeData(LevelCompletionResults results)
@@ -173,7 +181,7 @@ namespace BeatSaviorData
 		public bool IsPraticeMode() => songDataType == SongDataType.practice;
 		public string GetDeepTrackersResults() => deepTrackerResult;
 		public string GetTrackersResults() => trackerResult;
-		public string GetTinyJson() => JsonConvert.SerializeObject(new TinyJson() { playerID = playerID, songID = songID, gameMode = gameMode, score = (trackers["scoreTracker"] as ScoreTracker).score, difficulty = songDifficultyRank }, Formatting.None);
+		public string GetTinyJson() => JsonConvert.SerializeObject(new TinyJson() { playerID = playerID, songID = songID, gameMode = gameMode, score = (trackers["scoreTracker"] as ScoreTracker).score, difficulty = songDifficultyRank, isAPass = songDataType == SongDataType.pass }, Formatting.None);
 		#endregion
 		}
 
@@ -181,5 +189,6 @@ namespace BeatSaviorData
 	{
 		public string playerID, songID, gameMode;
 		public int score, difficulty;
+		public bool isAPass;
 	}
 }
