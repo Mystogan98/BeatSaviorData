@@ -30,14 +30,20 @@ namespace BeatSaviorData
 		public CutType cutType;
 		public int multiplier;
 		public int[] score;
+		public float[] noteCenter, noteRotation;
 		public float timeDeviation, speed, preswing, postswing, distanceToCenter;
 		public float[] cutPoint, saberDir, cutNormal;
 		public float timeDependence;
 
 		private readonly NoteCutInfo info;
 
-		private Note(NoteData data, CutType cut)
+		private Note(NoteController controller, CutType cut)
 		{
+			NoteData data = controller.noteData;
+
+			noteCenter = Utils.FloatArrayFromVector(controller.noteTransform.position);
+			noteRotation = Utils.FloatArrayFromVector(controller.noteTransform.rotation.eulerAngles);
+
 			if (data.colorType == ColorType.ColorB)
 				noteType = BSDNoteType.right;
 			else if (data.colorType == ColorType.ColorA)
@@ -53,7 +59,7 @@ namespace BeatSaviorData
 			cutType = cut;
 		}
 
-		public Note(NoteData data, CutType cut, NoteCutInfo _info, int _multiplier) : this(data, cut)
+		public Note(NoteController controller, CutType cut, NoteCutInfo _info, int _multiplier) : this(controller, cut)
 		{
 			multiplier = _multiplier;
 
@@ -68,7 +74,7 @@ namespace BeatSaviorData
 			}
 		}
 
-		public Note(NoteData data, CutType cut, int _multiplier) : this(data, cut)
+		public Note(NoteController controller, CutType cut, int _multiplier) : this(controller, cut)
 		{
 			// This is a miss
 			multiplier = _multiplier;

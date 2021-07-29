@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using System.Reflection;
 using HarmonyLib;
+using BS_Utils.Utilities;
 
 namespace BeatSaviorData
 {
@@ -51,8 +52,10 @@ namespace BeatSaviorData
 		#endregion
 
 		#region Private
-			private readonly DataCollector dataCollector;
-			private readonly BeatmapObjectSpawnController BOSC;
+			// Yes, I know, I have to Zenjectify all the things
+			private DataCollector dataCollector;
+			//private readonly BeatmapObjectSpawnController BOSC;
+			private BeatmapObjectManager BOM;
 			private readonly GameplayCoreSceneSetupData GCSSD;
 			private readonly ScoreController scoreController;
 			private readonly GameplayModifiersModelSO modifierData;
@@ -71,14 +74,16 @@ namespace BeatSaviorData
 				
 			try
 			{
-				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();						// Does this get used for anything?
+				//BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();						// Does this get used for anything? || Seems not ¯\_(ツ)_/¯
 				GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
 				modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
 				playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
 
 				// Ideally, this would get used with (x => x.isActiveAndEnabled). However, when SongData is getting created, no ScoreController is active and enabled at that point in time.
 				// Getting the last one might be good enough, though.
-				scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().Last();		
+				scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().Last();
+				//BOM = scoreController.GetPrivateField<BeatmapObjectManager>("_beatmapObjectManager");
+				GetBOMFromScoreController();
 			} catch (Exception)
 			{
 				Logger.log.Error("SongData couldn't be created. Did you start the tutorial ?");
@@ -114,7 +119,17 @@ namespace BeatSaviorData
 				// We set it as a replay by default, then set it as a pass if IsNotAReplay() is called
 				//scoreController.scoreDidChangeEvent += IsNotAReplay;
 			}
+		}
 
+		private async void GetBOMFromScoreController()
+		{
+			while(BOM == null)
+			{
+				await Task.Delay(50);
+				BOM = scoreController.GetPrivateField<BeatmapObjectManager>("_beatmapObjectManager");
+			}
+
+			// Create the DataCollector only now because it needs the BOM
 			dataCollector = new DataCollector();
 			dataCollector.RegisterCollector(this);
 		}
@@ -170,7 +185,8 @@ namespace BeatSaviorData
 		}
 
 		#region Getters
-		public BeatmapObjectSpawnController GetBOSC() => BOSC;
+		//public BeatmapObjectSpawnController GetBOSC() => BOSC;
+		public BeatmapObjectManager GetBOM() => BOM;
 		public GameplayCoreSceneSetupData GetGCSSD() => GCSSD;
 		public ScoreController GetScoreController() => scoreController;
 		public GameplayModifiersModelSO GetModifierData() => modifierData;
