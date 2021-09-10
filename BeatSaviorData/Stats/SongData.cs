@@ -29,7 +29,7 @@ namespace BeatSaviorData
 
 		#region Public
 			public SongDataType songDataType = SongDataType.none;
-			public string playerID, songID, songDifficulty, songName, songArtist, songMapper;
+			public string playerID, songID, songDifficulty, songName, songArtist, songMapper, gameMode;
 			public int songDifficultyRank;
 			public float songSpeed = 1, songStartTime = 0, songDuration = 0;
 
@@ -61,7 +61,7 @@ namespace BeatSaviorData
 			private readonly GameplayModifiersModelSO modifierData;
 			private readonly PlayerDataModel playerData;
 
-			private string trackerResult, deepTrackerResult, gameMode;
+			private string trackerResult, deepTrackerResult;
 		#endregion
 
 		public SongData()
