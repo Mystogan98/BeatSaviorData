@@ -31,7 +31,7 @@ namespace BeatSaviorData
 			public SongDataType songDataType = SongDataType.none;
 			public string playerID, songID, songDifficulty, songName, songArtist, songMapper, gameMode;
 			public int songDifficultyRank;
-			public float songSpeed = 1, songStartTime = 0, songDuration = 0;
+			public float songSpeed = 1, songStartTime = 0, songDuration = 0, jd = 0;
 
 			#region Dictionarries
 				public Dictionary<string, ITracker> trackers = new Dictionary<string, ITracker>()
@@ -60,6 +60,7 @@ namespace BeatSaviorData
 			private readonly ScoreController scoreController;
 			private readonly GameplayModifiersModelSO modifierData;
 			private readonly PlayerDataModel playerData;
+			private readonly BeatmapObjectSpawnController beatSpawnController;
 
 			private string trackerResult, deepTrackerResult;
 		#endregion
@@ -78,6 +79,9 @@ namespace BeatSaviorData
 				GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
 				modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
 				playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
+				beatSpawnController = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().First();
+
+				beatSpawnController.didInitEvent += BeatSpawnControllerDidInit;
 
 				// Ideally, this would get used with (x => x.isActiveAndEnabled). However, when SongData is getting created, no ScoreController is active and enabled at that point in time.
 				// Getting the last one might be good enough, though.
@@ -150,6 +154,11 @@ namespace BeatSaviorData
 		{
 			playerID = UserIDFix.UserID;
 			UserIDFix.UserIDReady -= SetUserID;
+		}
+
+		private void BeatSpawnControllerDidInit()
+        {
+			jd = beatSpawnController.jumpDistance;
 		}
 
 		/*private void IsNotAReplay(int score, int modifiedScore)
