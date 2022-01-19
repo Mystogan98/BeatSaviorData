@@ -157,7 +157,7 @@ namespace BeatSaviorData
 		}
 
 		private void BeatSpawnControllerDidInit()
-        {
+		{
 			jd = beatSpawnController.jumpDistance;
 		}
 
