@@ -102,7 +102,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HarmonyPatches\ImageViewFilledImagePatch.cs" />
     <Compile Include="HarmonyPatches\SaberSwingRatingCounterPatches.cs" />
     <Compile Include="Stats\SwingTranspilerHandler.cs" />
     <Compile Include="UserIDFix.cs" />

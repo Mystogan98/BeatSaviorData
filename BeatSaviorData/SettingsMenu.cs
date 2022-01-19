@@ -49,13 +49,6 @@ namespace BeatSaviorData
 			set => config.SetBool("BeatSaviorData", "DisableBeatSaviorUpload", value);
 		}
 
-		[UIValue("EnableBSFRUpload")]
-		public bool EnableBSFRUpload
-		{
-			get => config.GetBool("BeatSaviorData", "EnableBSFRUpload", false, true);
-			set => config.SetBool("BeatSaviorData", "EnableBSFRUpload", value);
-		}
-
 		public bool EnableCustomUrlUpload
 		{
 			get => config.GetBool("BeatSaviorData", "EnableCustomUrlUpload", false, true);

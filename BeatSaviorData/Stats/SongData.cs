@@ -197,14 +197,6 @@ namespace BeatSaviorData
 		public bool IsPraticeMode() => songDataType == SongDataType.practice;
 		public string GetDeepTrackersResults() => deepTrackerResult;
 		public string GetTrackersResults() => trackerResult;
-		public string GetTinyJson() => JsonConvert.SerializeObject(new TinyJson() { playerID = playerID, songID = songID, gameMode = gameMode, score = (trackers["scoreTracker"] as ScoreTracker).score, difficulty = songDifficultyRank, isAPass = songDataType == SongDataType.pass }, Formatting.None);
 		#endregion
 		}
-
-	public class TinyJson
-	{
-		public string playerID, songID, gameMode;
-		public int score, difficulty;
-		public bool isAPass;
-	}
 }

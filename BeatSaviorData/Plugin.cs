@@ -135,7 +135,7 @@ namespace BeatSaviorData
 						Logger.log.Info("Fail upload is disabled in the settings.");
 					else
 					{
-						HTTPManager.UploadSongJson(songData.GetTrackersResults(), songData.GetTinyJson());
+						HTTPManager.UploadSongJson(songData.GetTrackersResults());
 					}
 				}
 
@@ -176,6 +176,7 @@ namespace BeatSaviorData
 		}
 
 		public bool IsComputeFinished() => songDataFinished;
+
 		public SongData GetSongData() {
 			songDataFinished = false;
 			return storedData;

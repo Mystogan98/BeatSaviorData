@@ -30,7 +30,7 @@ namespace BeatSaviorData
 			}
 		}
 
-		public async static void UploadSongJson(string json, string tinyJson = null)
+		public async static void UploadSongJson(string json)
 		{
 			if (!SettingsMenu.instance.DisableBeatSaviorUpload)
 			{
@@ -49,24 +49,11 @@ namespace BeatSaviorData
 				Logger.log.Debug("Beat Savior Upload is disabled in the settings.");
 			}
 
-			if (SettingsMenu.instance.EnableBSFRUpload)
-			{
-				try
-				{
-					await Upload(tinyJson, PrivateKeys.BSFRUploadNotifierUrl);
-				}
-				catch (Exception ex)
-				{
-					Logger.log.Error($"BSD : Error uploading player stats to BSFR");
-					Logger.log.Debug(ex);
-				}
-			}
-
 			if (SettingsMenu.instance.EnableCustomUrlUpload)
 			{
 				try
 				{
-					await Upload(tinyJson, SettingsMenu.instance.CustomUploadUrl);
+					await Upload(json, SettingsMenu.instance.CustomUploadUrl);
 				}
 				catch (Exception ex)
 				{
