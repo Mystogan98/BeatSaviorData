@@ -84,5 +84,5 @@
     <text id='rightSpeed' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
   </bg>
   
-  <text text="BeatSaviorData v2.1.6 by Mystogan#5963" anchor-min-x='0' anchor-max-x='0.95' anchor-min-y='0' anchor-max-y='0.05' font-size='3' size-delta-x='0' size-delta-y='0' font-color='#AAAAAA' align='Right'></text>
+  <text text="BeatSaviorData v2.1.10 by Mystogan#5963" anchor-min-x='0' anchor-max-x='0.95' anchor-min-y='0' anchor-max-y='0.05' font-size='3' size-delta-x='0' size-delta-y='0' font-color='#AAAAAA' align='Right'></text>
 </bg>
