@@ -31,7 +31,7 @@ namespace BeatSaviorData
 			public SongDataType songDataType = SongDataType.none;
 			public string playerID, songID, songDifficulty, songName, songArtist, songMapper, gameMode;
 			public int songDifficultyRank;
-			public float songSpeed = 1, songStartTime = 0, songDuration = 0, jd = 0;
+			public float songSpeed = 1, songStartTime = 0, songDuration = 0, songJumpDistance = 0;
 
 			#region Dictionarries
 				public Dictionary<string, ITracker> trackers = new Dictionary<string, ITracker>()
@@ -54,13 +54,12 @@ namespace BeatSaviorData
 		#region Private
 			// Yes, I know, I have to Zenjectify all the things
 			private DataCollector dataCollector;
-			//private readonly BeatmapObjectSpawnController BOSC;
+			private readonly BeatmapObjectSpawnController BOSC;
 			private BeatmapObjectManager BOM;
 			private readonly GameplayCoreSceneSetupData GCSSD;
 			private readonly ScoreController scoreController;
 			private readonly GameplayModifiersModelSO modifierData;
 			private readonly PlayerDataModel playerData;
-			private readonly BeatmapObjectSpawnController beatSpawnController;
 
 			private string trackerResult, deepTrackerResult;
 		#endregion
@@ -75,13 +74,12 @@ namespace BeatSaviorData
 				
 			try
 			{
-				//BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();						// Does this get used for anything? || Seems not ¯\_(ツ)_/¯
+				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();						// Does this get used for anything? || Seems not ¯\_(ツ)_/¯
 				GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
 				modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
 				playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
-				beatSpawnController = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().First();
 
-				beatSpawnController.didInitEvent += BeatSpawnControllerDidInit;
+				BOSC.didInitEvent += BOSCDidInit;
 
 				// Ideally, this would get used with (x => x.isActiveAndEnabled). However, when SongData is getting created, no ScoreController is active and enabled at that point in time.
 				// Getting the last one might be good enough, though.
@@ -156,9 +154,9 @@ namespace BeatSaviorData
 			UserIDFix.UserIDReady -= SetUserID;
 		}
 
-		private void BeatSpawnControllerDidInit()
+		private void BOSCDidInit()
 		{
-			jd = beatSpawnController.jumpDistance;
+			songJumpDistance = BOSC.jumpDistance;
 		}
 
 		/*private void IsNotAReplay(int score, int modifiedScore)
