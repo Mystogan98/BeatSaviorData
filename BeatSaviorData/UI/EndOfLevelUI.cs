@@ -68,8 +68,8 @@ namespace BeatSaviorData
         private readonly TextMeshProUGUI leftAccuracy;
         [UIComponent("leftAfterCut")]
         private readonly TextMeshProUGUI leftAfterCut;
-        [UIComponent("leftDistance")]
-        private readonly TextMeshProUGUI leftDistance;
+        [UIComponent("leftTD")]
+        private readonly TextMeshProUGUI leftTD;
         [UIComponent("leftSpeed")]
         private readonly TextMeshProUGUI leftSpeed;
         [UIComponent("leftBeforeSwing")]
@@ -90,8 +90,8 @@ namespace BeatSaviorData
         private readonly TextMeshProUGUI rightAccuracy;
         [UIComponent("rightAfterCut")]
         private readonly TextMeshProUGUI rightAfterCut;
-        [UIComponent("rightDistance")]
-        private readonly TextMeshProUGUI rightDistance;
+        [UIComponent("rightTD")]
+        private readonly TextMeshProUGUI rightTD;
         [UIComponent("rightSpeed")]
         private readonly TextMeshProUGUI rightSpeed;
         [UIComponent("rightBeforeSwing")]
@@ -197,8 +197,8 @@ namespace BeatSaviorData
             leftAfterCut.overflowMode = TextOverflowModes.Overflow;
 
             // LeftDistance
-            leftDistance.color = colors.saberAColor;
-            leftDistance.overflowMode = TextOverflowModes.Overflow;
+            leftTD.color = colors.saberAColor;
+            leftTD.overflowMode = TextOverflowModes.Overflow;
 
             // LeftSpeed
             leftSpeed.color = colors.saberAColor;
@@ -254,8 +254,8 @@ namespace BeatSaviorData
             rightAfterCut.overflowMode = TextOverflowModes.Overflow;
 
             // rightDistance
-            rightDistance.color = colors.saberBColor;
-            rightDistance.overflowMode = TextOverflowModes.Overflow;
+            rightTD.color = colors.saberBColor;
+            rightTD.overflowMode = TextOverflowModes.Overflow;
 
             // rightSpeed
             rightSpeed.color = colors.saberBColor;
@@ -286,7 +286,7 @@ namespace BeatSaviorData
             HitTracker ht = (data.trackers["hitTracker"] as HitTracker);
             WinTracker wt = (data.trackers["winTracker"] as WinTracker);
             ScoreTracker st = (data.trackers["scoreTracker"] as ScoreTracker);
-            DistanceTracker dt = (data.trackers["distanceTracker"] as DistanceTracker);
+            //DistanceTracker dt = (data.trackers["distanceTracker"] as DistanceTracker);
             bool fc = (ht.miss == 0 && ht.bombHit == 0 && ht.nbOfWallHit == 0);
             int index = 0;
 
@@ -397,7 +397,7 @@ namespace BeatSaviorData
             leftAfterCut.text = at.leftAverageCut[2].ToString("0.#");
 
             // LeftDistance
-            leftDistance.text = dt.leftHand.ToString("0.##") + " m";
+            leftTD.text = at.leftTimeDependence.ToString("0.###");
 
             // LeftSpeed
             leftSpeed.text = (at.leftSpeed * 3.6f).ToString("0.##") + " Km/h";
@@ -426,7 +426,7 @@ namespace BeatSaviorData
             rightAfterCut.text = at.rightAverageCut[2].ToString("0.#");
 
             // rightDistance
-            rightDistance.text = dt.rightHand.ToString("0.##") + " m";
+            rightTD.text = at.rightTimeDependence.ToString("0.###");
 
             // rightSpeed
             rightSpeed.text = (at.rightSpeed * 3.6f).ToString("0.##") + " Km/h";

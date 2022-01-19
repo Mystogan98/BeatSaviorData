@@ -43,8 +43,8 @@
     <text align='Center' text='After cut' font-size='3' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.57' anchor-max-y='0.62' size-delta-x='0' size-delta-y='0'></text>
     <text id='leftAfterCut' align='Center' font-size='5' anchor-min-x='0.6' anchor-max-x='0.9' anchor-min-y='0.47' anchor-max-y='0.57' size-delta-x='0' size-delta-y='0'></text>
 
-    <text align='Center' text='Distance' font-size='3' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.35' anchor-max-y='0.4' size-delta-x='0' size-delta-y='0'></text>
-    <text id='leftDistance' align='Center' font-size='4.5' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.25' anchor-max-y='0.35' size-delta-x='0' size-delta-y='0'></text>
+    <text align='Center' text='Time Dependency' font-size='3' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.35' anchor-max-y='0.4' size-delta-x='0' size-delta-y='0'></text>
+    <text id='leftTD' align='Center' font-size='4.5' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.25' anchor-max-y='0.35' size-delta-x='0' size-delta-y='0'></text>
 
     <text align='Center' text='Speed' font-size='3' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.19' anchor-max-y='0.24' size-delta-x='0' size-delta-y='0'></text>
     <text id='leftSpeed' align='Center' font-size='4.5' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
@@ -77,8 +77,8 @@
     <text align='Center' text='Post-swing' font-size='3' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.19' anchor-max-y='0.24' size-delta-x='0' size-delta-y='0'></text>
     <text id='rightAfterSwing' align='Center' font-size='4.5' anchor-min-x='0.1' anchor-max-x='0.5' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
     
-    <text align='Center' text='Distance' font-size='3' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.35' anchor-max-y='0.4' size-delta-x='0' size-delta-y='0'></text>
-    <text id='rightDistance' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.25' anchor-max-y='0.35' size-delta-x='0' size-delta-y='0'></text>
+    <text align='Center' text='Time Dependency' font-size='3' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.35' anchor-max-y='0.4' size-delta-x='0' size-delta-y='0'></text>
+    <text id='rightTD' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.25' anchor-max-y='0.35' size-delta-x='0' size-delta-y='0'></text>
 
     <text align='Center' text='Speed' font-size='3' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.19' anchor-max-y='0.24' size-delta-x='0' size-delta-y='0'></text>
     <text id='rightSpeed' align='Center' font-size='4.5' anchor-min-x='0.5' anchor-max-x='0.9' anchor-min-y='0.09' anchor-max-y='0.19' size-delta-x='0' size-delta-y='0'></text>
