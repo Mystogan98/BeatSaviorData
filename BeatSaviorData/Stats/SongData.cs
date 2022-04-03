@@ -9,7 +9,7 @@ using System;
 using System.Threading.Tasks;
 using System.Reflection;
 using HarmonyLib;
-using BS_Utils.Utilities;
+using IPA.Utilities;
 
 namespace BeatSaviorData
 {
@@ -99,7 +99,7 @@ namespace BeatSaviorData
 
 			songID = GCSSD.difficultyBeatmap.level.levelID.Replace("custom_level_","").Split('_')[0];
 			songDifficulty = GCSSD.difficultyBeatmap.difficulty.ToString().ToLower();
-			gameMode = GCSSD.difficultyBeatmap.level.beatmapLevelData.difficultyBeatmapSets[0].beatmapCharacteristic.serializedName;
+			//gameMode = GCSSD.difficultyBeatmap.level.beatmapLevelData.difficultyBeatmapSets[0].beatmapCharacteristic.serializedName;
 
 			songDifficultyRank = GCSSD.difficultyBeatmap.difficultyRank;
 			songName = GCSSD.difficultyBeatmap.level.songName;
@@ -128,7 +128,8 @@ namespace BeatSaviorData
 			while(BOM == null)
 			{
 				await Task.Delay(50);
-				BOM = scoreController.GetPrivateField<BeatmapObjectManager>("_beatmapObjectManager");
+				//BOM = scoreController.GetPrivateField<BeatmapObjectManager>("_beatmapObjectManager");
+				BOM = scoreController.GetField<BeatmapObjectManager, ScoreController>("_beatmapObjectManager");
 			}
 
 			// Create the DataCollector only now because it needs the BOM

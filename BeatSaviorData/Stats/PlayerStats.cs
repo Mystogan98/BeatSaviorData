@@ -28,7 +28,7 @@ namespace BeatSaviorData
 	{
 		public string playerID;
 		public int averageCutScore, badCutsCount, clearedLevelsCount, failedLevelsCount, fullComboCount, goodCutsCount, handDistanceTravelled, missedCutsCount, playedLevelsCount;
-		public long totalScore, cummulativeCutScoreWithoutMultiplier;
+		public long totalScore;
 		public float timePlayed;
 		public SerializableColor saberAColor, saberBColor, lightAColor, lightBColor, obstacleColor;
 
@@ -49,9 +49,9 @@ namespace BeatSaviorData
 			ColorScheme colors = playerData.colorSchemesSettings.GetSelectedColorScheme();
 			PlayerAllOverallStatsData.PlayerOverallStatsData playerStats = playerData.playerAllOverallStatsData.allOverallStatsData;
 
-			averageCutScore = playerStats.averageCutScore;
+			averageCutScore = (int) playerStats.totalScore / playerStats.goodCutsCount;
 			badCutsCount = playerStats.badCutsCount;
-			clearedLevelsCount = playerStats.cleardLevelsCount;
+			clearedLevelsCount = playerStats.clearedLevelsCount;
 			failedLevelsCount = playerStats.failedLevelsCount;
 			fullComboCount = playerStats.fullComboCount;
 			goodCutsCount = playerStats.goodCutsCount;
@@ -59,7 +59,6 @@ namespace BeatSaviorData
 			missedCutsCount = playerStats.missedCutsCount;
 			playedLevelsCount = playerStats.playedLevelsCount;
 			totalScore = playerStats.totalScore;
-			cummulativeCutScoreWithoutMultiplier = playerStats.cummulativeCutScoreWithoutMultiplier;
 			timePlayed = playerStats.timePlayed;
 
 			saberAColor = colors.saberAColor;

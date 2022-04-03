@@ -1,8 +1,10 @@
-﻿using System;
+﻿using IPA.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BeatSaviorData
 {
@@ -37,6 +39,28 @@ namespace BeatSaviorData
 
 		private readonly NoteCutInfo info;
 
+		private Note(GoodCutScoringElement goodcut, CutType cut)
+		{
+			NoteData data = goodcut.noteData;
+
+			noteCenter = Utils.FloatArrayFromVector(goodcut.cutScoreBuffer.noteCutInfo.notePosition);
+			noteRotation = Utils.FloatArrayFromVector(goodcut.cutScoreBuffer.noteCutInfo.noteRotation.eulerAngles);
+
+			if (data.colorType == ColorType.ColorB)
+				noteType = BSDNoteType.right;
+			else if (data.colorType == ColorType.ColorA)
+				noteType = BSDNoteType.left;
+
+			score = new int[] { 0, 0, 0 };
+			index = data.lineIndex + 4 * (int)data.noteLineLayer;
+			time = data.time;
+			id = actualId;
+			actualId++;
+
+			noteDirection = data.cutDirection;
+			cutType = cut;
+		}
+
 		private Note(NoteController controller, CutType cut)
 		{
 			NoteData data = controller.noteData;
@@ -59,19 +83,19 @@ namespace BeatSaviorData
 			cutType = cut;
 		}
 
-		public Note(NoteController controller, CutType cut, NoteCutInfo _info, int _multiplier) : this(controller, cut)
+		public Note(GoodCutScoringElement goodCut, CutType cut, NoteCutInfo _info, int _multiplier) : this(goodCut, cut)
 		{
 			multiplier = _multiplier;
 
 			info = _info;
 
-			if (/*info != null && */info.swingRatingCounter != null)
-			{
-				timeDependence = Math.Abs(info.cutNormal.z);
-				// info.swingRatingCounter.UnregisterDidFinishReceiver(new WaitForSwing(this));
-				info.swingRatingCounter.RegisterDidFinishReceiver(new WaitForSwing(this));
-				distanceToCenter = info.cutDistanceToCenter;
-			}
+			timeDependence = Math.Abs(info.cutNormal.z);
+			score = new int[] { 0, goodCut.cutScoreBuffer.centerDistanceCutScore, 0 };
+			//(goodCut.cutScoreBuffer as CutScoreBuffer).GetField<SaberSwingRatingCounter, CutScoreBuffer>("_saberSwingRatingCounter").RegisterDidFinishReceiver(new WaitForSwing(this));
+
+			goodCut.cutScoreBuffer.RegisterDidFinishReceiver(new WaitForSwing(this));
+
+			distanceToCenter = info.cutDistanceToCenter;
 		}
 
 		public Note(NoteController controller, CutType cut, int _multiplier) : this(controller, cut)
@@ -93,7 +117,7 @@ namespace BeatSaviorData
 		public bool IsAMiss() => GetTotalScore() == 0;
 		public NoteCutInfo GetInfo() => info;
 
-		private class WaitForSwing : ISaberSwingRatingCounterDidFinishReceiver
+		private class WaitForSwing : ISaberSwingRatingCounterDidFinishReceiver, ICutScoreBufferDidFinishReceiver
 		{
 			private Note n;
 
@@ -102,9 +126,29 @@ namespace BeatSaviorData
 				n = _n;
 			}
 
-			public void HandleSaberSwingRatingCounterDidFinish(ISaberSwingRatingCounter s)
+            public void HandleCutScoreBufferDidFinish(CutScoreBuffer cutScoreBuffer)
+            {
+				SwingHolder sh = SwingTranspilerHandler.GetSwing(cutScoreBuffer.GetField<SaberSwingRatingCounter, CutScoreBuffer>("_saberSwingRatingCounter"));
+				if (sh != null)
+				{
+					n.preswing = sh.preswing;
+					n.postswing = sh.postswing;
+				}
+
+				n.score[0] = cutScoreBuffer.beforeCutScore;
+				n.score[2] = cutScoreBuffer.afterCutScore;
+				n.timeDeviation = n.info.timeDeviation;
+				n.speed = n.info.saberSpeed;
+				n.cutPoint = Utils.FloatArrayFromVector(n.info.cutPoint);
+				n.saberDir = Utils.FloatArrayFromVector(n.info.saberDir);
+				n.cutNormal = Utils.FloatArrayFromVector(n.info.cutNormal);
+
+				cutScoreBuffer.UnregisterDidFinishReceiver(this);
+			}
+
+            public void HandleSaberSwingRatingCounterDidFinish(ISaberSwingRatingCounter s)
 			{
-				ScoreModel.RawScoreWithoutMultiplier(s, n.info.cutDistanceToCenter, out int before, out int after, out int accuracy);
+				//ScoreModel.RawScoreWithoutMultiplier(s, n.info.cutDistanceToCenter, out int before, out int after, out int accuracy);
 
 				SwingHolder sh = SwingTranspilerHandler.GetSwing(s as SaberSwingRatingCounter);
 				if (sh != null)
@@ -113,14 +157,15 @@ namespace BeatSaviorData
 					n.postswing = sh.postswing;
 				}
 
-				n.score = new int[] { before, accuracy, after };
+				n.score[0] = Mathf.RoundToInt(70f * s.beforeCutRating);
+				n.score[2] = Mathf.RoundToInt(30f * s.afterCutRating);
 				n.timeDeviation = n.info.timeDeviation;
 				n.speed = n.info.saberSpeed;
 				n.cutPoint = Utils.FloatArrayFromVector(n.info.cutPoint);
 				n.saberDir = Utils.FloatArrayFromVector(n.info.saberDir);
 				n.cutNormal = Utils.FloatArrayFromVector(n.info.cutNormal);
 
-				n.info.swingRatingCounter.UnregisterDidFinishReceiver(this);
+				s.UnregisterDidFinishReceiver(this);
 			}
 		}
 	}

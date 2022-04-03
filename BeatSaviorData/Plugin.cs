@@ -3,17 +3,12 @@ using IPALogger = IPA.Logging.Logger;
 using BS_Utils.Utilities;
 using BeatSaberMarkupLanguage.Settings;
 using UnityEngine;
-using System.Linq;
 using HarmonyLib;
-using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
 using BeatSaviorData.Trackers;
-using UnityEngine.UI;
-using System.Collections;
-using HMUI;
-using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Net;
 using System.Net.Security;
 
 namespace BeatSaviorData
@@ -111,7 +106,7 @@ namespace BeatSaviorData
 		[OnExit]
 		public void OnApplicationExit()
 		{
-			harmony.UnpatchAll("BeatSaviorData");
+			harmony.UnpatchSelf();
 
 			SceneManager.activeSceneChanged -= OnActiveSceneChanged;
 

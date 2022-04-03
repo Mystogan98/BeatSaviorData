@@ -1,10 +1,5 @@
 ﻿using IPA.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static BeatmapSaveData;
 
 namespace BeatSaviorData
 {
@@ -25,9 +20,11 @@ namespace BeatSaviorData
 
 			bom = data.GetBOM();
 			sc = data.GetScoreController();
-			bom.noteWasCutEvent += OnNoteCut;
+			phaoi = phaoi ?? sc.GetField<PlayerHeadAndObstacleInteraction, ScoreController>("_playerHeadAndObstacleInteraction");
+
+			sc.scoringForNoteStartedEvent += OnNoteCut;
 			bom.noteWasMissedEvent += OnNoteMiss;
-			sc.comboBreakingEventHappenedEvent += BreakCombo;
+			phaoi.headDidEnterObstaclesEvent += BreakComboByWalls;
 			BS_Utils.Utilities.BSEvents.songPaused += SongPaused;
 		}
 
@@ -36,13 +33,39 @@ namespace BeatSaviorData
 			if (combo > maxCombo)
 				maxCombo = combo;
 
-			bom.noteWasCutEvent -= OnNoteCut;
+			sc.scoringForNoteStartedEvent -= OnNoteCut;
 			bom.noteWasMissedEvent -= OnNoteMiss;
-			sc.comboBreakingEventHappenedEvent -= BreakCombo;
+			phaoi.headDidEnterObstaclesEvent -= BreakComboByWalls;
 			BS_Utils.Utilities.BSEvents.songPaused -= SongPaused;
 		}
 
-		private void OnNoteCut(NoteController controller, in NoteCutInfo info)
+		private void OnNoteCut(ScoringElement scoringElement)
+		{
+			if (scoringElement is GoodCutScoringElement goodCut)
+			{
+				NoteCutInfo info = goodCut.cutScoreBuffer.noteCutInfo;
+
+				// (data.colorType != ColorType.None) checks if it is not a bomb
+				if (info.allIsOK && goodCut.noteData.colorType != ColorType.None)
+				{
+					combo++;
+					ComputeMultiplier(true);
+					notes.Add(new Note(goodCut, CutType.cut, info, multiplier));
+				}
+				else if (goodCut.noteData.colorType != ColorType.None)
+				{
+					ComputeMultiplier(false);
+					notes.Add(new Note(goodCut, CutType.badCut, info, multiplier));
+				}
+				else if (goodCut.noteData.colorType == ColorType.None)
+				{
+					ComputeMultiplier(false);
+					bombHit++;
+				}
+			}
+		}
+
+		/*private void OnNoteCut(NoteController controller, in NoteCutInfo info)
 		{
 			// (data.colorType != ColorType.None) checks if it is not a bomb
 			if (info.allIsOK && controller.noteData.colorType != ColorType.None)
@@ -61,7 +84,7 @@ namespace BeatSaviorData
 				ComputeMultiplier(false);
 				bombHit++;
 			}
-		}
+		}*/
 
 		private void OnNoteMiss(NoteController controller)
 		{
@@ -90,16 +113,11 @@ namespace BeatSaviorData
 			}
 		}
 
-		private void BreakCombo()
+		private void BreakComboByWalls()
 		{
-			phaoi = phaoi ?? sc.GetField<PlayerHeadAndObstacleInteraction, ScoreController>("_playerHeadAndObstacleInteraction");
-
-			if (phaoi != null && phaoi.intersectingObstacles.Count > 0)
-			{
-				// We only reset multiplier on walls hit because we already count miss, badcuts and bombs in other events
-				ComputeMultiplier(false);
-				nbOfWallHit++;
-			}
+			// We only reset multiplier on walls hit because we already count miss, badcuts and bombs in other events
+			ComputeMultiplier(false);
+			nbOfWallHit++;
 
 			if (combo > maxCombo)
 				maxCombo = combo;

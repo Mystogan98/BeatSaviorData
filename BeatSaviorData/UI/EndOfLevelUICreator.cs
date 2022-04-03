@@ -1,6 +1,6 @@
 ﻿using BeatSaberMarkupLanguage;
 using BeatSaviorData;
-using BS_Utils.Utilities;
+using IPA.Utilities;
 using HMUI;
 using System;
 using System.Collections;
@@ -30,9 +30,9 @@ namespace BeatSaviorData
 
 		public static void Show(FlowCoordinator fc)
 		{
-			fc.InvokeMethod("SetLeftScreenViewController", new object[] { instance.leftUi, ViewController.AnimationType.None });
+			fc.InvokeMethod<object , FlowCoordinator>("SetLeftScreenViewController", new object[] { instance.leftUi, ViewController.AnimationType.None });
 			if (!SettingsMenu.instance.DisableGraphPanel)
-				fc.InvokeMethod("SetRightScreenViewController", new object[] { instance.rightUi, ViewController.AnimationType.None });
+				fc.InvokeMethod<object, FlowCoordinator>("SetRightScreenViewController", new object[] { instance.rightUi, ViewController.AnimationType.None });
 		}
 
 		public static void Create()
