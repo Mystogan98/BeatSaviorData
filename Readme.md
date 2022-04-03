@@ -1,5 +1,7 @@
 # BeatSaviorData
 
+<!> I lost my old discord account Mystogan#5963. If you need something, please DM my new account Mystogan#5049 instead. <!>
+
 ## What it does
 
 BeatSaviorData is a Beat Saber plugin that collects and shows a lot of data about your plays, such as per-hand accuracy, speed, distance traveled, overswing percentage, ...
