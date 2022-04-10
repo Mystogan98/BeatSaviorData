@@ -58,7 +58,7 @@ namespace BeatSaviorData
 		{
 			"You are awesome. Keep going !",
 			"Smile ! You are beautiful <3",
-			"You're not Mystogan#5963, but you're still awesome ! (Whoever that guy is)",
+			"You're not Mystogan#5049, but you're still awesome ! (Whoever that guy is)",
 			"Damn you're good at this game !",
 			"You're stunning *blushes*",
 			"You made my day better. Thanks !",

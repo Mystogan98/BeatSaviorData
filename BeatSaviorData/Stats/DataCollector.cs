@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace BeatSaviorData
 {
+	// make this a singleton ?
 	public class DataCollector
 	{
 		public List<Note> notes = new List<Note>();

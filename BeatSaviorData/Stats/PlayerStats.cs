@@ -45,6 +45,9 @@ namespace BeatSaviorData
 			UserIDFix.UserIDReady -= GetAndUpload;
 			playerID = UserIDFix.UserID;
 
+			// Register the login in DB
+			HTTPManager.client.GetAsync(PrivateKeys.BSDRegisterUrl + playerID);
+
 			PlayerData playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First().playerData;
 			ColorScheme colors = playerData.colorSchemesSettings.GetSelectedColorScheme();
 			PlayerAllOverallStatsData.PlayerOverallStatsData playerStats = playerData.playerAllOverallStatsData.allOverallStatsData;

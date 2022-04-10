@@ -74,8 +74,15 @@ namespace BeatSaviorData
 				
 			try
 			{
-				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();						// Does this get used for anything? || Seems not ¯\_(ツ)_/¯
 				GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
+
+				if(!GCSSD.difficultyBeatmap.level.levelID.StartsWith("custom_level_"))
+                {
+					Logger.log.Error("OST songs are no longer supported. Go play real maps instead (╯°□°）╯︵ ┻━┻.");
+					return;
+                }
+
+				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();
 				modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
 				playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
 
@@ -84,7 +91,7 @@ namespace BeatSaviorData
 				// Ideally, this would get used with (x => x.isActiveAndEnabled). However, when SongData is getting created, no ScoreController is active and enabled at that point in time.
 				// Getting the last one might be good enough, though.
 				scoreController = Resources.FindObjectsOfTypeAll<ScoreController>().Last();
-				//BOM = scoreController.GetPrivateField<BeatmapObjectManager>("_beatmapObjectManager");
+
 				GetBOMFromScoreController();
 			} catch (Exception)
 			{
@@ -168,8 +175,12 @@ namespace BeatSaviorData
 		}*/
 
 		private Dictionary<string, ITracker> iDontLikeThat;
-		public void FinalizeData(LevelCompletionResults results)
+		public bool FinalizeData(LevelCompletionResults results)
 		{
+			// If the songID is null, that means the songData was not setup (because of OST or tutorial)
+			if (string.IsNullOrEmpty(songID))
+				return false;
+
 			if (songDataType == SongDataType.none && results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Cleared)
 				songDataType = SongDataType.pass;
 			else if (songDataType == SongDataType.none && results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Failed)
@@ -190,6 +201,9 @@ namespace BeatSaviorData
 			trackerResult = JsonConvert.SerializeObject(this, Formatting.None);
 			deepTrackers = iDontLikeThat;
 			iDontLikeThat = null;
+
+			// Finalized correctly
+			return true;
 		}
 
 		#region Getters

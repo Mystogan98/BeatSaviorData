@@ -96,7 +96,7 @@ namespace BeatSaviorData
 		private void DiscardSongData(StandardLevelScenesTransitionSetupDataSO data, LevelCompletionResults results)
 		{
 			// Prevent a nullref exception, but it shouldn't happen in the first place (might mean some trackers do not get destroyed), so some investigation required
-			if (songData == null)
+			if (songData == null || string.IsNullOrEmpty(songData.songID))
 				return;
 
 			songData.GetDataCollector().UnregisterCollector(songData);
@@ -119,7 +119,10 @@ namespace BeatSaviorData
 		{
 			if (songData != null && !songData.IsAReplay() && results.levelEndAction == LevelCompletionResults.LevelEndAction.None)
 			{
-				songData.FinalizeData(results);
+				// If the song data did not finalize correctly, return
+				if (!songData.FinalizeData(results))
+					return;
+
 				if(isCampaign)
 					songData.songDataType = SongDataType.campaign;
 

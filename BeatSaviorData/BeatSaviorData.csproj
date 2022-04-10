@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="HarmonyPatches\SaberSwingRatingCounterPatches.cs" />
     <Compile Include="Stats\SwingTranspilerHandler.cs" />
+    <Compile Include="UI\SpeedonsUI.cs" />
     <Compile Include="UserIDFix.cs" />
     <Compile Include="FileManager.cs" />
     <Compile Include="HarmonyPatches\ResultsViewControllerPatch.cs" />
@@ -113,6 +114,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:\Games\steamapps\common\Beat Saber\Beat Saber_Data\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -131,6 +133,13 @@
     <Reference Include="UnityEngine.UIModule">
       <HintPath>C:\Games\steamapps\common\Beat Saber\Beat Saber_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\Views\SpeedonsView.bsml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\Doctors.png" />
+    <EmbeddedResource Include="Resources\Images\speedons.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

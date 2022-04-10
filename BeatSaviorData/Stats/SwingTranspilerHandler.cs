@@ -57,7 +57,12 @@ namespace BeatSaviorData
 
 		public static void AddPreswing(float swing)
 		{
-			if (takeNextPreswing) {
+			// My take here is : 
+			// Somehow code folows this path  :
+			// PreparePreswing() -> GetSwing() -> AddPReswing
+			// Now the why, I'm not sure at all
+
+			if (takeNextPreswing && swings.Count > 0) {
 				swings.Last().preswing = swing;
 				takeNextPreswing = false;
 			}
