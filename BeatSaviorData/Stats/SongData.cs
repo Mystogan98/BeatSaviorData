@@ -106,7 +106,7 @@ namespace BeatSaviorData
 
 			songID = GCSSD.difficultyBeatmap.level.levelID.Replace("custom_level_","").Split('_')[0];
 			songDifficulty = GCSSD.difficultyBeatmap.difficulty.ToString().ToLower();
-			//gameMode = GCSSD.difficultyBeatmap.level.beatmapLevelData.difficultyBeatmapSets[0].beatmapCharacteristic.serializedName;
+			gameMode = GCSSD.difficultyBeatmap.level.beatmapLevelData.difficultyBeatmapSets[0].beatmapCharacteristic.serializedName;
 
 			songDifficultyRank = GCSSD.difficultyBeatmap.difficultyRank;
 			songName = GCSSD.difficultyBeatmap.level.songName;
