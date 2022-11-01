@@ -97,6 +97,14 @@ namespace BeatSaviorData
 
 			distanceToCenter = info.cutDistanceToCenter;
 		}
+		
+		// Bad Cut
+		public Note(NoteController controller, CutType cut, NoteCutInfo _info, int _multiplier) : this(controller, cut)
+		{
+			multiplier = _multiplier;
+
+			info = _info;
+		}
 
 		public Note(NoteController controller, CutType cut, int _multiplier) : this(controller, cut)
 		{

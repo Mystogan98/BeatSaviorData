@@ -24,6 +24,7 @@ namespace BeatSaviorData
 			phaoi = phaoi ?? sc.GetField<PlayerHeadAndObstacleInteraction, ScoreController>("_playerHeadAndObstacleInteraction");
 
 			sc.scoringForNoteStartedEvent += OnNoteCut;
+			bom.noteWasCutEvent += OnMaybeBadCut;
 			bom.noteWasMissedEvent += OnNoteMiss;
 			phaoi.headDidEnterObstaclesEvent += BreakComboByWalls;
 			BS_Utils.Utilities.BSEvents.songPaused += SongPaused;
@@ -35,6 +36,7 @@ namespace BeatSaviorData
 				maxCombo = combo;
 
 			sc.scoringForNoteStartedEvent -= OnNoteCut;
+			bom.noteWasCutEvent -= OnMaybeBadCut;
 			bom.noteWasMissedEvent -= OnNoteMiss;
 			phaoi.headDidEnterObstaclesEvent -= BreakComboByWalls;
 			BS_Utils.Utilities.BSEvents.songPaused -= SongPaused;
@@ -53,28 +55,14 @@ namespace BeatSaviorData
 					ComputeMultiplier(true);
 					notes.Add(new Note(goodCut, CutType.cut, info, multiplier));
 				}
-				else if (goodCut.noteData.colorType != ColorType.None)
-				{
-					ComputeMultiplier(false);
-					notes.Add(new Note(goodCut, CutType.badCut, info, multiplier));
-				}
-				else if (goodCut.noteData.colorType == ColorType.None)
-				{
-					ComputeMultiplier(false);
-					bombHit++;
-				}
 			}
 		}
 
-		/*private void OnNoteCut(NoteController controller, in NoteCutInfo info)
+		private void OnMaybeBadCut(NoteController controller, in NoteCutInfo info)
 		{
 			// (data.colorType != ColorType.None) checks if it is not a bomb
 			if (info.allIsOK && controller.noteData.colorType != ColorType.None)
-			{
-				combo++;
-				ComputeMultiplier(true);
-				notes.Add(new Note(controller, CutType.cut, info, multiplier));
-			}
+			{ }
 			else if (controller.noteData.colorType != ColorType.None)
 			{
 				ComputeMultiplier(false);
@@ -85,7 +73,7 @@ namespace BeatSaviorData
 				ComputeMultiplier(false);
 				bombHit++;
 			}
-		}*/
+		}
 
 		private void OnNoteMiss(NoteController controller)
 		{
@@ -100,6 +88,9 @@ namespace BeatSaviorData
 		{
 			if(!goodHit)
 			{
+				if (combo > maxCombo)
+					maxCombo = combo;
+				combo = 0;
 				if(multiplier > 1)
 					multiplier /= 2;
 				multiplierProgress = 0;
@@ -119,10 +110,6 @@ namespace BeatSaviorData
 			// We only reset multiplier on walls hit because we already count miss, badcuts and bombs in other events
 			ComputeMultiplier(false);
 			nbOfWallHit++;
-
-			if (combo > maxCombo)
-				maxCombo = combo;
-			combo = 0;
 		}
 
 		private void SongPaused()
