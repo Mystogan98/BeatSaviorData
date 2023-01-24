@@ -20,7 +20,7 @@ Requires BSIPA (4.1.3 or higher), BS_Utils (1.6.5 or higher) and BeatSaberMarkup
 
 ## Can I use the data myself ?
 
-Yes ! You can use the api on the website (https://www.beatsavior.io/api/livescores/player/), or locally in your AppData folder (AppData/Roaming/Beat Savior Data). I plan on making the DataCollector directly accessible in the game too, for other mods to use it in real time. In the local files, the first line is the player's stats, then every other line corresponds to one song. Every line is a correct json object, even though the whole file isn't.
+Yes ! You can use the api on the website (https://beat-savior.herokuapp.com/#/), or locally in your AppData folder (AppData/Roaming/Beat Savior Data). I plan on making the DataCollector directly accessible in the game too, for other mods to use it in real time. In the local files, the first line is the player's stats, then every other line corresponds to one song. Every line is a correct json object, even though the whole file isn't.
 
 Please credit me if you use them.
 
