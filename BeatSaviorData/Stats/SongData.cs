@@ -60,6 +60,7 @@ namespace BeatSaviorData
 			private readonly ScoreController scoreController;
 			private readonly GameplayModifiersModelSO modifierData;
 			private readonly PlayerDataModel playerData;
+			private readonly IReadonlyBeatmapData beatmapData;
 
 			private string trackerResult, deepTrackerResult;
 		#endregion
@@ -76,15 +77,10 @@ namespace BeatSaviorData
 			{
 				GCSSD = BS_Utils.Plugin.LevelData.GameplayCoreSceneSetupData;
 
-				if(!GCSSD.difficultyBeatmap.level.levelID.StartsWith("custom_level_"))
-                {
-					Logger.log.Error("OST songs are no longer supported. Go play real maps instead (╯°□°）╯︵ ┻━┻.");
-					return;
-                }
-
 				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();
 				modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
 				playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
+				beatmapData = GCSSD.beatmapDataCache.GetBeatmapData(GCSSD.difficultyBeatmap, GCSSD.environmentInfo, GCSSD.playerSpecificSettings).Result;
 
 				BOSC.didInitEvent += BOSCDidInit;
 
@@ -214,6 +210,7 @@ namespace BeatSaviorData
 		public GameplayModifiersModelSO GetModifierData() => modifierData;
 		public PlayerDataModel GetPlayerData() => playerData;
 		public DataCollector GetDataCollector() => dataCollector;
+		public IReadonlyBeatmapData GetBeatmapData() => beatmapData;
 
 		public bool IsAReplay() => songDataType == SongDataType.replay;
 		public bool IsPraticeMode() => songDataType == SongDataType.practice;

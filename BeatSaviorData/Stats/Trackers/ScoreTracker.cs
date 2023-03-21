@@ -30,7 +30,7 @@ namespace BeatSaviorData.Trackers
 		{
 			IDifficultyBeatmap beatmap = data.GetGCSSD().difficultyBeatmap;
 			PlayerLevelStatsData stats = data.GetPlayerData().playerData.GetPlayerLevelStatsData(beatmap.level.levelID, beatmap.difficulty, beatmap.parentDifficultyBeatmapSet.beatmapCharacteristic);
-			maxRawScore = Utils.MaxRawScoreForNumberOfNotes(beatmap.GetBeatmapDataBasicInfoAsync().Result.cuttableNotesCount);
+			maxRawScore = Utils.MaxRawScoreForNumberOfNotes(data.GetBeatmapData().cuttableNotesCount);
 
 			modifiersMultiplier = GetTotalMultiplier(data.GetPlayerData().playerData.gameplayModifiers, results.energy);
 			maxScore = Mathf.RoundToInt(maxRawScore * modifiersMultiplier);
