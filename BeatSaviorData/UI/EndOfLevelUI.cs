@@ -14,12 +14,21 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace BeatSaviorData
 {
 	public class EndOfLevelUI : BSMLResourceViewController
 	{
-        #pragma warning disable 0649    // Disables the "never assigned" warning
+        private ICoroutineStarter coroutineStarter;
+
+        [Inject]
+        public void Init(ICoroutineStarter coroutineStarter)
+        {
+            this.coroutineStarter = coroutineStarter;
+        }
+
+#pragma warning disable 0649    // Disables the "never assigned" warning
         [UIObject("titleCard")]
         private readonly GameObject titleCard;
         [UIObject("songCover")]
@@ -382,7 +391,7 @@ namespace BeatSaviorData
 
             #region LeftSaberStats
             // LeftCircle
-            SharedCoroutineStarter.instance.StartCoroutine(AnimateCircle(leftCircleImg, GetCircleFillRatio(at.accLeft), 1.5f));
+            coroutineStarter.StartCoroutine(AnimateCircle(leftCircleImg, GetCircleFillRatio(at.accLeft), 1.5f));
 
             // LeftAverageCut
             leftAverage.text = at.accLeft.ToString("0.##");
@@ -411,7 +420,7 @@ namespace BeatSaviorData
 
             #region RightSaberStats
             // rightCircle
-            SharedCoroutineStarter.instance.StartCoroutine(AnimateCircle(rightCircleImg, GetCircleFillRatio(at.accRight), 1.5f));
+            coroutineStarter.StartCoroutine(AnimateCircle(rightCircleImg, GetCircleFillRatio(at.accRight), 1.5f));
 
             // rightAverageCut
             rightAverage.text = at.accRight.ToString("0.##");

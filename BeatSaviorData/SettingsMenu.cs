@@ -1,64 +1,37 @@
 ﻿using BeatSaberMarkupLanguage.Attributes;
-using BS_Utils.Utilities;
+using IPA.Config.Stores;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo(GeneratedStore.AssemblyVisibilityTarget)]
 namespace BeatSaviorData
 {
-	class SettingsMenu : PersistentSingleton<SettingsMenu>
-	{
-		private static readonly Config config = new Config("BeatSaviorData");
+    internal class SettingsMenu
+    {
+        public static SettingsMenu instance { get; set; }
 
 		[UIValue("DisablePass")]
-		public bool DisablePass
-		{
-			get => config.GetBool("BeatSaviorData", "DisablePass", false, true);
-			set => config.SetBool("BeatSaviorData", "DisablePass", value);
-		}
-
+        public bool DisablePass { get; set; } = false;
+       
 		[UIValue("DisableFail")]
-		public bool DisableFails
-		{
-			get => config.GetBool("BeatSaviorData", "DisableFails", false, true);
-			set => config.SetBool("BeatSaviorData", "DisableFails", value);
-		}
+		public bool DisableFails { get; set; } = false;
 
 		[UIValue("HideNbOfPauses")]
-		public bool HideNbOfPauses
-		{
-			get => config.GetBool("BeatSaviorData", "HideNbOfPauses", false, true);
-			set => config.SetBool("BeatSaviorData", "HideNbOfPauses", value);
-		}
+		public bool HideNbOfPauses { get; set; } = false;
 
 		[UIValue("EnableUI")]
-		public bool EnableUI
-		{
-			get => config.GetBool("BeatSaviorData", "EnableUI", true, true);
-			set => config.SetBool("BeatSaviorData", "EnableUI", value);
-		}
+		public bool EnableUI { get; set; } = true;
 
 		[UIValue("DisableGraphPanel")]
-		public bool DisableGraphPanel
-		{
-			get => config.GetBool("BeatSaviorData", "DisableGraphPanel", false, true);
-			set => config.SetBool("BeatSaviorData", "DisableGraphPanel", value);
-		}
+		public bool DisableGraphPanel { get; set; } = false;
 
-		[UIValue("DisableBeatSaviorUpload")]
-		public bool DisableBeatSaviorUpload
-		{
-			get => config.GetBool("BeatSaviorData", "DisableBeatSaviorUpload", false, true);
-			set => config.SetBool("BeatSaviorData", "DisableBeatSaviorUpload", value);
-		}
+        [UIValue("DisableBeatSaviorUpload")]
+		public bool DisableBeatSaviorUpload { get; set; } = false;
 
-		public bool EnableCustomUrlUpload
-		{
-			get => config.GetBool("BeatSaviorData", "EnableCustomUrlUpload", false, true);
-			set => config.SetBool("BeatSaviorData", "EnableCustomUrlUpload", value);
-		}
+        public bool EnableCustomUrlUpload { get; set; } = false;
 
-		public string CustomUploadUrl
-		{
-			get => config.GetString("BeatSaviorData", "CustomUploadUrl", "", true);
-			set => config.GetString("BeatSaviorData", "CustomUploadUrl", value);
-		}
-	}
+        public string CustomUploadUrl { get; set; } = "";
+
+        public int MaxStatsFiles { get; set; } = 30;
+
+    }
 }

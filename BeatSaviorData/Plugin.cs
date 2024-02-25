@@ -1,4 +1,6 @@
 ﻿using IPA;
+using IPAConfig = IPA.Config.Config;
+using IPA.Config.Stores;
 using IPALogger = IPA.Logging.Logger;
 using BS_Utils.Utilities;
 using BeatSaberMarkupLanguage.Settings;
@@ -25,11 +27,12 @@ namespace BeatSaviorData
 		private bool songDataFinished = false;
 
 		[Init]
-		public void Init(IPALogger logger) 
+		public void Init(IPALogger logger, IPAConfig conf) 
 		{
 			ServicePointManager.ServerCertificateValidationCallback = ((object message, X509Certificate cert, X509Chain chain, SslPolicyErrors sslPolicyErrors) => true);
-			Logger.log = logger; 
-			UserIDFix.GetUserID(); 
+			Logger.log = logger;
+			SettingsMenu.instance = conf.Generated<SettingsMenu>();
+			UserIDFix.GetUserID();
 		}
 
 		[OnStart]

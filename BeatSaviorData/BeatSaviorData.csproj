@@ -22,6 +22,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+		<Reference Include="BGLib.AppFlow">
+			<HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.AppFlow.dll</HintPath>
+			<Private>false</Private>
+			<Publicize>true</Publicize>
+		</Reference>
+		<Reference Include="BGLib.UnityExtension">
+			<HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BGLib.UnityExtension.dll</HintPath>
+			<Private>false</Private>
+			<Publicize>true</Publicize>
+		</Reference>
         <Reference Include="System.Net.Http" />
         <Reference Include="UnityEngine">
             <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.dll</HintPath>
@@ -51,11 +61,17 @@
             <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Main.dll</HintPath>
             <Private>False</Private>
         </Reference>
+        <Reference Include="PlatformUserModel">
+	      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\PlatformUserModel.dll</HintPath>
+	      <Private>false</Private>
+	      <Publicize>true</Publicize>
+        </Reference>
         <Reference Include="BeatmapCore">
             <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\BeatmapCore.dll</HintPath>
             <Private>False</Private>
         </Reference>
         <Reference Include="Colors">
+            <Private>False</Private>
             <SpecificVersion>False</SpecificVersion>
             <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Colors.dll</HintPath>
         </Reference>
@@ -120,7 +136,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="BeatSaberModdingTools.Tasks" Version="2.0.0-beta4">
+        <PackageReference Include="BeatSaberModdingTools.Tasks" Version="2.0.0-beta7">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
