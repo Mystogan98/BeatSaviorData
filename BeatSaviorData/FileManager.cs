@@ -12,7 +12,6 @@ namespace BeatSaviorData
 {
     class FileManager
     {
-        private const int MaxStatsFiles = 30;
         private const string FileDateFormat = "yyyy-MM-dd";
         private const string OldFileDateFormat = "dd-MM-yyyy";
         private static bool isANewFile = false;
@@ -79,7 +78,7 @@ namespace BeatSaviorData
                 }
             }
 
-            while (filesWithTime.Count > MaxStatsFiles)
+            while (filesWithTime.Count > SettingsMenu.instance.MaxStatsFiles)
             {
                 KeyValuePair<DateTime, string> entry = filesWithTime.First();
                 try
