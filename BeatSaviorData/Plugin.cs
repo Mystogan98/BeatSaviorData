@@ -10,6 +10,7 @@ using BeatSaviorData.Trackers;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
 using System.Net.Security;
+using BeatSaberMarkupLanguage.Util;
 
 namespace BeatSaviorData
 {
@@ -43,10 +44,10 @@ namespace BeatSaviorData
 			BSEvents.levelFailed += UploadSoloData;
 			BSEvents.lateMenuSceneLoadedFresh += UploadStats;
 
+			BSEvents.earlyMenuSceneLoadedFresh += AddSettingsMenuOnMenuLoad;
+
 			BSEvents.levelQuit += DiscardSongData;
 			BSEvents.levelRestarted += DiscardSongData;
-
-			BSMLSettings.instance.AddSettingsMenu("BeatSaviorData", "BeatSaviorData.UI.Views.SettingsView.bsml", SettingsMenu.instance);
 
 			harmony = new Harmony("BeatSaviorData");
 
@@ -57,7 +58,12 @@ namespace BeatSaviorData
 			new GameObject("EndOfLevelUICreator").AddComponent<EndOfLevelUICreator>().plugin = this;
 		}
 
-		private void UploadStats(ScenesTransitionSetupDataSO obj)
+        private void AddSettingsMenuOnMenuLoad(ScenesTransitionSetupDataSO sO)
+        {
+            BSMLSettings.Instance.AddSettingsMenu("BeatSaviorData", "BeatSaviorData.UI.Views.SettingsView.bsml", SettingsMenu.instance);
+        }
+
+        private void UploadStats(ScenesTransitionSetupDataSO obj)
 		{ 
 			new PlayerStats();	// Get and upload player related stats
 			BSEvents.lateMenuSceneLoadedFresh -= UploadStats;
@@ -113,7 +119,9 @@ namespace BeatSaviorData
 			BSEvents.levelCleared -= UploadSoloData;
 			BSEvents.levelFailed -= UploadSoloData;
 			BSEvents.lateMenuSceneLoadedFresh -= UploadStats;
-		}
+
+            BSEvents.earlyMenuSceneLoadedFresh -= AddSettingsMenuOnMenuLoad;
+        }
 
 		private void UploadData(StandardLevelScenesTransitionSetupDataSO data, LevelCompletionResults results, bool isCampaign)
 		{
