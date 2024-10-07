@@ -80,7 +80,7 @@ namespace BeatSaviorData
 				BOSC = Resources.FindObjectsOfTypeAll<BeatmapObjectSpawnController>().Last();
 				modifierData = Resources.FindObjectsOfTypeAll<GameplayModifiersModelSO>().First();
 				playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First();
-				beatmapData = GCSSD.beatmapDataCache.GetBeatmapData(GCSSD.difficultyBeatmap, GCSSD.environmentInfo, GCSSD.playerSpecificSettings).Result;
+				beatmapData = GCSSD.transformedBeatmapData;
 
 				BOSC.didInitEvent += BOSCDidInit;
 
@@ -100,14 +100,14 @@ namespace BeatSaviorData
 			else
 				UserIDFix.UserIDReady += SetUserID;
 
-			songID = GCSSD.difficultyBeatmap.level.levelID.Replace("custom_level_","").Split('_')[0];
-			songDifficulty = GCSSD.difficultyBeatmap.difficulty.ToString().ToLower();
-			gameMode = GCSSD.difficultyBeatmap.parentDifficultyBeatmapSet.beatmapCharacteristic.serializedName;
+			songID = GCSSD.beatmapKey.levelId.Replace("custom_level_","").Split('_')[0];
+			songDifficulty = GCSSD.beatmapKey.difficulty.ToString().ToLower();
+			gameMode = GCSSD.beatmapKey.beatmapCharacteristic.serializedName;
 
-			songDifficultyRank = GCSSD.difficultyBeatmap.difficultyRank;
-			songName = GCSSD.difficultyBeatmap.level.songName;
-			songArtist = GCSSD.difficultyBeatmap.level.songAuthorName;
-			songMapper = GCSSD.difficultyBeatmap.level.levelAuthorName;
+			songDifficultyRank = GCSSD.beatmapKey.beatmapCharacteristic.sortingOrder;
+			songName = GCSSD.beatmapLevel.songName;
+			songArtist = GCSSD.beatmapLevel.songAuthorName;
+			songMapper = GCSSD.beatmapLevel.allMappers.FirstOrDefault() ?? string.Empty;
 
 			WaitForAudioTimeSyncController();
 

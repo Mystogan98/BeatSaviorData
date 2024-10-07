@@ -292,7 +292,7 @@ namespace BeatSaviorData
 
             #region TitleCard
             // SongCover
-            Sprite s = data.GetGCSSD().difficultyBeatmap.level.GetCoverImageAsync(new System.Threading.CancellationToken()).Result;
+            Sprite s = data.GetGCSSD().beatmapLevel.previewMediaData.GetCoverSpriteAsync(new System.Threading.CancellationToken()).Result;
             songCoverImg.sprite = s;
 
             // Title
@@ -382,7 +382,7 @@ namespace BeatSaviorData
 
             #region LeftSaberStats
             // LeftCircle
-            SharedCoroutineStarter.instance.StartCoroutine(AnimateCircle(leftCircleImg, GetCircleFillRatio(at.accLeft), 1.5f));
+            StartCoroutine(AnimateCircle(leftCircleImg, GetCircleFillRatio(at.accLeft), 1.5f));
 
             // LeftAverageCut
             leftAverage.text = at.accLeft.ToString("0.##");
@@ -411,7 +411,7 @@ namespace BeatSaviorData
 
             #region RightSaberStats
             // rightCircle
-            SharedCoroutineStarter.instance.StartCoroutine(AnimateCircle(rightCircleImg, GetCircleFillRatio(at.accRight), 1.5f));
+            StartCoroutine(AnimateCircle(rightCircleImg, GetCircleFillRatio(at.accRight), 1.5f));
 
             // rightAverageCut
             rightAverage.text = at.accRight.ToString("0.##");
