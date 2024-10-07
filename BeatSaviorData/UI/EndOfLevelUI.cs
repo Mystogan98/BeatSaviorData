@@ -292,7 +292,7 @@ namespace BeatSaviorData
 
             #region TitleCard
             // SongCover
-            Sprite s = data.GetGCSSD().beatmapLevel.previewMediaData.GetCoverSpriteAsync(new System.Threading.CancellationToken()).Result;
+            Sprite s = data.GetGCSSD().beatmapLevel.previewMediaData.GetCoverSpriteAsync().Result;
             songCoverImg.sprite = s;
 
             // Title

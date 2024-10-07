@@ -46,7 +46,7 @@ namespace BeatSaviorData
 			playerID = UserIDFix.UserID;
 
 			// Register the login in DB
-			HTTPManager.client.GetAsync(PrivateKeys.BSDRegisterUrl + playerID);
+			// HTTPManager.client.GetAsync(PrivateKeys.BSDRegisterUrl + playerID);
 
 			PlayerData playerData = Resources.FindObjectsOfTypeAll<PlayerDataModel>().First().playerData;
 			ColorScheme colors = playerData.colorSchemesSettings.GetSelectedColorScheme();
@@ -73,7 +73,7 @@ namespace BeatSaviorData
 			string json = JsonConvert.SerializeObject(this, Formatting.None);
 
 			FileManager.SavePlayerStats(json);
-			HTTPManager.UploadPlayerStats(json);
+			// HTTPManager.UploadPlayerStats(json);
 		}
 	}
 }

@@ -8,19 +8,19 @@ namespace BeatSaviorData
 	{
 		private static readonly Config config = new Config("BeatSaviorData");
 
-		[UIValue("DisablePass")]
+		/*[UIValue("DisablePass")]
 		public bool DisablePass
 		{
 			get => config.GetBool("BeatSaviorData", "DisablePass", false, true);
 			set => config.SetBool("BeatSaviorData", "DisablePass", value);
-		}
+		}*/
 
-		[UIValue("DisableFail")]
+		/*[UIValue("DisableFail")]
 		public bool DisableFails
 		{
 			get => config.GetBool("BeatSaviorData", "DisableFails", false, true);
 			set => config.SetBool("BeatSaviorData", "DisableFails", value);
-		}
+		}*/
 
 		[UIValue("HideNbOfPauses")]
 		public bool HideNbOfPauses
@@ -43,12 +43,12 @@ namespace BeatSaviorData
 			set => config.SetBool("BeatSaviorData", "DisableGraphPanel", value);
 		}
 
-		[UIValue("DisableBeatSaviorUpload")]
+		/*[UIValue("DisableBeatSaviorUpload")]
 		public bool DisableBeatSaviorUpload
 		{
 			get => config.GetBool("BeatSaviorData", "DisableBeatSaviorUpload", false, true);
 			set => config.SetBool("BeatSaviorData", "DisableBeatSaviorUpload", value);
-		}
+		}*/
 
 		public bool EnableCustomUrlUpload
 		{
