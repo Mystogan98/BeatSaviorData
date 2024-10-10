@@ -134,7 +134,7 @@ namespace BeatSaviorData
 				if(isCampaign)
 					songData.songDataType = SongDataType.campaign;
 
-				if (!songData.IsPraticeMode()) {
+				/*if (!songData.IsPraticeMode()) {
 					if (results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Cleared && SettingsMenu.instance.DisablePass)
 						Logger.log.Info("Pass upload is disabled in the settings.");
 					else if (results.levelEndStateType == LevelCompletionResults.LevelEndStateType.Failed && SettingsMenu.instance.DisableFails)
@@ -143,7 +143,7 @@ namespace BeatSaviorData
 					{
 						HTTPManager.UploadSongJson(songData.GetTrackersResults());
 					}
-				}
+				}*/
 
 				FileManager.SaveSongStats(songData.GetDeepTrackersResults());
 				FileManager.SavePBScoreGraph((songData.trackers["scoreGraphTracker"] as ScoreGraphTracker).graph, (songData.trackers["scoreTracker"] as ScoreTracker).score, songData.songID);

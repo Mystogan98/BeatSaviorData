@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
-using BeatSaviorData.UI;
 
 namespace BeatSaviorData
 {
@@ -22,7 +21,6 @@ namespace BeatSaviorData
 		private SongData lastData;
 		private EndOfLevelUI leftUi;
 		private ScoreGraphUI rightUi;
-		private SpeedonsUI speedonsUI;
 
 		private void Start()
 		{
@@ -33,13 +31,6 @@ namespace BeatSaviorData
 		public static void Show(FlowCoordinator fc)
 		{
 			fc.InvokeMethod<object , FlowCoordinator>("SetLeftScreenViewController", new object[] { instance.leftUi, ViewController.AnimationType.None });
-
-			/* Temporary */
-			if (instance.speedonsUI != null)
-			{
-				fc.InvokeMethod<object, FlowCoordinator>("SetRightScreenViewController", new object[] { instance.speedonsUI, ViewController.AnimationType.None });
-				return;
-			}
 
 			if (!SettingsMenu.instance.DisableGraphPanel)
 				fc.InvokeMethod<object, FlowCoordinator>("SetRightScreenViewController", new object[] { instance.rightUi, ViewController.AnimationType.None });
@@ -68,14 +59,6 @@ namespace BeatSaviorData
 					rightUi = BeatSaberUI.CreateViewController<ScoreGraphUI>();
 				rightUi.Refresh(lastData);
 			}
-
-			/* Temporary */
-			if(DateTime.Today >= new DateTime(2022, 4, 13) && DateTime.Today <= new DateTime(2022, 4, 18))
-            {
-				if (speedonsUI == null)
-					speedonsUI = BeatSaberUI.CreateViewController<SpeedonsUI>();
-				speedonsUI.Refresh();
-            }
 		}
 	}
 }
