@@ -3,9 +3,9 @@
   "id": "BeatSaviorData",
   "name": "BeatSaviorData",
   "author": "Mystogan",
-  "version": "2.1.15",
+  "version": "2.1.16",
   "description": "Show in-depth stats and a score graph at the end of songs, uploads part of those stats to Beat Savior, and save in-depth stats localy",
-  "gameVersion": "1.21.0",
+  "gameVersion": "1.38.0",
   "dependsOn": {
     "BSIPA": "^4.2.2",
     "BS Utils": "^1.12.0",
